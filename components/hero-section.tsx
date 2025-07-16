@@ -1,62 +1,77 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, Shield, Truck, Award } from "lucide-react"
 
 export default function HeroSection() {
   return (
-    <section className="relative bg-gradient-to-r from-green-50 to-green-100 py-20 lg:py-32">
+    <section className="relative bg-gradient-to-br from-green-50 to-blue-50 py-20 overflow-hidden">
       <div className="container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Content */}
           <div className="space-y-8">
             <div className="space-y-4">
               <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                Your Natural Health Journey Starts Here
+                Your Natural Health
+                <span className="text-green-600 block">Journey Starts Here</span>
               </h1>
               <p className="text-xl text-gray-600 leading-relaxed">
-                Discover premium vitamins, supplements, and wellness products to support your healthy lifestyle. Trusted
-                by millions for over 150 years.
+                Discover premium vitamins, supplements, and natural wellness products trusted by millions. Supporting
+                your health naturally for over 150 years.
               </p>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="bg-green-600 hover:bg-green-700" asChild>
-                <Link href="/products">
+              <Link href="/products">
+                <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white px-8 py-3">
                   Shop Now
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link href="/about">Learn More</Link>
-              </Button>
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+              <Link href="/products?category=Vitamins">
+                <Button variant="outline" size="lg" className="px-8 py-3 bg-transparent">
+                  Browse Vitamins
+                </Button>
+              </Link>
             </div>
 
-            <div className="flex items-center space-x-8 pt-8">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-green-600">150+</div>
-                <div className="text-sm text-gray-600">Years of Trust</div>
+            {/* Trust indicators */}
+            <div className="grid grid-cols-3 gap-6 pt-8 border-t border-gray-200">
+              <div className="flex items-center space-x-3">
+                <Shield className="h-8 w-8 text-green-600" />
+                <div>
+                  <p className="font-semibold text-gray-900">Quality Assured</p>
+                  <p className="text-sm text-gray-600">Tested & Certified</p>
+                </div>
               </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-green-600">1000+</div>
-                <div className="text-sm text-gray-600">Products</div>
+              <div className="flex items-center space-x-3">
+                <Truck className="h-8 w-8 text-green-600" />
+                <div>
+                  <p className="font-semibold text-gray-900">Free Delivery</p>
+                  <p className="text-sm text-gray-600">Orders over £35</p>
+                </div>
               </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-green-600">5M+</div>
-                <div className="text-sm text-gray-600">Happy Customers</div>
+              <div className="flex items-center space-x-3">
+                <Award className="h-8 w-8 text-green-600" />
+                <div>
+                  <p className="font-semibold text-gray-900">150+ Years</p>
+                  <p className="text-sm text-gray-600">Trusted Heritage</p>
+                </div>
               </div>
             </div>
           </div>
 
+          {/* Hero Image */}
           <div className="relative">
-            <div className="aspect-square rounded-2xl bg-gradient-to-br from-green-200 to-green-300 p-8">
-              <div className="h-full w-full rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                <div className="text-center space-y-4">
-                  <div className="w-32 h-32 mx-auto bg-white rounded-full flex items-center justify-center shadow-lg">
-                    <span className="text-4xl">🌿</span>
-                  </div>
-                  <p className="text-green-800 font-medium">Natural • Pure • Trusted</p>
-                </div>
-              </div>
+            <div className="relative z-10">
+              <img
+                src="/placeholder.svg?height=600&width=500"
+                alt="Natural health products"
+                className="w-full h-auto rounded-2xl shadow-2xl"
+              />
             </div>
+            {/* Decorative elements */}
+            <div className="absolute -top-4 -right-4 w-72 h-72 bg-green-200 rounded-full opacity-20 blur-3xl"></div>
+            <div className="absolute -bottom-4 -left-4 w-72 h-72 bg-blue-200 rounded-full opacity-20 blur-3xl"></div>
           </div>
         </div>
       </div>

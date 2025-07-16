@@ -10,11 +10,11 @@ import { useCart } from "@/contexts/cart-context"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 const navigation = [
-  { name: "Vitamins", href: "/products/vitamins" },
-  { name: "Supplements", href: "/products/supplements" },
-  { name: "Herbal", href: "/products/herbal" },
-  { name: "Beauty", href: "/products/beauty" },
-  { name: "Wellness", href: "/products/wellness" },
+  { name: "Vitamins", href: "/products?category=Vitamins" },
+  { name: "Supplements", href: "/products?category=Supplements" },
+  { name: "Herbal", href: "/products?category=Herbal" },
+  { name: "Beauty", href: "/products?category=Beauty" },
+  { name: "Wellness", href: "/products?category=Wellness" },
 ]
 
 export default function Header() {

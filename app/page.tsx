@@ -1,7 +1,6 @@
-import { Suspense } from "react"
 import HeroSection from "@/components/hero-section"
-import FeaturedProducts from "@/components/featured-products"
 import CategoryGrid from "@/components/category-grid"
+import FeaturedProducts from "@/components/featured-products"
 import PromotionalBanner from "@/components/promotional-banner"
 import NewsletterSignup from "@/components/newsletter-signup"
 
@@ -9,13 +8,9 @@ export default function HomePage() {
   return (
     <div className="min-h-screen">
       <HeroSection />
+      <CategoryGrid />
+      <FeaturedProducts />
       <PromotionalBanner />
-      <Suspense fallback={<div>Loading categories...</div>}>
-        <CategoryGrid />
-      </Suspense>
-      <Suspense fallback={<div>Loading products...</div>}>
-        <FeaturedProducts />
-      </Suspense>
       <NewsletterSignup />
     </div>
   )

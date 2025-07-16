@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
+import { useSearchParams } from "next/navigation"
 import { Search, Filter, Grid, List } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -20,11 +21,20 @@ const priceRanges = [
 ]
 
 export default function ProductsPage() {
+  const searchParams = useSearchParams()
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [selectedPriceRanges, setSelectedPriceRanges] = useState<string[]>([])
   const [sortBy, setSortBy] = useState("name")
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
+
+  // Handle category from URL parameters
+  useEffect(() => {
+    const categoryParam = searchParams.get("category")
+    if (categoryParam && categories.includes(categoryParam)) {
+      setSelectedCategory(categoryParam)
+    }
+  }, [searchParams])
 
   const filteredProducts = useMemo(() => {
     let filtered = products
@@ -83,8 +93,14 @@ export default function ProductsPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">All Products</h1>
-        <p className="text-gray-600">Discover our complete range of health and wellness products</p>
+        <h1 className="text-3xl font-bold text-gray-900 mb-4">
+          {selectedCategory === "All" ? "All Products" : selectedCategory}
+        </h1>
+        <p className="text-gray-600">
+          {selectedCategory === "All"
+            ? "Discover our complete range of health and wellness products"
+            : `Browse our ${selectedCategory.toLowerCase()} collection`}
+        </p>
       </div>
 
       <div className="grid lg:grid-cols-4 gap-8">

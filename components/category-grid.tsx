@@ -1,48 +1,42 @@
 import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
+import { Pill, Leaf, Sparkles, Heart, Dumbbell } from "lucide-react"
 
 const categories = [
   {
     name: "Vitamins",
     description: "Essential vitamins for daily health",
-    icon: "💊",
-    href: "/products/vitamins",
-    color: "bg-blue-50 hover:bg-blue-100",
+    icon: Pill,
+    href: "/products?category=Vitamins",
+    color: "bg-blue-50 text-blue-600",
   },
   {
     name: "Supplements",
     description: "Nutritional supplements for wellness",
-    icon: "🏃‍♂️",
-    href: "/products/supplements",
-    color: "bg-green-50 hover:bg-green-100",
+    icon: Dumbbell,
+    href: "/products?category=Supplements",
+    color: "bg-green-50 text-green-600",
   },
   {
     name: "Herbal",
     description: "Natural herbal remedies",
-    icon: "🌿",
-    href: "/products/herbal",
-    color: "bg-emerald-50 hover:bg-emerald-100",
+    icon: Leaf,
+    href: "/products?category=Herbal",
+    color: "bg-emerald-50 text-emerald-600",
   },
   {
     name: "Beauty",
-    description: "Natural beauty & skincare",
-    icon: "✨",
-    href: "/products/beauty",
-    color: "bg-pink-50 hover:bg-pink-100",
+    description: "Natural beauty products",
+    icon: Sparkles,
+    href: "/products?category=Beauty",
+    color: "bg-pink-50 text-pink-600",
   },
   {
     name: "Wellness",
     description: "Complete wellness solutions",
-    icon: "🧘‍♀️",
-    href: "/products/wellness",
-    color: "bg-purple-50 hover:bg-purple-100",
-  },
-  {
-    name: "Sports Nutrition",
-    description: "Fuel your active lifestyle",
-    icon: "💪",
-    href: "/products/sports",
-    color: "bg-orange-50 hover:bg-orange-100",
+    icon: Heart,
+    href: "/products?category=Wellness",
+    color: "bg-purple-50 text-purple-600",
   },
 ]
 
@@ -58,20 +52,25 @@ export default function CategoryGrid() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {categories.map((category) => (
-            <Link key={category.name} href={category.href}>
-              <Card
-                className={`${category.color} border-0 transition-all duration-300 hover:shadow-lg hover:scale-105`}
-              >
-                <CardContent className="p-6 text-center">
-                  <div className="text-4xl mb-4">{category.icon}</div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{category.name}</h3>
-                  <p className="text-gray-600">{category.description}</p>
-                </CardContent>
-              </Card>
-            </Link>
-          ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+          {categories.map((category) => {
+            const IconComponent = category.icon
+            return (
+              <Link key={category.name} href={category.href}>
+                <Card className="group hover:shadow-lg transition-all duration-300 cursor-pointer h-full">
+                  <CardContent className="p-6 text-center">
+                    <div
+                      className={`w-16 h-16 rounded-full ${category.color} flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}
+                    >
+                      <IconComponent className="h-8 w-8" />
+                    </div>
+                    <h3 className="font-semibold text-lg mb-2 text-gray-900">{category.name}</h3>
+                    <p className="text-gray-600 text-sm">{category.description}</p>
+                  </CardContent>
+                </Card>
+              </Link>
+            )
+          })}
         </div>
       </div>
     </section>
