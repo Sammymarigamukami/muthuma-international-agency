@@ -112,7 +112,7 @@ export default function ContactPage() {
                   <Phone className="h-5 w-5 text-green-600 mt-1" />
                   <div>
                     <p className="font-medium">Phone</p>
-                    <p className="text-gray-600">0800 123 4567</p>
+                    <p className="text-gray-600">+254715-907311</p>
                     <p className="text-sm text-gray-500">Mon-Fri 8am-8pm, Sat-Sun 9am-6pm</p>
                   </div>
                 </div>
@@ -131,11 +131,11 @@ export default function ContactPage() {
                   <div>
                     <p className="font-medium">Address</p>
                     <p className="text-gray-600">
-                      Holland & Barrett House
+                      Online store only
                       <br />
-                      45 Henry Street
+                      online
                       <br />
-                      Dublin 1, Ireland
+                      online
                     </p>
                   </div>
                 </div>
@@ -162,7 +162,7 @@ export default function ContactPage() {
                 <div>
                   <p className="font-medium text-sm">How long does delivery take?</p>
                   <p className="text-sm text-gray-600">
-                    Standard delivery takes 2-3 business days. Free delivery on orders over £35.
+                    Standard delivery takes 2-3 business days. Free delivery on orders over Ksh2500.
                   </p>
                 </div>
                 <div>

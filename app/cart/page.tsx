@@ -44,7 +44,7 @@ export default function CartPage() {
                   <div className="flex-1 space-y-2">
                     <h3 className="font-medium text-gray-900">{item.name}</h3>
                     <p className="text-sm text-gray-500">{item.category}</p>
-                    <p className="font-bold text-green-600">£{item.price.toFixed(2)}</p>
+                    <p className="font-bold text-green-600">Ksh{item.price.toFixed(2)}</p>
                   </div>
 
                   <div className="flex items-center space-x-2">
@@ -89,7 +89,7 @@ export default function CartPage() {
             <CardContent className="space-y-4">
               <div className="flex justify-between">
                 <span>Items ({getItemCount()})</span>
-                <span>£{getTotal().toFixed(2)}</span>
+                <span>Ksh{getTotal().toFixed(2)}</span>
               </div>
 
               <div className="flex justify-between">
@@ -101,7 +101,7 @@ export default function CartPage() {
 
               <div className="flex justify-between font-bold text-lg">
                 <span>Total</span>
-                <span>£{getTotal().toFixed(2)}</span>
+                <span>Ksh{getTotal().toFixed(2)}</span>
               </div>
 
               <Button className="w-full bg-green-600 hover:bg-green-700" size="lg">
@@ -113,7 +113,7 @@ export default function CartPage() {
               </Button>
 
               <div className="text-center text-sm text-gray-500 pt-4">
-                <p>Free delivery on orders over £35</p>
+                <p>Free delivery on orders over Ksh2500</p>
                 <p>30-day money-back guarantee</p>
               </div>
             </CardContent>

@@ -94,9 +94,9 @@ export default function ProductCard({ product }: ProductCardProps) {
 
           <div className="flex items-center justify-between mt-auto">
             <div className="flex items-center space-x-2">
-              <span className="text-lg font-bold text-gray-900">£{product.price}</span>
+              <span className="text-lg font-bold text-gray-900">Ksh{product.price}</span>
               {product.originalPrice && (
-                <span className="text-sm text-gray-500 line-through">£{product.originalPrice}</span>
+                <span className="text-sm text-gray-500 line-through">Ksh{product.originalPrice}</span>
               )}
             </div>
             <Button size="sm" onClick={handleAddToCart} className="bg-green-600 hover:bg-green-700">

@@ -1,7 +1,10 @@
 "use client"
 
+import type React from "react"
+
 import { useState } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { Search, ShoppingCart, Menu, User, Heart } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -19,15 +22,35 @@ const navigation = [
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState("")
   const { items } = useCart()
+  const router = useRouter()
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (searchQuery.trim()) {
+      router.push(`/products?search=${encodeURIComponent(searchQuery.trim())}`)
+      setSearchQuery("")
+    }
+  }
+
+  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value)
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSearch(e)
+    }
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
       <div className="container mx-auto px-4">
         {/* Top bar */}
         <div className="flex h-12 items-center justify-between border-b text-sm">
-          <p className="text-muted-foreground">Free delivery on orders over £35</p>
+          <p className="text-muted-foreground">Free delivery on orders over Ksh2500</p>
           <div className="flex items-center space-x-4">
             <Link href="/contact" className="text-muted-foreground hover:text-primary">
               Contact Us
@@ -60,6 +83,20 @@ export default function Header() {
                     </Link>
                   ))}
                 </nav>
+                {/* Mobile Search */}
+                <div className="mt-6">
+                  <form onSubmit={handleSearch} className="relative">
+                    <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      type="search"
+                      placeholder="Search products..."
+                      value={searchQuery}
+                      onChange={handleSearchInputChange}
+                      onKeyDown={handleKeyDown}
+                      className="pl-8"
+                    />
+                  </form>
+                </div>
               </SheetContent>
             </Sheet>
 
@@ -88,18 +125,34 @@ export default function Header() {
 
           {/* Search and Actions */}
           <div className="flex items-center space-x-4">
+            {/* Desktop Search */}
             <div className="hidden sm:flex items-center space-x-2">
-              <div className="relative">
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                <Input type="search" placeholder="Search products..." className="w-[200px] lg:w-[300px] pl-8" />
-              </div>
+              <form onSubmit={handleSearch} className="relative">
+                <Search
+                  className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground cursor-pointer"
+                  onClick={handleSearch}
+                />
+                <Input
+                  type="search"
+                  placeholder="Search products..."
+                  value={searchQuery}
+                  onChange={handleSearchInputChange}
+                  onKeyDown={handleKeyDown}
+                  className="w-[200px] lg:w-[300px] pl-8"
+                />
+              </form>
             </div>
 
-            <Button variant="ghost" size="icon">
-              <User className="h-5 w-5" />
+            {/* Mobile Search Button */}
+            <Button variant="ghost" size="icon" className="sm:hidden">
+              <Search className="h-5 w-5 hidden" />
             </Button>
 
-            <Button variant="ghost" size="icon">
+            <Button variant="ghost" size="icon" className="hidden">
+              <User className="h-5 w-5 " />
+            </Button>
+
+            <Button variant="ghost" size="icon" className="hidden">
               <Heart className="h-5 w-5" />
             </Button>
 

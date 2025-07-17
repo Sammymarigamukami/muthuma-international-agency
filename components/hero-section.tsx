@@ -15,8 +15,7 @@ export default function HeroSection() {
                 <span className="text-green-600 block">Journey Starts Here</span>
               </h1>
               <p className="text-xl text-gray-600 leading-relaxed">
-                Discover premium vitamins, supplements, and natural wellness products trusted by millions. Supporting
-                your health naturally for over 150 years.
+                Discover premium vitamins, supplements, and natural wellness products trusted by millions.
               </p>
             </div>
 
@@ -47,13 +46,13 @@ export default function HeroSection() {
                 <Truck className="h-8 w-8 text-green-600" />
                 <div>
                   <p className="font-semibold text-gray-900">Free Delivery</p>
-                  <p className="text-sm text-gray-600">Orders over £35</p>
+                  <p className="text-sm text-gray-600">Orders over Ksh2500</p>
                 </div>
               </div>
               <div className="flex items-center space-x-3">
                 <Award className="h-8 w-8 text-green-600" />
                 <div>
-                  <p className="font-semibold text-gray-900">150+ Years</p>
+                  <p className="font-semibold text-gray-900">3+ Years</p>
                   <p className="text-sm text-gray-600">Trusted Heritage</p>
                 </div>
               </div>

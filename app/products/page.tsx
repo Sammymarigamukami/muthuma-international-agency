@@ -14,10 +14,10 @@ import { products } from "@/lib/data"
 
 const categories = ["All", "Vitamins", "Supplements", "Herbal", "Beauty", "Wellness"]
 const priceRanges = [
-  { label: "Under £10", min: 0, max: 10 },
-  { label: "£10 - £25", min: 10, max: 25 },
-  { label: "£25 - £50", min: 25, max: 50 },
-  { label: "Over £50", min: 50, max: Number.POSITIVE_INFINITY },
+  { label: "Under Ksh1500", min: 0, max: 10 },
+  { label: "Ksh1501 - Ksh2500", min: 10, max: 25 },
+  { label: "Ksh2501 - Ksh5000", min: 25, max: 50 },
+  { label: "Over Ksh5000", min: 50, max: Number.POSITIVE_INFINITY },
 ]
 
 export default function ProductsPage() {

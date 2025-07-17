@@ -38,6 +38,13 @@ const categories = [
     href: "/products?category=Wellness",
     color: "bg-purple-50 text-purple-600",
   },
+  {
+    name: "Protains",
+    description: "Complete wellness solutions",
+    icon: Heart,
+    href: "/products?category=Protains",
+    color: "bg-purple-50 text-purple-600",
+  },
 ]
 
 export default function CategoryGrid() {
