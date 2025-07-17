@@ -63,7 +63,7 @@ export default function CartPage() {
                   </div>
 
                   <div className="text-right">
-                    <p className="font-bold text-gray-900">£{(item.price * item.quantity).toFixed(2)}</p>
+                    <p className="font-bold text-gray-900">Ksh{(item.price * item.quantity).toFixed(2)}</p>
                     <Button
                       variant="ghost"
                       size="sm"

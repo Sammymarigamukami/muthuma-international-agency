@@ -92,9 +92,9 @@ export default function ProductPage({ params }: ProductPageProps) {
           </div>
 
           <div className="flex items-center space-x-4">
-            <span className="text-3xl font-bold text-green-600">£{product.price.toFixed(2)}</span>
+            <span className="text-3xl font-bold text-green-600">Ksh{product.price.toFixed(2)}</span>
             {product.originalPrice && (
-              <span className="text-xl text-gray-500 line-through">£{product.originalPrice.toFixed(2)}</span>
+              <span className="text-xl text-gray-500 line-through">Ksh{product.originalPrice.toFixed(2)}</span>
             )}
           </div>
 
@@ -136,7 +136,7 @@ export default function ProductPage({ params }: ProductPageProps) {
             <div className="text-center">
               <Truck className="h-6 w-6 mx-auto mb-2 text-green-600" />
               <p className="text-sm font-medium">Free Delivery</p>
-              <p className="text-xs text-gray-500">On orders over £35</p>
+              <p className="text-xs text-gray-500">On orders over Ksh2500</p>
             </div>
             <div className="text-center">
               <Shield className="h-6 w-6 mx-auto mb-2 text-green-600" />
