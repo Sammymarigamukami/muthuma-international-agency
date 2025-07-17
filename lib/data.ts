@@ -207,7 +207,7 @@ export const products: Product[] = [
     description: "Combined calcium and vitamin D3 supplement for strong bones and teeth.",
     price: 0,
     image: "/placeholder.svg?height=400&width=400",
-    category: "Protains",
+    category: "Proteins",
     rating: 4,
     reviews: 134,
     featured: false,
