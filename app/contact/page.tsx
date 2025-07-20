@@ -112,7 +112,7 @@ export default function ContactPage() {
                   <Phone className="h-5 w-5 text-green-600 mt-1" />
                   <div>
                     <p className="font-medium">Phone</p>
-                    <p className="text-gray-600">+254715-907311</p>
+                    <p className="text-gray-600">+254-715-907311</p>
                     <p className="text-sm text-gray-500">Mon-Fri 8am-8pm, Sat-Sun 9am-6pm</p>
                   </div>
                 </div>
@@ -132,10 +132,6 @@ export default function ContactPage() {
                     <p className="font-medium">Address</p>
                     <p className="text-gray-600">
                       Online store only
-                      <br />
-                      online
-                      <br />
-                      online
                     </p>
                   </div>
                 </div>
@@ -145,9 +141,7 @@ export default function ContactPage() {
                   <div>
                     <p className="font-medium">Store Hours</p>
                     <p className="text-gray-600">
-                      Mon-Fri: 8:00 AM - 8:00 PM
-                      <br />
-                      Sat-Sun: 9:00 AM - 6:00 PM
+                      Available 24/7
                     </p>
                   </div>
                 </div>

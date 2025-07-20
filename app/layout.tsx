@@ -6,10 +6,16 @@ import Header from "@/components/header"
 import Footer from "@/components/footer"
 import { CartProvider } from "@/contexts/cart-context"
 import { Toaster } from "@/components/ui/toaster"
+import { Icon } from "lucide-react"
 
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
+  icons: {
+    icon: "/placeholder-logo.png",
+    shortcut: "/placeholder-logo.png",
+    apple: "/placeholder-logo.png"
+  },
   title: "Holland & Barrett - Health, Wellness & Natural Products",
   description:
     "Discover vitamins, supplements, herbal remedies, beauty and wellness products at Holland & Barrett. Your trusted partner in natural health.",

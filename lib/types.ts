@@ -6,7 +6,15 @@ export interface Product {
   originalPrice?: number
   discount?: number
   image: string
+  images: string[]
   category: string
+  ingredients: string[]
+  usage: {
+    dosage: string
+    bestTime: string
+    storage: string
+    warning: string
+  }
   rating: number
   reviews: number
   featured: boolean

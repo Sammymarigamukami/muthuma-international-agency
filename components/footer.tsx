@@ -15,7 +15,7 @@ export default function Footer() {
               <span className="font-bold text-xl text-green-400">Holland & Barrett</span>
             </div>
             <p className="text-gray-300 text-sm">
-              Your trusted partner in natural health and wellness for over  years.
+              Your trusted partner in natural health and wellness for over 2 years.
             </p>
             <div className="flex space-x-4">
               <Link href="#" className="text-gray-400 hover:text-white">

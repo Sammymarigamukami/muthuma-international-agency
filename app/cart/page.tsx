@@ -44,7 +44,7 @@ export default function CartPage() {
                   <div className="flex-1 space-y-2">
                     <h3 className="font-medium text-gray-900">{item.name}</h3>
                     <p className="text-sm text-gray-500">{item.category}</p>
-                    <p className="font-bold text-green-600">Ksh{item.price.toFixed(2)}</p>
+                    <p className="font-bold text-green-600">KSh{item.price.toFixed(2)}</p>
                   </div>
 
                   <div className="flex items-center space-x-2">
@@ -97,15 +97,19 @@ export default function CartPage() {
                 <span className="text-green-600">FREE</span>
               </div>
 
+              <div className="flex justify-between">
+                <span>Ksh{(getTotal()).toFixed(2)}</span>
+              </div>
+
               <Separator />
 
               <div className="flex justify-between font-bold text-lg">
                 <span>Total</span>
-                <span>Ksh{getTotal().toFixed(2)}</span>
+                <span>KSh{(getTotal()).toFixed(2)}</span>
               </div>
 
-              <Button className="w-full bg-green-600 hover:bg-green-700" size="lg">
-                Proceed to Checkout
+              <Button asChild className="w-full bg-green-600 hover:bg-green-700" size="lg">
+                <Link href="/checkout">Proceed to Checkout</Link>
               </Button>
 
               <Button variant="outline" className="w-full bg-transparent" asChild>

@@ -51,15 +51,16 @@ export default function ProductPage({ params }: ProductPageProps) {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="grid lg:grid-cols-2 gap-12">
-        {/* Product Images */}
+        {/* MAIN IMAGE */}
         <div className="space-y-4">
           <div className="aspect-square relative overflow-hidden rounded-lg bg-gray-100">
             <Image src={images[selectedImage] || "/placeholder.svg"} alt={product.name} fill className="object-cover" />
             {product.discount && <Badge className="absolute top-4 left-4 bg-red-500">-{product.discount}%</Badge>}
           </div>
 
+          {/* THUMBNAILS IMAGES */}
           <div className="grid grid-cols-3 gap-4">
-            {images.map((image, index) => (
+            {product.images.map((img, index) => (
               <button
                 key={index}
                 onClick={() => setSelectedImage(index)}
@@ -68,7 +69,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                 }`}
               >
                 <Image
-                  src={image || "/placeholder.svg"}
+                  src={img}
                   alt={`${product.name} ${index + 1}`}
                   fill
                   className="object-cover"
@@ -183,14 +184,18 @@ export default function ProductPage({ params }: ProductPageProps) {
                 <CardTitle>Ingredients</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-600 mb-4">Each serving contains carefully selected ingredients:</p>
-                <ul className="list-disc list-inside space-y-2 text-gray-600">
-                  <li>Premium active ingredient (standardized extract)</li>
-                  <li>Natural binding agents</li>
-                  <li>Vegetarian capsule shell</li>
-                  <li>No artificial colors or preservatives</li>
-                </ul>
-              </CardContent>
+                 <p className="text-gray-600 mb-4">Each serving contains carefully selected ingredients:</p>
+                    {product.ingredients && product.ingredients.length > 0 ? (
+                    <ul className="list-disc list-inside space-y-2 text-gray-600">
+                    {product.ingredients.map((item, index) => (
+                     <li key={index}>{item}</li>
+                    ))}
+                    </ul>
+                  ) : (
+                    <p className="text-gray-500">No ingredient information available.</p>
+                  )}
+                </CardContent>
+
             </Card>
           </TabsContent>
 
@@ -200,21 +205,20 @@ export default function ProductPage({ params }: ProductPageProps) {
                 <CardTitle>Usage Instructions</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4 text-gray-600">
-                  <p>
-                    <strong>Recommended Dosage:</strong> Take 1-2 capsules daily with food
-                  </p>
-                  <p>
-                    <strong>Best Time:</strong> Morning or as directed by your healthcare provider
-                  </p>
-                  <p>
-                    <strong>Storage:</strong> Store in a cool, dry place away from direct sunlight
-                  </p>
-                  <p>
-                    <strong>Warning:</strong> Consult your doctor before use if pregnant, nursing, or taking medications
-                  </p>
+                 <div className="space-y-4 text-gray-600">
+                   {product.usage && product.usage.length > 0 ? (
+                     product.usage.map((item, index) => (
+                       <p key={index}>
+                        <strong>{item.label}:</strong> {item.value}
+                       </p>
+                       ))
+                    ) : (
+                   <p className="text-gray-500">No usage Instruction available.</p>
+                  )}
                 </div>
               </CardContent>
+
+
             </Card>
           </TabsContent>
 
@@ -248,7 +252,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                     <div className="border-b pb-4">
                       <div className="flex items-center space-x-2 mb-2">
                         {renderStars(4)}
-                        <span className="font-medium">John D.</span>
+                        <span className="font-medium">Sam Mariga.</span>
                       </div>
                       <p className="text-gray-600">
                         "Good value for money. The packaging is excellent and the product seems to be working well."
