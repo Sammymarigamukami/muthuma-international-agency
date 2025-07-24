@@ -46,7 +46,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       <CardContent className="p-0 h-full flex flex-col">
         <div className="relative overflow-hidden rounded-t-lg">
           <img
-            src={product.image || "/placeholder.svg"}
+            src={product.image}
             alt={product.name}
             className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
           />
@@ -54,7 +54,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           <Button
             variant="ghost"
             size="icon"
-            className={`absolute top-2 right-2 ${
+            className={`absolute top-2 right-2 hidden ${
               isWishlisted ? "text-red-500" : "text-gray-400"
             } hover:text-red-500 bg-white/80 backdrop-blur-sm`}
             onClick={toggleWishlist}

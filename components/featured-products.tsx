@@ -68,7 +68,7 @@ export default function FeaturedProducts() {
                     } hover:text-red-500`}
                     onClick={() => toggleWishlist(product.id)}
                   >
-                    <Heart className={`h-5 w-5 ${wishlist.includes(product.id) ? "fill-current" : ""}`} />
+                    <Heart className={`h-5 w-5 hidden ${wishlist.includes(product.id) ? "fill-current" : ""}`} />
                   </Button>
                 </div>
 
