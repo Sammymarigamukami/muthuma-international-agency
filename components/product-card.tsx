@@ -52,7 +52,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
           />
           </Link>
-          {product.inStock && <Badge className="absolute top-2 left-2 bg-red-500 hover:bg-red-600">Sale</Badge>}
+          {product.inStock && <Badge className="absolute top-2 left-2 bg-red-500 hover:bg-red-600">On sale</Badge>}
           <Button
             variant="ghost"
             size="icon"

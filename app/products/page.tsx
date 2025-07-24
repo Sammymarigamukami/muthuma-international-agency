@@ -12,7 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import ProductCard from "@/components/product-card"
 import { products } from "@/lib/data"
 
-const categories = ["All", "Vitamins", "Supplements", "Herbal", "Beauty", "Wellness"]
+const categories = ["All", "Vitamins", "Supplements", "Herbal", "Beauty", "Wellness",]
 const priceRanges = [
   { label: "Under Ksh2500", min: 0, max: 10 },
   { label: "Ksh2500 - Ksh3500", min: 10, max: 25 },
@@ -213,7 +213,7 @@ export default function ProductsPage() {
                 </SelectContent>
               </Select>
 
-              <div className="hidden md:flex border rounded-md">
+              <div className="hidden border rounded-md">
                 <Button
                   variant={viewMode === "grid" ? "default" : "ghost"}
                   size="sm"

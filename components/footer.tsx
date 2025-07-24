@@ -43,22 +43,22 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/products/vitamins" className="text-gray-300 hover:text-white">
+                <Link href="/products?category=Vitamins" className="text-gray-300 hover:text-white">
                   Vitamins
                 </Link>
               </li>
               <li>
-                <Link href="/products/supplements" className="text-gray-300 hover:text-white">
+                <Link href="/products?category=Supplements" className="text-gray-300 hover:text-white">
                   Supplements
                 </Link>
               </li>
               <li>
-                <Link href="/products/herbal" className="text-gray-300 hover:text-white">
+                <Link href="/products?category=Herbal" className="text-gray-300 hover:text-white">
                   Herbal
                 </Link>
               </li>
               <li>
-                <Link href="/products/beauty" className="text-gray-300 hover:text-white">
+                <Link href="/products?category=Beauty" className="text-gray-300 hover:text-white">
                   Beauty
                 </Link>
               </li>
