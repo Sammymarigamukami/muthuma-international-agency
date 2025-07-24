@@ -13,6 +13,7 @@ import { useCart } from "@/contexts/cart-context"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 const navigation = [
+  { name: "Home", href: "/" },
   { name: "Vitamins", href: "/products?category=Vitamins" },
   { name: "Supplements", href: "/products?category=Supplements" },
   { name: "Herbal", href: "/products?category=Herbal" },
