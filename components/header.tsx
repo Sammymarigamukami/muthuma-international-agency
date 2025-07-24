@@ -90,7 +90,7 @@ export default function Header() {
                 </nav>
                 {/* Mobile Search */}
                 <div className="mt-6">
-                  <form onSubmit={handleSearch} className="relative">
+                  <form onSubmit={handleSearch} className="relative hidden">
                     <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                     <Input
                       type="search"
