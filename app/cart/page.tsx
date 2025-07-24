@@ -94,7 +94,7 @@ export default function CartPage() {
 
               <div className="flex justify-between">
                 <span>Delivery</span>
-                <span className="text-green-600">FREE</span>
+                <span className="text-green-600">NOT FREE</span>
               </div>
 
               <div className="flex justify-between">

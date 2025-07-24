@@ -42,7 +42,7 @@ const categories = [
     name: "Proteins",
     description: "Complete wellness solutions",
     icon: Heart,
-    href: "/products?category=Protains",
+    href: "/products?category=Proteins",
     color: "bg-purple-50 text-purple-600",
   },
 ]

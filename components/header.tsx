@@ -50,12 +50,17 @@ export default function Header() {
       <div className="container mx-auto px-4">
         {/* Top bar */}
         <div className="flex h-12 items-center justify-between border-b text-sm">
-          <p className="text-muted-foreground">Free delivery on orders over Ksh2500</p>
+          <a
+      href="mailto:work@example.com"
+      className="text-muted-foreground hover:text-primary"
+    >
+      work@example.com
+    </a>
           <div className="flex items-center space-x-4">
             <Link href="/contact" className="text-muted-foreground hover:text-primary">
               Contact Us
             </Link>
-            <Link href="/stores" className="text-muted-foreground hover:text-primary">
+            <Link href="/stores" className="text-muted-foreground hover:text-primary hidden">
               Store Locator
             </Link>
           </div>

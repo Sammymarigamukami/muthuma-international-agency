@@ -33,6 +33,8 @@ export const products: Product[] = [
     name: "Omega-3 Fish Oil Capsules",
     description: "Premium omega-3 fish oil capsules for heart, brain, and eye health support.",
     price: 100,
+    originalPrice: 0,
+    discount: 0,
     image: "/placeholder.svg?height=400&width=400",
     images: ["/placeholder.svg?height=400&width=400","/placeholder.svg?height=400&width=400","/placeholder.svg?height=400&width=400",
     ],

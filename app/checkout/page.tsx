@@ -63,7 +63,6 @@ export default function CheckoutPage() {
                     id="firstName"
                     value={customerInfo.firstName}
                     onChange={(e) => handleInputChange("firstName", e.target.value)}
-                    placeholder="John"
                   />
                 </div>
                 <div>
@@ -72,7 +71,6 @@ export default function CheckoutPage() {
                     id="lastName"
                     value={customerInfo.lastName}
                     onChange={(e) => handleInputChange("lastName", e.target.value)}
-                    placeholder="Doe"
                   />
                 </div>
               </div>
@@ -84,7 +82,7 @@ export default function CheckoutPage() {
                   type="email"
                   value={customerInfo.email}
                   onChange={(e) => handleInputChange("email", e.target.value)}
-                  placeholder="john@example.com"
+                  placeholder="sam@example.com"
                 />
               </div>
 
@@ -197,19 +195,19 @@ export default function CheckoutPage() {
 
                 <div className="flex justify-between text-sm">
                   <span>Delivery</span>
-                  <span className="text-green-600">FREE</span>
+                  <span className="text-green-600">NOT FREE</span>
                 </div>
 
                 <div className="flex justify-between text-sm">
                   <span>Tax</span>
-                  <span>Ksh{(getTotal() * 0.16).toFixed(2)}</span>
+                  <span>Ksh0.00</span>
                 </div>
 
                 <Separator />
 
                 <div className="flex justify-between font-bold text-lg">
                   <span>Total</span>
-                  <span>Ksh{(getTotal() * 1.16).toFixed(2)}</span>
+                  <span>Ksh{(getTotal())}</span>
                 </div>
               </div>
 
