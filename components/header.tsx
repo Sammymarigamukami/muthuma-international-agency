@@ -51,11 +51,11 @@ export default function Header() {
         {/* Top bar */}
         <div className="flex h-12 items-center justify-between border-b text-sm">
           <a
-      href="mailto:work@example.com"
-      className="text-muted-foreground hover:text-primary"
-    >
-      work@example.com
-    </a>
+          href="mailto:work@example.com"
+          className="text-muted-foreground hover:text-primary"
+          >
+           Email us: work@example.com
+          </a>
           <div className="flex items-center space-x-4">
             <Link href="/contact" className="text-muted-foreground hover:text-primary">
               Contact Us
