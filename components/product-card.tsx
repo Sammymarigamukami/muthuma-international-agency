@@ -45,12 +45,14 @@ export default function ProductCard({ product }: ProductCardProps) {
     <Card className="group hover:shadow-lg transition-all duration-300 h-full">
       <CardContent className="p-0 h-full flex flex-col">
         <div className="relative overflow-hidden rounded-t-lg">
+          <Link href={`/products/${product.id}`}>
           <img
             src={product.image}
             alt={product.name}
             className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
           />
-          {product.isOnSale && <Badge className="absolute top-2 left-2 bg-red-500 hover:bg-red-600">Sale</Badge>}
+          </Link>
+          {product.inStock && <Badge className="absolute top-2 left-2 bg-red-500 hover:bg-red-600">Sale</Badge>}
           <Button
             variant="ghost"
             size="icon"

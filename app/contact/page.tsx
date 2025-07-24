@@ -112,7 +112,7 @@ export default function ContactPage() {
                   <Phone className="h-5 w-5 text-green-600 mt-1" />
                   <div>
                     <p className="font-medium">Phone</p>
-                    <p className="text-gray-600">+254-715-907311</p>
+                    <p className="text-gray-600">+254-000-000000</p>
                     <p className="text-sm text-gray-500">Mon-Fri 8am-8pm, Sat-Sun 9am-6pm</p>
                   </div>
                 </div>
@@ -121,7 +121,7 @@ export default function ContactPage() {
                   <Mail className="h-5 w-5 text-green-600 mt-1" />
                   <div>
                     <p className="font-medium">Email</p>
-                    <p className="text-gray-600">support@hollandandbarrett.com</p>
+                    <p className="text-gray-600">work@example.com</p>
                     <p className="text-sm text-gray-500">We'll respond within 24 hours</p>
                   </div>
                 </div>
@@ -166,7 +166,7 @@ export default function ContactPage() {
                 <div>
                   <p className="font-medium text-sm">Do you offer health consultations?</p>
                   <p className="text-sm text-gray-600">
-                    Our qualified nutritionists are available for free consultations in-store and over the phone.
+                    We currently do not offer health consultations. However, our team is happy to assist with product information and general wellness guidance.
                   </p>
                 </div>
               </CardContent>

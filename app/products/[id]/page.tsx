@@ -93,9 +93,9 @@ export default function ProductPage({ params }: ProductPageProps) {
           </div>
 
           <div className="flex items-center space-x-4">
-            <span className="text-3xl font-bold text-green-600">Ksh{product.price.toFixed(2)}</span>
+            <span className="text-3xl font-bold text-green-600">Ksh{product.price}</span>
             {product.originalPrice && (
-              <span className="text-xl text-gray-500 line-through">Ksh{product.originalPrice.toFixed(2)}</span>
+              <span className="text-xl text-gray-500 line-through">Ksh{product.originalPrice}</span>
             )}
           </div>
 
@@ -126,7 +126,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                 <ShoppingCart className="h-5 w-5 mr-2" />
                 Add to Cart
               </Button>
-              <Button variant="outline" size="lg">
+              <Button className="hidden" variant="outline" size="lg">
                 <Heart className="h-5 w-5" />
               </Button>
             </div>
@@ -136,7 +136,7 @@ export default function ProductPage({ params }: ProductPageProps) {
           <div className="grid grid-cols-3 gap-4 pt-6 border-t">
             <div className="text-center">
               <Truck className="h-6 w-6 mx-auto mb-2 text-green-600" />
-              <p className="text-sm font-medium">Free Delivery</p>
+              <p className="text-sm font-medium">Home Delivery</p>
               <p className="text-xs text-gray-500">On orders over Ksh2500</p>
             </div>
             <div className="text-center">
@@ -213,7 +213,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                        </p>
                        ))
                     ) : (
-                   <p className="text-gray-500">No usage Instruction available.</p>
+                   <p className="text-gray-500">No usage Instructions available yet.</p>
                   )}
                 </div>
               </CardContent>

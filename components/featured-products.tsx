@@ -52,12 +52,14 @@ export default function FeaturedProducts() {
             <Card key={product.id} className="group hover:shadow-lg transition-all duration-300">
               <CardContent className="p-0">
                 <div className="relative overflow-hidden rounded-t-lg">
+                  <Link href={`/products/${product.id}`}>
                   <img
-                    src={product.image || "/placeholder.svg"}
+                    src={product.image}
                     alt={product.name}
                     className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  {product.isOnSale && (
+                  </Link>
+                  {product.inStock && (
                     <Badge className="absolute top-2 left-2 bg-red-500 hover:bg-red-600">Sale</Badge>
                   )}
                   <Button

@@ -63,7 +63,7 @@ export default function HeroSection() {
           <div className="relative">
             <div className="relative z-10">
               <img
-                src="/placeholder.svg?height=600&width=500"
+                src="/comingsoon.png?height=600&width=500"
                 alt="Natural health products"
                 className="w-full h-auto rounded-2xl shadow-2xl"
               />
