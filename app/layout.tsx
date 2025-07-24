@@ -12,9 +12,9 @@ const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   icons: {
-    icon: "/placeholder-logo.png",
-    shortcut: "/placeholder-logo.png",
-    apple: "/placeholder-logo.png"
+    icon: "/placeholder.svg",
+    shortcut: "/placeholder.svg",
+    apple: "/placeholder.svg",
   },
   title: "Holland & Barrett - Health, Wellness & Natural Products",
   description:
