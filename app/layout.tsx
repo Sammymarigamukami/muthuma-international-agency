@@ -20,7 +20,6 @@ export const metadata: Metadata = {
   description:
     "Discover vitamins, supplements, herbal remedies, beauty and wellness products at Holland & Barrett. Your trusted partner in natural health.",
   keywords: "vitamins, supplements, herbal remedies, natural health, wellness, beauty products",
-    generator: 'v0.dev'
 }
 
 export default function RootLayout({
