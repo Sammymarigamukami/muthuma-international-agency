@@ -14,10 +14,10 @@ import { products } from "@/lib/data"
 
 const categories = ["All", "Vitamins", "Supplements", "Herbal", "Beauty", "Wellness"]
 const priceRanges = [
-  { label: "Under Ksh1500", min: 0, max: 10 },
-  { label: "Ksh1501 - Ksh2500", min: 10, max: 25 },
-  { label: "Ksh2501 - Ksh5000", min: 25, max: 50 },
-  { label: "Over Ksh5000", min: 50, max: Number.POSITIVE_INFINITY },
+  { label: "Under Ksh2500", min: 0, max: 10 },
+  { label: "Ksh2500 - Ksh3500", min: 10, max: 25 },
+  { label: "Ksh3500 - Ksh4500", min: 25, max: 50 },
+  { label: "Over Ksh4500", min: 50, max: Number.POSITIVE_INFINITY },
 ]
 
 export default function ProductsPage() {
@@ -28,11 +28,17 @@ export default function ProductsPage() {
   const [sortBy, setSortBy] = useState("name")
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
 
-  // Handle category from URL parameters
+  // Handle URL parameters
   useEffect(() => {
     const categoryParam = searchParams.get("category")
+    const searchParam = searchParams.get("search")
+
     if (categoryParam && categories.includes(categoryParam)) {
       setSelectedCategory(categoryParam)
+    }
+
+    if (searchParam) {
+      setSearchTerm(searchParam)
     }
   }, [searchParams])
 
@@ -44,7 +50,9 @@ export default function ProductsPage() {
       filtered = filtered.filter(
         (product) =>
           product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          product.description.toLowerCase().includes(searchTerm.toLowerCase()),
+          product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          product.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          (product.tags && product.tags.some((tag) => tag.toLowerCase().includes(searchTerm.toLowerCase()))),
       )
     }
 
@@ -90,17 +98,33 @@ export default function ProductsPage() {
     }
   }
 
+  const getPageTitle = () => {
+    if (searchTerm && selectedCategory !== "All") {
+      return `${selectedCategory} - "${searchTerm}"`
+    } else if (searchTerm) {
+      return `Search Results for "${searchTerm}"`
+    } else if (selectedCategory !== "All") {
+      return selectedCategory
+    }
+    return "All Products"
+  }
+
+  const getPageDescription = () => {
+    if (searchTerm && selectedCategory !== "All") {
+      return `${selectedCategory.toLowerCase()} products matching "${searchTerm}"`
+    } else if (searchTerm) {
+      return `Products matching "${searchTerm}"`
+    } else if (selectedCategory !== "All") {
+      return `Browse our ${selectedCategory.toLowerCase()} collection`
+    }
+    return "Discover our complete range of health and wellness products"
+  }
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">
-          {selectedCategory === "All" ? "All Products" : selectedCategory}
-        </h1>
-        <p className="text-gray-600">
-          {selectedCategory === "All"
-            ? "Discover our complete range of health and wellness products"
-            : `Browse our ${selectedCategory.toLowerCase()} collection`}
-        </p>
+        <h1 className="text-3xl font-bold text-gray-900 mb-4">{getPageTitle()}</h1>
+        <p className="text-gray-600">{getPageDescription()}</p>
       </div>
 
       <div className="grid lg:grid-cols-4 gap-8">
@@ -178,10 +202,10 @@ export default function ProductsPage() {
 
             <div className="flex items-center space-x-4">
               <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="w-[180px] hidden">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="hidden">
                   <SelectItem value="name">Sort by Name</SelectItem>
                   <SelectItem value="price-low">Price: Low to High</SelectItem>
                   <SelectItem value="price-high">Price: High to Low</SelectItem>
@@ -189,7 +213,7 @@ export default function ProductsPage() {
                 </SelectContent>
               </Select>
 
-              <div className="flex border rounded-md">
+              <div className="hidden md:flex border rounded-md">
                 <Button
                   variant={viewMode === "grid" ? "default" : "ghost"}
                   size="sm"
@@ -212,6 +236,11 @@ export default function ProductsPage() {
           {filteredProducts.length === 0 ? (
             <div className="text-center py-12">
               <p className="text-gray-500">No products found matching your criteria.</p>
+              {searchTerm && (
+                <Button variant="outline" className="mt-4 bg-transparent" onClick={() => setSearchTerm("")}>
+                  Clear Search
+                </Button>
+              )}
             </div>
           ) : (
             <div
