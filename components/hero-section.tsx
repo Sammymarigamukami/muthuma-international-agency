@@ -52,7 +52,7 @@ export default function HeroSection() {
               <div className="flex items-center space-x-3">
                 <Award className="h-8 w-8 text-green-600" />
                 <div>
-                  <p className="font-semibold text-gray-900">3+ Years</p>
+                  <p className="font-semibold text-gray-900">2+ Years</p>
                   <p className="text-sm text-gray-600">Trusted Heritage</p>
                 </div>
               </div>

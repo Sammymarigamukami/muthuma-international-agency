@@ -80,7 +80,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/shipping" className="text-gray-300 hover:text-white">
+                <Link href="/shipping" className="text-gray-300 hover:text-white hidden">
                   Shipping Info
                 </Link>
               </li>
@@ -90,7 +90,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/stores" className="text-gray-300 hover:text-white">
+                <Link href="/stores" className="text-gray-300 hover:text-white hidden">
                   Store Locator
                 </Link>
               </li>
@@ -112,17 +112,17 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/sustainability" className="text-gray-300 hover:text-white">
+                <Link href="/sustainability" className="text-gray-300 hover:text-white hidden">
                   Sustainability
                 </Link>
               </li>
               <li>
-                <Link href="/press" className="text-gray-300 hover:text-white">
+                <Link href="/press" className="text-gray-300 hover:text-white hidden">
                   Press
                 </Link>
               </li>
               <li>
-                <Link href="/investors" className="text-gray-300 hover:text-white">
+                <Link href="/investors" className="text-gray-300 hover:text-white hidden">
                   Investors
                 </Link>
               </li>
@@ -133,13 +133,13 @@ export default function Footer() {
         <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm">© 2025 Holland & Barrett. All rights reserved.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
-            <Link href="/privacy" className="text-gray-400 hover:text-white text-sm">
+            <Link href="/privacy" className="text-gray-400 hover:text-white text-sm hidden">
               Privacy Policy
             </Link>
-            <Link href="/terms" className="text-gray-400 hover:text-white text-sm">
+            <Link href="/terms" className="text-gray-400 hover:text-white text-sm hidden">
               Terms of Service
             </Link>
-            <Link href="/cookies" className="text-gray-400 hover:text-white text-sm">
+            <Link href="/cookies" className="text-gray-400 hover:text-white text-sm hidden">
               Cookie Policy
             </Link>
           </div>

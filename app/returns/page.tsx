@@ -252,10 +252,10 @@ export default function ReturnsPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Badge variant="outline" className="text-lg py-2 px-4">
-                📞 number??????
+                📞 coming soon
               </Badge>
               <Badge variant="outline" className="text-lg py-2 px-4">
-                ✉️ email?????
+                ✉️ soo
               </Badge>
             </div>
           </div>
