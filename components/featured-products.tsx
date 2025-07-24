@@ -60,7 +60,7 @@ export default function FeaturedProducts() {
                   />
                   </Link>
                   {product.inStock && (
-                    <Badge className="absolute top-2 left-2 bg-red-500 hover:bg-red-600">Sale</Badge>
+                    <Badge className="absolute top-2 left-2 bg-red-500 hover:bg-red-600">On sale</Badge>
                   )}
                   <Button
                     variant="ghost"
