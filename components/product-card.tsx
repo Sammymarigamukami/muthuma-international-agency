@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect} from "react"
 import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { Star, Heart, ShoppingCart } from "lucide-react"
 import { useCart } from "@/contexts/cart-context"
 import { useToast } from "@/hooks/use-toast"
+import { ToastAction } from "@radix-ui/react-toast"
 import type { Product } from "@/lib/types"
 
 interface ProductCardProps {
@@ -30,8 +31,29 @@ export default function ProductCard({ product }: ProductCardProps) {
     toast({
       title: "Added to cart",
       description: `${product.name} has been added to your cart.`,
+      action: <ToastAction altText="Go to cart" asChild>
+        <Link className="font-medium" href="/cart">Go to cart 🛒</Link>
+      </ToastAction>
     })
   }
+
+  // fetch data from the backend
+
+  const [products, setProducts] = useState<Product[]>([])
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/products")
+        const data = await response.json()
+        setProducts(data)
+      } catch (error) {
+        console.error("Failed to fetch products:", error)
+      }
+    }
+
+    fetchProducts()
+  }, [])
 
   const toggleWishlist = () => {
     setIsWishlisted(!isWishlisted)

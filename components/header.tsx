@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { useCart } from "@/contexts/cart-context"
+import { useAppContext } from "@/contexts/AppContext"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 const navigation = [
@@ -23,6 +24,7 @@ const navigation = [
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { user, login, logout, isLoading, setShowUserLogin, showUserLogin } = useAppContext()
   const [searchQuery, setSearchQuery] = useState("")
   const { items } = useCart()
   const router = useRouter()
@@ -34,6 +36,14 @@ export default function Header() {
       router.push(`/products?search=${encodeURIComponent(searchQuery.trim())}`)
       setSearchQuery("")
     }
+  }
+  
+  const handleClick = () => {
+    router.push("my-order")
+  }
+
+  const handleLogout = () => {
+    logout()
   }
 
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,7 +57,9 @@ export default function Header() {
   }
 
   return (
+    
     <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+    <div className={showUserLogin ? "pointer-events-none opacity-40" : ""}>
       <div className="container mx-auto px-4">
         {/* Top bar */}
         <div className="flex h-12 items-center justify-between border-b text-sm">
@@ -172,8 +184,39 @@ export default function Header() {
                 )}
               </Button>
             </Link>
+            <div>
+                {!user ? (
+                  <>
+                <button
+                   className="cursor-pointer px-8 py-2 bg-[#4fbf8b] hover:bg-[#44ae7c] transition text-white rounded-full hidden md:block"
+                    onClick = {() => setShowUserLogin(true)}
+                 >
+                 Login
+               </button>
+               <div 
+               onClick={() => setShowUserLogin(true)}
+               className="md:hidden cursor-pointer"
+               >
+                <img src="/placeholder-user.jpg" className="w-20 rounded-full" alt="Login" />
+               </div>
+               </>
+                 ) : (
+                  <div className="relative group">
+                   <img src="/profile_icon.png" className="w-10 rounded-full" alt="" />
+                     <ul className="hidden group-hover:block absolute top-10 right-0 bg-white shadow border border-gray-200 py-2.5 w-30 rounded-md text-sm z-40">
+                        <li onClick={handleClick} className="p-1.5 pl-3 hover:bg-[#4fbf8b]/10 cursor-pointer">
+                        My order
+                        </li>
+                        <li onClick={handleLogout} className="p-1.5 pl-3 hover:bg-[#4fbf8b]/10 cursor-pointer">
+                        Logout
+                        </li>
+                     </ul>
+                  </div>
+                )}
+            </div>
           </div>
         </div>
+      </div>
       </div>
     </header>
   )

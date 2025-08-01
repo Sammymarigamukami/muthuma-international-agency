@@ -11,6 +11,10 @@ body {
     text-wrap: balance;
   }
 }
+@theme{
+  --color-primary: #4fbf8b;
+  --color-primary-dull: #44ae7c;
+}
 
 @layer base {
   :root {

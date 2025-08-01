@@ -7,6 +7,9 @@ import Footer from "@/components/footer"
 import { CartProvider } from "@/contexts/cart-context"
 import { Toaster } from "@/components/ui/toaster"
 import { Icon } from "lucide-react"
+import { AuthProvider, useAppContext } from "@/contexts/AppContext"
+import LoginWrapper from "@/components/LoginWrapper"
+import SessionWatcher from "@/components/SessionWatcher"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -26,16 +29,21 @@ export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
-}) {
+})
+ {
   return (
     <html lang="en">
       <body className={inter.className}>
+        <AuthProvider>
         <CartProvider>
           <Header />
           <main>{children}</main>
           <Footer />
           <Toaster />
+          <SessionWatcher />
+          <LoginWrapper />
         </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   )

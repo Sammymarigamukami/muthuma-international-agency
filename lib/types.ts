@@ -9,16 +9,15 @@ export interface Product {
   images: string[]
   category: string
   ingredients: string[]
-  usage: {
-    dosage: string
-    bestTime: string
-    storage: string
-    warning: string
-  }
+ usage: {
+    label: string
+    value: string
+  }[]
   rating: number
   reviews: number
   featured: boolean
   inStock: boolean
+  tags: string[]
 }
 
 export interface CartItem extends Product {

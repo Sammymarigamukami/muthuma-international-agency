@@ -255,7 +255,7 @@ export default function ReturnsPage() {
                 📞 coming soon
               </Badge>
               <Badge variant="outline" className="text-lg py-2 px-4">
-                ✉️ soo
+                ✉️ soon
               </Badge>
             </div>
           </div>

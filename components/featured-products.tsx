@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -8,12 +8,25 @@ import { Badge } from "@/components/ui/badge"
 import { Star, Heart, ShoppingCart } from "lucide-react"
 import { useCart } from "@/contexts/cart-context"
 import { useToast } from "@/hooks/use-toast"
+import { ToastAction } from "@radix-ui/react-toast"
 import { products } from "@/lib/data"
 
 export default function FeaturedProducts() {
   const { addItem } = useCart()
   const { toast } = useToast()
-  const [wishlist, setWishlist] = useState<number[]>([])
+  const [wishlist, setWishlist] = useState<number[]>([]);
+  //const [products,setProducts] = useState([]);
+
+  // fetch data from the backend
+  {/*useEffect(() => {
+    const fetchProducts = async () => {
+      const productResponse = await fetch('http://localhost:3001/products');
+      const products = await productResponse.json();
+      console.log(products);
+      setProducts(products);
+    };
+    fetchProducts();
+  },[])*/}
 
   // Get featured products (first 8 products)
   const featuredProducts = products.slice(0, 8)
@@ -29,6 +42,9 @@ export default function FeaturedProducts() {
     toast({
       title: "Added to cart",
       description: `${product.name} has been added to your cart.`,
+      action: <ToastAction altText="Go tocart" asChild>
+        <Link className="font-semibold" href="/cart">Go to cart 🛒</Link>
+      </ToastAction>
     })
   }
 

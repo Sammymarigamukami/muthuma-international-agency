@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useCart } from "@/contexts/cart-context"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -11,10 +11,12 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { MpesaPayment } from "@/components/mpesa-payment"
 import { ShoppingBag, CreditCard, Smartphone } from "lucide-react"
 import Image from "next/image"
+import { useAppContext } from "@/contexts/AppContext"
 
 export default function CheckoutPage() {
   const { items, getTotal, getItemCount } = useCart()
   const [paymentMethod, setPaymentMethod] = useState("mpesa")
+  const { user } = useAppContext()
   const [customerInfo, setCustomerInfo] = useState({
     firstName: "",
     lastName: "",
@@ -24,6 +26,9 @@ export default function CheckoutPage() {
     city: "",
     postalCode: "",
   })
+
+
+
 
   const handleInputChange = (field: string, value: string) => {
     setCustomerInfo((prev) => ({ ...prev, [field]: value }))
@@ -42,6 +47,19 @@ export default function CheckoutPage() {
         </div>
       </div>
     )
+  }
+
+  // Redirect to login page or trigger login overlay
+  useEffect(() => {
+    if (!user) {
+      // No-op because LoginWrapper handles login rendering globally
+      // If you want a full redirect instead, uncomment this:
+      // redirect("/login")
+    }
+  }, [user])
+
+  if (!user) {
+    return null // prevent checkout UI from rendering
   }
 
   return (

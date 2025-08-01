@@ -27,6 +27,18 @@ export default function ProductsPage() {
   const [selectedPriceRanges, setSelectedPriceRanges] = useState<string[]>([])
   const [sortBy, setSortBy] = useState("name")
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
+  //const [products,setProducts] = useState([]);
+
+  // fetch data from the backend
+  {/*useEffect(() => {
+    const fetchProducts = async () => {
+      const productResponse = await fetch('http://localhost:3001/products');
+      const products = await productResponse.json();
+      console.log(products);
+      setProducts(products);
+    };
+    fetchProducts();
+  },[]) */}
 
   // Handle URL parameters
   useEffect(() => {

@@ -2,14 +2,32 @@
 
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation";
 import { Minus, Plus, Trash2, ShoppingBag } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { useCart } from "@/contexts/cart-context"
+import { useAppContext } from "@/contexts/AppContext"
 
 export default function CartPage() {
   const { items, updateQuantity, removeItem, getTotal, getItemCount } = useCart()
+  const {user, setShowUserLogin } = useAppContext()
+
+  console.log("Current user state:", user);
+  console.log("Is user logged in?", !!user);
+
+  const router = useRouter();
+
+  const handleCheckout = () => {
+    if (!user) {
+      console.log("User not logged in, showing login form.");
+      setShowUserLogin(true);
+      return;
+    }
+    console.log("User logged in, proceeding to checkout.");
+    router.push("/checkout")
+  }
 
   if (items.length === 0) {
     return (
@@ -108,11 +126,15 @@ export default function CartPage() {
                 <span>KSh{(getTotal()).toFixed(2)}</span>
               </div>
 
-              <Button asChild className="w-full bg-green-600 hover:bg-green-700" size="lg">
-                <Link href="/checkout">Proceed to Checkout</Link>
+              <Button asChild className="w-full bg-green-600 hover:bg-green-700" size="lg"
+              onClick={handleCheckout}
+              >
+                <Link href={"/checkout"} >Proceed to Checkout</Link>
+                {/*Proceed to Checkout*/}
               </Button>
 
-              <Button variant="outline" className="w-full bg-transparent" asChild>
+              <Button variant="outline" className="w-full bg-transparent" asChild
+              >
                 <Link href="/products">Continue Shopping</Link>
               </Button>
 

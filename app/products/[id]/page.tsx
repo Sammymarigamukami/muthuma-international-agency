@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, use } from "react"
 import { notFound } from "next/navigation"
 import Image from "next/image"
 import { Star, Heart, ShoppingCart, Minus, Plus, Shield, Truck, RotateCcw } from "lucide-react"
@@ -24,8 +24,10 @@ export default function ProductPage({ params }: ProductPageProps) {
   const [selectedImage, setSelectedImage] = useState(0)
   const { addItem } = useCart()
   const { toast } = useToast()
+  //const [products,setProducts] = useState([]);
+  const{id} = use(params);
 
-  const product = products.find((p) => p.id === params.id)
+  const product = products.find((p) => p.id === id)
 
   if (!product) {
     notFound()
@@ -38,6 +40,17 @@ export default function ProductPage({ params }: ProductPageProps) {
       description: `${quantity} x ${product.name} added to your cart.`,
     })
   }
+
+  // fetch data from the backend
+    {/*useEffect(() => {
+      const fetchProducts = async () => {
+        const productResponse = await fetch('http://localhost:3001/products');
+        const products = await productResponse.json();
+        console.log(products);
+        setProducts(products);
+      };
+      fetchProducts();
+    },[]) */}
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
