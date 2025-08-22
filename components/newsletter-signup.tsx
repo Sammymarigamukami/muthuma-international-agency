@@ -6,22 +6,34 @@ import { useState } from "react"
 import { Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { useToast } from "@/hooks/use-toast"
+import { toast } from "sonner"
 
 export default function NewsletterSignup() {
-  const [email, setEmail] = useState("")
-  const { toast } = useToast()
+  const [email, setEmail] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (email) {
-      toast({
-        title: "Subscribed!",
-        description: "Thank you for subscribing to our newsletter.",
-      })
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault()
+  if (!email) return
+
+  try {
+    const res = await fetch("/api/newsletter", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    })
+
+    if (res.ok) {
+      toast.success("Subscribed! Check your inbox for updates soon.")
       setEmail("")
+    } else {
+      const data = await res.json()
+      toast.error(data.error || "Subscription failed.")
     }
+  } catch {
+    toast.error("Network issue. Try again later.")
   }
+}
+
 
   return (
     <section className="bg-gray-900 text-white py-16">

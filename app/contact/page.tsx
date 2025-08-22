@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { useToast } from "@/hooks/use-toast"
+import { toast } from "sonner"
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -17,16 +17,30 @@ export default function ContactPage() {
     subject: "",
     message: "",
   })
-  const { toast } = useToast()
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    toast({
-      title: "Message sent!",
-      description: "Thank you for contacting us. We'll get back to you soon.",
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault()
+
+  try {
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
     })
-    setFormData({ name: "", email: "", subject: "", message: "" })
+
+    const data = await res.json()
+    if (data.success) {
+      toast.success("Message sent directly to Telegram!")
+      setFormData({ name: "", email: "", subject: "", message: "" })
+    } else {
+      throw new Error(data.error || "Failed to send message")
+    }
+  } catch (err) {
+    toast.error("Failed to send message. Try again.")
   }
+}
+
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({

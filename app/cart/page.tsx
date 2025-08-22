@@ -29,6 +29,30 @@ export default function CartPage() {
     router.push("/checkout")
   }
 
+  {/*const handleCheckout = () => {
+  if (!user) {
+    console.log("User not logged in, showing login form.");
+    setShowUserLogin(true);
+    return;
+  }
+  router.push("/cart")
+  // Your business WhatsApp number
+  const phone = "254715907311";
+
+  // Build message from cart items
+  const cartMessage = items
+    .map(item => `${item.quantity} x ${item.name} @ KSh${item.price.toFixed(2)} = KSh${(item.price * item.quantity).toFixed(2)}`)
+    .join("\n");
+
+  const message = encodeURIComponent(
+    `Hello, I want to place an order:\n\n${cartMessage}\n\nTotal: KSh ${getTotal().toFixed(2)}`
+  );
+
+  // Open WhatsApp
+  window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
+};*/}
+
+
   if (items.length === 0) {
     return (
       <div className="container mx-auto px-4 py-16">
@@ -128,10 +152,7 @@ export default function CartPage() {
 
               <Button asChild className="w-full bg-green-600 hover:bg-green-700" size="lg"
               onClick={handleCheckout}
-              >
-                <Link href={"/checkout"} >Proceed to Checkout</Link>
-                {/*Proceed to Checkout*/}
-              </Button>
+              ><Link href={"/checkout"} >Proceed to Checkout</Link></Button>
 
               <Button variant="outline" className="w-full bg-transparent" asChild
               >

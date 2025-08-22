@@ -4,8 +4,8 @@
 import React, { useEffect } from "react";
 
 import { useAppContext } from "@/contexts/AppContext";
-import Login from "@/app/Login/page";
 import { usePathname } from "next/navigation";
+import { LoginForm } from "@/app/logins/page";
 
 const LoginWrapper: React.FC = () => {
   const { user, showUserLogin, setRedirectPath} = useAppContext();
@@ -18,7 +18,7 @@ const LoginWrapper: React.FC = () => {
 
   if(!showUserLogin || user) return null
 
-  return <Login />
+  return <LoginForm />
 
 };
 

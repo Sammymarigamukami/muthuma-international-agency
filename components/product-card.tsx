@@ -39,7 +39,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   // fetch data from the backend
 
-  const [products, setProducts] = useState<Product[]>([])
+  {/**const [products, setProducts] = useState<Product[]>([])
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -53,7 +53,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     }
 
     fetchProducts()
-  }, [])
+  }, [])**/}
 
   const toggleWishlist = () => {
     setIsWishlisted(!isWishlisted)

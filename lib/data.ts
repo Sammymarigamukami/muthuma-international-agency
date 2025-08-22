@@ -5,7 +5,7 @@ export const products: Product[] = [
     id: "1",
     name: "Vitamin D3 1000IU Tablets",
     description: "High-strength Vitamin D3 tablets to support bone health, immune function, and muscle strength.",
-    price:  100,
+    price:  1,
     image: "/comingsoon.png?height=400&width=400",
     images: ["/image1.png?height=400&width=400","/image2.png?height=400&width=400","/image3.png?height=400&width=400",
     ],

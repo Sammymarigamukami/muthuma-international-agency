@@ -5,11 +5,11 @@ import "./globals.css"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import { CartProvider } from "@/contexts/cart-context"
-import { Toaster } from "@/components/ui/toaster"
-import { Icon } from "lucide-react"
-import { AuthProvider, useAppContext } from "@/contexts/AppContext"
-import LoginWrapper from "@/components/LoginWrapper"
+import { Toaster } from "sonner"  
+import { AppProvider, useAppContext } from "@/contexts/AppContext"
 import SessionWatcher from "@/components/SessionWatcher"
+import AuthWrapper from "@/components/authWrapper"
+
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -34,16 +34,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AuthProvider>
+        <AppProvider>
         <CartProvider>
           <Header />
           <main>{children}</main>
           <Footer />
           <Toaster />
           <SessionWatcher />
-          <LoginWrapper />
+          <AuthWrapper />
         </CartProvider>
-        </AuthProvider>
+        </AppProvider>
       </body>
     </html>
   )

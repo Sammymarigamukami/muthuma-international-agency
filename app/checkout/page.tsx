@@ -49,18 +49,12 @@ export default function CheckoutPage() {
     )
   }
 
-  // Redirect to login page or trigger login overlay
   useEffect(() => {
     if (!user) {
-      // No-op because LoginWrapper handles login rendering globally
-      // If you want a full redirect instead, uncomment this:
-      // redirect("/login")
     }
   }, [user])
 
-  if (!user) {
-    return null // prevent checkout UI from rendering
-  }
+  if (!user) return null
 
   return (
     <div className="container mx-auto px-4 py-8">

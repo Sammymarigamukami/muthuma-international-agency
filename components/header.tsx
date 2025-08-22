@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Search, ShoppingCart, Menu, User, Heart } from "lucide-react"
@@ -24,11 +24,12 @@ const navigation = [
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const { user, login, logout, isLoading, setShowUserLogin, showUserLogin } = useAppContext()
+  const { user, logout, isLoading, setShowUserLogin, showUserLogin } = useAppContext()
   const [searchQuery, setSearchQuery] = useState("")
   const { items } = useCart()
   const router = useRouter()
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
+  const [isClient, setIsClient] = useState(false);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
@@ -37,13 +38,28 @@ export default function Header() {
       setSearchQuery("")
     }
   }
+    useEffect(() => {
+    setIsClient(true);
+  }, []);
   
   const handleClick = () => {
     router.push("my-order")
   }
 
-  const handleLogout = () => {
-    logout()
+  const handleLogout = async () => {
+    try {
+      await logout({
+        fetchOptions: {
+          onSuccess: () => {
+            // Redirect to the home page or login page after successful logout
+            router.push("/") 
+          },
+        },
+      })
+    } catch (error) {
+      console.error("Logout failed:", error)
+      // You can add an alert or other error handling here
+    }
   }
 
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,6 +71,7 @@ export default function Header() {
       handleSearch(e)
     }
   }
+  console.log('Header render - user:', user);
 
   return (
     
@@ -144,7 +161,7 @@ export default function Header() {
           {/* Search and Actions */}
           <div className="flex items-center space-x-4">
             {/* Desktop Search */}
-            <div className="hidden sm:flex items-center space-x-2">
+            {/*<div className="hidden sm:flex items-center space-x-2">
               <form onSubmit={handleSearch} className="relative">
                 <Search
                   className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground cursor-pointer"
@@ -159,7 +176,7 @@ export default function Header() {
                   className="w-[200px] lg:w-[300px] pl-8"
                 />
               </form>
-            </div>
+            </div>*/}
 
             {/* Mobile Search Button */}
             <Button variant="ghost" size="icon" className="sm:hidden">
@@ -185,33 +202,36 @@ export default function Header() {
               </Button>
             </Link>
             <div>
-                {!user ? (
-                  <>
-                <button
-                   className="cursor-pointer px-8 py-2 bg-[#4fbf8b] hover:bg-[#44ae7c] transition text-white rounded-full hidden md:block"
-                    onClick = {() => setShowUserLogin(true)}
-                 >
-                 Login
-               </button>
-               <div 
-               onClick={() => setShowUserLogin(true)}
-               className="md:hidden cursor-pointer"
-               >
-                <img src="/placeholder-user.jpg" className="w-20 rounded-full" alt="Login" />
-               </div>
-               </>
-                 ) : (
-                  <div className="relative group">
-                   <img src="/profile_icon.png" className="w-10 rounded-full" alt="" />
-                     <ul className="hidden group-hover:block absolute top-10 right-0 bg-white shadow border border-gray-200 py-2.5 w-30 rounded-md text-sm z-40">
+                { isLoading ? (
+                  <div className="w-10 h-10 rounded-full bg-gray-200 animate-pulse" />
+                ): user ? (
+                    <div className="relative group">
+                      <img src="/profile_icon.png" className="w-10 rounded-full" alt="User Profile" />
+                      <ul className="hidden group-hover:block absolute top-10 right-0 bg-white shadow border border-gray-200 py-2.5 w-30 rounded-md text-sm z-40">
                         <li onClick={handleClick} className="p-1.5 pl-3 hover:bg-[#4fbf8b]/10 cursor-pointer">
-                        My order
+                          My order
                         </li>
                         <li onClick={handleLogout} className="p-1.5 pl-3 hover:bg-[#4fbf8b]/10 cursor-pointer">
-                        Logout
+                          Logout
                         </li>
-                     </ul>
-                  </div>
+                      </ul>
+                    </div>
+                  ) : (
+                    <>
+                      <button
+                        className="cursor-pointer px-8 py-2 bg-[#4fbf8b] hover:bg-[#44ae7c] transition text-white rounded-full hidden md:block"
+                        onClick={() => setShowUserLogin(true)}
+                      >
+                        Login
+                      </button>
+                      <div
+                        onClick={() => setShowUserLogin(true)}
+                        className="md:hidden cursor-pointer"
+                      >
+                        <img src="/placeholder-user.jpg" className="w-20 rounded-full" alt="Login" />
+                      </div>
+                    </>
+                  
                 )}
             </div>
           </div>
