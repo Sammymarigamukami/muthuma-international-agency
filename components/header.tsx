@@ -48,19 +48,12 @@ export default function Header() {
 
   const handleLogout = async () => {
     try {
-      await logout({
-        fetchOptions: {
-          onSuccess: () => {
-            // Redirect to the home page or login page after successful logout
-            router.push("/") 
-          },
-        },
-      })
+      await logout(); // Call the logout function from your context
+      router.push("/"); // Redirect after the logout is complete
     } catch (error) {
-      console.error("Logout failed:", error)
-      // You can add an alert or other error handling here
+      console.error("Logout failed:", error);
     }
-  }
+  };
 
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value)
