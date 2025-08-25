@@ -33,6 +33,13 @@ export default function CheckoutPage() {
   const handleInputChange = (field: string, value: string) => {
     setCustomerInfo((prev) => ({ ...prev, [field]: value }))
   }
+  
+    useEffect(() => {
+    if (!user) {
+    }
+  }, [user])
+
+  if (!user) return null
 
   if (items.length === 0) {
     return (
@@ -49,12 +56,7 @@ export default function CheckoutPage() {
     )
   }
 
-  useEffect(() => {
-    if (!user) {
-    }
-  }, [user])
 
-  if (!user) return null
 
   return (
     <div className="container mx-auto px-4 py-8">
