@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, use } from "react"
+import { useState } from "react"
 import { notFound } from "next/navigation"
 import Image from "next/image"
 import { Star, Heart, ShoppingCart, Minus, Plus, Shield, Truck, RotateCcw } from "lucide-react"
@@ -15,7 +15,7 @@ import { products } from "@/lib/data"
 
 interface ProductPageProps {
   params: {
-    id: string
+    slug: string
   }
 }
 
@@ -24,10 +24,9 @@ export default function ProductPage({ params }: ProductPageProps) {
   const [selectedImage, setSelectedImage] = useState(0)
   const { addItem } = useCart()
   const { toast } = useToast()
-  //const [products,setProducts] = useState([]);
-  const{id} = use(params);
 
-  const product = products.find((p) => p.id === id)
+  // Find product by slug instead of ID
+  const product = products.find((p) => p.slug === params.slug)
 
   if (!product) {
     notFound()
@@ -41,25 +40,14 @@ export default function ProductPage({ params }: ProductPageProps) {
     })
   }
 
-  // fetch data from the backend
-    {/*useEffect(() => {
-      const fetchProducts = async () => {
-        const productResponse = await fetch('http://localhost:3001/products');
-        const products = await productResponse.json();
-        console.log(products);
-        setProducts(products);
-      };
-      fetchProducts();
-    },[]) */}
-
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
       <Star key={i} className={`h-4 w-4 ${i < rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}`} />
     ))
   }
 
-  // Mock additional images for gallery
-  const images = [product.image, product.image, product.image]
+  // Fallback if no images
+  const images = product.images?.length ? product.images : [product.image]
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -67,13 +55,13 @@ export default function ProductPage({ params }: ProductPageProps) {
         {/* MAIN IMAGE */}
         <div className="space-y-4">
           <div className="aspect-square relative overflow-hidden rounded-lg bg-gray-100">
-            <Image src={images[selectedImage] || "/placeholder.svg"} alt={product.name} fill className="object-cover" />
+            <Image src={images[selectedImage]} alt={product.name} fill className="object-cover" />
             {product.discount && <Badge className="absolute top-4 left-4 bg-red-500">-{product.discount}%</Badge>}
           </div>
 
-          {/* THUMBNAILS IMAGES */}
+          {/* THUMBNAIL IMAGES */}
           <div className="grid grid-cols-3 gap-4">
-            {product.images.map((img, index) => (
+            {images.map((img, index) => (
               <button
                 key={index}
                 onClick={() => setSelectedImage(index)}
@@ -81,12 +69,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                   selectedImage === index ? "border-green-600" : "border-transparent"
                 }`}
               >
-                <Image
-                  src={img}
-                  alt={`${product.name} ${index + 1}`}
-                  fill
-                  className="object-cover"
-                />
+                <Image src={img} alt={`${product.name} ${index + 1}`} fill className="object-cover" />
               </button>
             ))}
           </div>
@@ -182,11 +165,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                 <CardTitle>Product Description</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-600 leading-relaxed">
-                  {product.description} This premium product is carefully formulated to provide maximum benefits for
-                  your health and wellness journey. Made with high-quality ingredients and backed by scientific
-                  research, it's designed to support your daily nutritional needs.
-                </p>
+                <p className="text-gray-600 leading-relaxed">{product.description}</p>
               </CardContent>
             </Card>
           </TabsContent>
@@ -197,18 +176,16 @@ export default function ProductPage({ params }: ProductPageProps) {
                 <CardTitle>Ingredients</CardTitle>
               </CardHeader>
               <CardContent>
-                 <p className="text-gray-600 mb-4">Each serving contains carefully selected ingredients:</p>
-                    {product.ingredients && product.ingredients.length > 0 ? (
-                    <ul className="list-disc list-inside space-y-2 text-gray-600">
+                {product.ingredients?.length ? (
+                  <ul className="list-disc list-inside space-y-2 text-gray-600">
                     {product.ingredients.map((item, index) => (
-                     <li key={index}>{item}</li>
+                      <li key={index}>{item}</li>
                     ))}
-                    </ul>
-                  ) : (
-                    <p className="text-gray-500">No ingredient information available.</p>
-                  )}
-                </CardContent>
-
+                  </ul>
+                ) : (
+                  <p className="text-gray-500">No ingredient information available.</p>
+                )}
+              </CardContent>
             </Card>
           </TabsContent>
 
@@ -218,20 +195,18 @@ export default function ProductPage({ params }: ProductPageProps) {
                 <CardTitle>Usage Instructions</CardTitle>
               </CardHeader>
               <CardContent>
-                 <div className="space-y-4 text-gray-600">
-                   {product.usage && product.usage.length > 0 ? (
-                     product.usage.map((item, index) => (
-                       <p key={index}>
+                {product.usage?.length ? (
+                  <div className="space-y-4 text-gray-600">
+                    {product.usage.map((item, index) => (
+                      <p key={index}>
                         <strong>{item.label}:</strong> {item.value}
-                       </p>
-                       ))
-                    ) : (
-                   <p className="text-gray-500">No usage Instructions available yet.</p>
-                  )}
-                </div>
+                      </p>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-gray-500">No usage instructions available.</p>
+                )}
               </CardContent>
-
-
             </Card>
           </TabsContent>
 
@@ -265,7 +240,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                     <div className="border-b pb-4">
                       <div className="flex items-center space-x-2 mb-2">
                         {renderStars(4)}
-                        <span className="font-medium">Sam Mariga.</span>
+                        <span className="font-medium">Sam Mariga</span>
                       </div>
                       <p className="text-gray-600">
                         "Good value for money. The packaging is excellent and the product seems to be working well."

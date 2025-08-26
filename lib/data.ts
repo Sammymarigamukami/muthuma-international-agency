@@ -4,6 +4,7 @@ export const products: Product[] = [
   {
     id: "1",
     name: "Vitamin D3 1000IU Tablets",
+    slug: "vitamin-d3-1000iu-tablets",
     description: "High-strength Vitamin D3 tablets to support bone health, immune function, and muscle strength.",
     price:  1,
     image: "/comingsoon.png?height=400&width=400",
@@ -31,6 +32,7 @@ export const products: Product[] = [
   {
     id: "2",
     name: "Omega-3 Fish Oil Capsules",
+    slug: "omega-3-fish-oil-capsules",
     description: "Premium omega-3 fish oil capsules for heart, brain, and eye health support.",
     price: 0,
     image: "/comingsoon.png?height=400&width=400",
@@ -48,6 +50,7 @@ export const products: Product[] = [
   {
     id: "3",
     name: "Turmeric & Black Pepper Capsules",
+    slug: "turmeric-black-pepper-capsules",
     description: "Organic turmeric with black pepper extract for natural anti-inflammatory support.",
     price: 0,
     image: "/comingsoon.png?height=400&width=400",
@@ -64,6 +67,7 @@ export const products: Product[] = [
   {
     id: "4",
     name: "Collagen Beauty Powder",
+    slug: "collagen-beauty-powder",
     description: "Marine collagen powder to support skin elasticity, hair, and nail health.",
     price: 100,
     image: "/comingsoon.png?height=400&width=400",
@@ -80,6 +84,7 @@ export const products: Product[] = [
   {
     id: "5",
     name: "Magnesium Glycinate 400mg",
+    slug: "magnesium-glycinate-400mg",
     description: "Highly absorbable magnesium glycinate for muscle relaxation and better sleep.",
     price: 0,
     image: "/comingsoon.png?height=400&width=400",
@@ -96,6 +101,7 @@ export const products: Product[] = [
   {
     id: "6",
     name: "Probiotics 50 Billion CFU",
+    slug: "probiotics-50-billion-cfu",
     description: "Multi-strain probiotic supplement for digestive health and immune support.",
     price: 0,
     image: "/comingsoon.png?height=400&width=400",
@@ -112,6 +118,7 @@ export const products: Product[] = [
   {
     id: "7",
     name: "Vitamin B Complex",
+    slug: "vitamin-b-complex",
     description: "Complete B-vitamin complex for energy metabolism and nervous system support.",
     price: 0,
     image: "/comingsoon.png?height=400&width=400",
@@ -128,6 +135,7 @@ export const products: Product[] = [
   {
     id: "8",
     name: "Ashwagandha Root Extract",
+    slug: "ashwagandha-root-extract",
     description: "Adaptogenic herb extract to help manage stress and support overall well-being.",
     price: 0,
     image: "/comingsoon.png?height=400&width=400",
@@ -144,6 +152,7 @@ export const products: Product[] = [
   {
     id: "9",
     name: "Zinc Picolinate 15mg",
+    slug: "zinc-picolinate-15mg",
     description: "Highly bioavailable zinc supplement for immune system and skin health.",
     price: 0,
     image: "/comingsoon.png?height=400&width=400",
@@ -160,6 +169,7 @@ export const products: Product[] = [
   {
     id: "10",
     name: "Evening Primrose Oil",
+    slug: "evening-primrose-oil",
     description: "Cold-pressed evening primrose oil capsules for hormonal balance and skin health.",
     price: 0,
     image: "/comingsoon.png?height=400&width=400",
@@ -176,6 +186,7 @@ export const products: Product[] = [
   {
     id: "11",
     name: "Whey Protein Powder",
+    slug: "whey-protein-powder",
     description: "Premium whey protein isolate for muscle building and recovery.",
     price: 0,
     image: "/comingsoon.png?height=400&width=400",
@@ -192,6 +203,7 @@ export const products: Product[] = [
   {
     id: "12",
     name: "Green Tea Extract",
+    slug: "green-tea-extract",
     description: "Standardized green tea extract with EGCG for antioxidant support.",
     price: 0,
     image: "/comingsoon.png?height=400&width=400",
@@ -208,6 +220,7 @@ export const products: Product[] = [
   {
     id: "13",
     name: "Iron Bisglycinate 18mg",
+    slug: "iron-bisglycinate-18mg",
     description: "Gentle iron supplement with superior absorption for energy and blood health.",
     price: 0,
     image: "/comingsoon.png?height=400&width=400",
@@ -224,6 +237,7 @@ export const products: Product[] = [
   {
     id: "14",
     name: "Hyaluronic Acid Serum",
+    slug: "hyaluronic-acid-serum",
     description: "Pure hyaluronic acid serum for intense hydration and plump, youthful skin.",
     price: 0,
     image: "/comingsoon.png?height=400&width=400",
@@ -240,6 +254,7 @@ export const products: Product[] = [
   {
     id: "15",
     name: "Melatonin 3mg",
+    slug: "melatonin-3mg",
     description: "Natural sleep aid to help regulate sleep-wake cycles and improve sleep quality.",
     price: 0,
     image: "/comingsoon.png?height=400&width=400",
@@ -256,6 +271,7 @@ export const products: Product[] = [
   {
     id: "16",
     name: "Calcium & Vitamin D3",
+    slug: "calcium-vitamin-d3",
     description: "Combined calcium and vitamin D3 supplement for strong bones and teeth.",
     price: 0,
     image: "/comingsoon.png?height=400&width=400",
@@ -272,6 +288,7 @@ export const products: Product[] = [
   {
     id: "17",
     name: "Calcium",
+    slug: "calcium",
     description: "Combined calcium and vitamin D3 supplement for strong bones and teeth.",
     price: 0,
     image: "/comingsoon.png?height=400&width=400",
