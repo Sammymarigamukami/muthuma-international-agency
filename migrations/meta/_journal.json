@@ -15,6 +15,20 @@
       "when": 1755738360190,
       "tag": "0001_far_black_panther",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1755887475857,
+      "tag": "0002_tense_prodigy",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1756067645081,
+      "tag": "0003_petite_true_believers",
+      "breakpoints": true
     }
   ]
 }

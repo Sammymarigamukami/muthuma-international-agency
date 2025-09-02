@@ -4,6 +4,7 @@ import {
   timestamp,
   boolean,
   integer,
+  json,
 } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
@@ -68,14 +69,10 @@ export const verification = pgTable("verification", {
 
 export const payment = pgTable("payment", {
   id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
-
   userId: text("user_id")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
-
-  // new column for email
   email: text("email").notNull(),
-
   phone: text("phone").notNull(),
   amount: integer("amount").notNull(),
   status: text("status").$defaultFn(() => "PENDING"), // PENDING | SUCCESS | FAILED

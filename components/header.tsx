@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge"
 import { useCart } from "@/contexts/cart-context"
 import { useAppContext } from "@/contexts/AppContext"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { authClient } from "@/lib/auth-client"
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -51,7 +52,6 @@ export default function Header() {
       await logout({
         fetchOptions: {
           onSuccess: () => {
-            // Redirect to the home page or login page after successful logout
             router.push("/") 
           },
         },

@@ -11,6 +11,8 @@ import ForgotPasswordEmail from "@/components/emails/reset-password";
 const resend = new Resend(process.env.RESEND_API_KEY as string);
  
 export const auth = betterAuth({
+  secret: process.env.BETTER_AUTH_SECRET!,
+  baseURL: process.env.BETTER_AUTH_URL,
   emailVerification: {
         sendVerificationEmail: async ({ user, url }) => {
             await resend.emails.send({

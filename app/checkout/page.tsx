@@ -34,6 +34,13 @@ export default function CheckoutPage() {
     setCustomerInfo((prev) => ({ ...prev, [field]: value }))
   }
 
+    useEffect(() => {
+    if (!user) {
+    }
+  }, [user])
+
+  if (!user) return null
+
   if (items.length === 0) {
     return (
       <div className="container mx-auto px-4 py-16">
@@ -49,12 +56,7 @@ export default function CheckoutPage() {
     )
   }
 
-  useEffect(() => {
-    if (!user) {
-    }
-  }, [user])
 
-  if (!user) return null
 
   return (
     <div className="container mx-auto px-4 py-8">
