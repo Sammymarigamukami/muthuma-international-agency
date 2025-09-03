@@ -5,7 +5,8 @@ import {
   boolean,
   integer,
   serial,
-  varchar
+  varchar,
+  json,
 } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
@@ -17,10 +18,10 @@ export const user = pgTable("user", {
     .notNull(),
   image: text("image"),
   createdAt: timestamp("created_at")
-    .$defaultFn(() => /* @__PURE__ */ new Date())
+    .$defaultFn(() => new Date())
     .notNull(),
   updatedAt: timestamp("updated_at")
-    .$defaultFn(() => /* @__PURE__ */ new Date())
+    .$defaultFn(() => new Date())
     .notNull(),
 });
 
@@ -60,64 +61,43 @@ export const verification = pgTable("verification", {
   identifier: text("identifier").notNull(),
   value: text("value").notNull(),
   expiresAt: timestamp("expires_at").notNull(),
-  createdAt: timestamp("created_at").$defaultFn(
-    () => /* @__PURE__ */ new Date(),
-  ),
-  updatedAt: timestamp("updated_at").$defaultFn(
-    () => /* @__PURE__ */ new Date(),
-  ),
+  createdAt: timestamp("created_at").$defaultFn(() => new Date()),
+  updatedAt: timestamp("updated_at").$defaultFn(() => new Date()),
 });
 
 export const payment = pgTable("payment", {
   id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
-
-  userId: text("user_id")
-    .notNull()
-    .references(() => user.id, { onDelete: "cascade" }),
-
-  orderId: integer("order_id")
-    .notNull()
-    .references(() => orders.id, { onDelete: "cascade" }),
-
-  // new column for email
+  userId: text("user_id").notNull().references(() => user.id, { onDelete: "cascade" }),
   email: text("email").notNull(),
-
   phone: text("phone").notNull(),
   amount: integer("amount").notNull(),
-  status: text("status").$defaultFn(() => "PENDING"), // PENDING | SUCCESS | FAILED
+  status: text("status").$defaultFn(() => "PENDING"),
   merchantRequestId: text("merchant_request_id"),
   checkoutRequestId: text("checkout_request_id"),
   receiptNumber: text("receipt_number"),
+  customerInfo: json("customer_info"),
+  items: json("items"),
   createdAt: timestamp("created_at").$defaultFn(() => new Date()).notNull(),
   updatedAt: timestamp("updated_at").$defaultFn(() => new Date()).notNull(),
 });
 
 export const orders = pgTable("orders", {
   id: serial("id").primaryKey(),
-
   userEmail: varchar("user_email", { length: 255 }).notNull(),
-
-  // sum of all order_items
   totalAmount: integer("total_amount").notNull(),
-
   status: varchar("status", { length: 50 }).default("pending").notNull(),
-
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
-// Order items table (linked to orders)
 export const orderItems = pgTable("order_items", {
   id: serial("id").primaryKey(),
-
   orderId: integer("order_id")
     .notNull()
     .references(() => orders.id, { onDelete: "cascade" }),
-
   productName: varchar("product_name", { length: 255 }).notNull(),
   quantity: integer("quantity").notNull(),
-  price: integer("price").notNull(), // price per unit
-  subtotal: integer("subtotal").notNull(), // quantity * price
+  price: integer("price").notNull(),
+  subtotal: integer("subtotal").notNull(),
 });
 
-
-export const schema = { user, session, account, verification, payment, orders, orderItems};
+export const schema = { user, session, account, verification, payment, orders, orderItems };

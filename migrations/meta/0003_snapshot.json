@@ -1,6 +1,11 @@
 {
+<<<<<<< HEAD
   "id": "0410c4d5-74fd-4c3c-9f16-cd73a21b9a46",
   "prevId": "c51579dc-48ec-41b2-935c-964efc62262a",
+=======
+  "id": "42702160-54f7-4f91-9c8f-2486b877f4de",
+  "prevId": "0adfc6f2-19e7-4542-b9ff-ccd1f827d8f2",
+>>>>>>> af1afd1b2b4bdd0b26bc70ae3979ba9890451403
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -109,6 +114,7 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+<<<<<<< HEAD
     "public.order_items": {
       "name": "order_items",
       "schema": "",
@@ -217,6 +223,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+=======
+>>>>>>> af1afd1b2b4bdd0b26bc70ae3979ba9890451403
     "public.payment": {
       "name": "payment",
       "schema": "",

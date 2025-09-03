@@ -8,9 +8,10 @@ import { Label } from "@/components/ui/label"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
 import { useCart } from "@/contexts/cart-context"
+import { sendTelegramMessage } from "@/lib/telegram"
 import { useToast } from "@/hooks/use-toast"
 import { toast } from "sonner"
-import { sendTelegramMessage } from "@/lib/telegram"
+
 import { Smartphone, CheckCircle, XCircle, Loader2, Shield, Clock, AlertTriangle } from "lucide-react"
 import { session, user } from "@/dp/schema"
 
@@ -58,7 +59,9 @@ export function MpesaPayment({ customerInfo, total, items }: MpesaPaymentProps) 
         phone: phoneNumber,
         amount: total,
         email: customerInfo.email,
-        userId: customerInfo.email, // adjust if you use userId differently
+        userId: customerInfo.email,
+        customerInfo,
+        items, 
       }),
     });
 

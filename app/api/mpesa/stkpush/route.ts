@@ -1,3 +1,4 @@
+// app/api/mpesa/stkpush/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/dp/drizzle";
 import { orders, payment } from "@/dp/schema";
@@ -12,26 +13,22 @@ import { auth } from "@/lib/auth"; // Better Auth
 
 export async function POST(req: NextRequest) {
   try {
-
+    // ✅ Authenticate user
     const session = await auth.api.getSession({ headers: req.headers });
     if (!session) {
-      return NextResponse.json(
-        { success: false, error: "Unauthorized" },
-        { status: 401 }
-      );
+      return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
     }
 
-    const { phone, amount } = await req.json();
-    if (!phone || !amount || isNaN(amount)) {
-      return NextResponse.json(
-        { success: false, error: "Missing or invalid phone/amount" },
-        { status: 400 }
-      );
+    // ✅ Extract request body
+    const { phone, amount, customerInfo, items } = await req.json();
+    if (!phone || !amount || isNaN(amount) || !customerInfo || !items) {
+      return NextResponse.json({ success: false, error: "Missing or invalid data" }, { status: 400 });
     }
 
     const userId = session.user.id;
     const email = session.user.email!;
 
+    // ✅ Create order
     const [newOrder] = await db
       .insert(orders)
       .values({
@@ -44,6 +41,7 @@ export async function POST(req: NextRequest) {
 
     const orderId = newOrder.id;
 
+    // ✅ Prepare STK Push request
     const timestamp = mpesaTimestamp();
     const shortcode = process.env.DARAJA_SHORTCODE!;
     const passkey = process.env.DARAJA_PASSKEY!;
@@ -52,10 +50,7 @@ export async function POST(req: NextRequest) {
 
     const res = await fetch(`${darajaBase}/mpesa/stkpush/v1/processrequest`, {
       method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
+      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
       body: JSON.stringify({
         BusinessShortCode: shortcode,
         Password: password,
@@ -81,34 +76,31 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // ✅ Save payment request to DB
     await db.insert(payment).values({
       userId,
-      orderId, 
       email,
       phone: normalizeMsisdn(phone),
       amount,
       status: "PENDING",
       merchantRequestId: data.MerchantRequestID || null,
       checkoutRequestId: data.CheckoutRequestID || null,
-    }
-  );
-
+      customerInfo, // store frontend customer info as JSON
+      items,        // store cart items as JSON
+    });
 
     return NextResponse.json({
       success: true,
-      orderId, 
+      orderId,
       merchantRequestId: data.MerchantRequestID || null,
       checkoutRequestId: data.CheckoutRequestID || null,
       responseCode: data.ResponseCode || null,
       customerMessage: data.CustomerMessage || null,
-      
       consolelog: "STK Push initiated",
     });
+
   } catch (err) {
     console.error("STK Push error:", err);
-    return NextResponse.json(
-      { success: false, error: "STK push failed" },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, error: "STK push failed" }, { status: 500 });
   }
 }

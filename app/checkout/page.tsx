@@ -34,12 +34,13 @@ export default function CheckoutPage() {
     setCustomerInfo((prev) => ({ ...prev, [field]: value }))
   }
   
-    useEffect(() => {
-    if (!user) {
-    }
+  useEffect(() => {
+    if (!user) return
+    console.log("User is available:", user)
   }, [user])
 
   if (!user) return null
+
 
   if (items.length === 0) {
     return (

@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "id": "c51579dc-48ec-41b2-935c-964efc62262a",
+=======
+  "id": "0adfc6f2-19e7-4542-b9ff-ccd1f827d8f2",
+>>>>>>> af1afd1b2b4bdd0b26bc70ae3979ba9890451403
   "prevId": "e6356849-98ba-4355-bca1-d19fb7e82eb5",
   "version": "7",
   "dialect": "postgresql",
@@ -109,6 +113,7 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+<<<<<<< HEAD
     "public.orders": {
       "name": "orders",
       "schema": "",
@@ -160,6 +165,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+=======
+>>>>>>> af1afd1b2b4bdd0b26bc70ae3979ba9890451403
     "public.payment": {
       "name": "payment",
       "schema": "",
@@ -218,6 +225,15 @@
           "primaryKey": false,
           "notNull": false
         },
+<<<<<<< HEAD
+=======
+        "items": {
+          "name": "items",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
+        },
+>>>>>>> af1afd1b2b4bdd0b26bc70ae3979ba9890451403
         "created_at": {
           "name": "created_at",
           "type": "timestamp",

@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge"
 import { useCart } from "@/contexts/cart-context"
 import { useAppContext } from "@/contexts/AppContext"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { authClient } from "@/lib/auth-client"
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -50,6 +51,13 @@ export default function Header() {
     try {
       await logout(); // Call the logout function from your context
       router.push("/"); // Redirect after the logout is complete
+      await logout({
+        fetchOptions: {
+          onSuccess: () => {
+            router.push("/") 
+          },
+        },
+      })
     } catch (error) {
       console.error("Logout failed:", error);
     }
