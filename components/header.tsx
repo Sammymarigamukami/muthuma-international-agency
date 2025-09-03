@@ -43,7 +43,7 @@ export default function Header() {
   }, []);
   
   const handleClick = () => {
-    router.push("my-order")
+    router.push("order")
   }
 
   const handleLogout = async () => {

@@ -1,7 +1,7 @@
 // app/api/mpesa/callback/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/dp/drizzle";
-import { payment } from "@/dp/schema";
+import { payment, orders } from "@/dp/schema"; // ✅ import orders too
 import { eq } from "drizzle-orm";
 
 export async function POST(req: NextRequest) {
@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     const resultDesc = result.ResultDesc;
 
     if (resultCode === 0) {
-      // Extract metadata safely
+      // ✅ Extract metadata safely
       const metadata = result.CallbackMetadata?.Item || [];
       const amount = metadata.find((i: any) => i.Name === "Amount")?.Value;
       const receiptNumber = metadata.find(
@@ -39,12 +39,27 @@ export async function POST(req: NextRequest) {
       if (amount) updateData.amount = amount;
       if (phone) updateData.phone = phone;
 
+      // ✅ Update payment
       await db
         .update(payment)
         .set(updateData)
         .where(eq(payment.checkoutRequestId, checkoutRequestId));
+
+      // ✅ Get the payment row so we know which order it belongs to
+      const [updatedPayment] = await db
+        .select()
+        .from(payment)
+        .where(eq(payment.checkoutRequestId, checkoutRequestId));
+
+      if (updatedPayment?.orderId) {
+        // ✅ Update the related order status
+        await db
+          .update(orders)
+          .set({ status: "SUCCESS"})
+          .where(eq(orders.id, updatedPayment.orderId));
+      }
     } else {
-      // mark as failed and keep the failure reason for debugging
+      // mark as failed in both tables
       await db
         .update(payment)
         .set({
@@ -54,14 +69,25 @@ export async function POST(req: NextRequest) {
         })
         .where(eq(payment.checkoutRequestId, checkoutRequestId));
 
+      const [failedPayment] = await db
+        .select()
+        .from(payment)
+        .where(eq(payment.checkoutRequestId, checkoutRequestId));
+
+      if (failedPayment?.orderId) {
+        await db
+          .update(orders)
+          .set({ status: "FAILED" })
+          .where(eq(orders.id, failedPayment.orderId));
+      }
+
       console.warn(`STK Push failed: ${resultDesc}`);
     }
 
-    // Always return 200 so Safaricom doesn't retry the callback
+    // ✅ Always return 200 so Safaricom doesn’t retry
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (err) {
     console.error("Callback error:", err);
-    // still return 200 to prevent Safaricom retries
-    return NextResponse.json({ success: false }, { status: 200 });
+    return NextResponse.json({ success: false }, { status: 200 }); // still 200 to stop retries
   }
 }

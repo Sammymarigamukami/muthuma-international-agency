@@ -15,6 +15,27 @@
       "when": 1755738360190,
       "tag": "0001_far_black_panther",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1756308849056,
+      "tag": "0002_dry_exodus",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1756321754316,
+      "tag": "0003_minor_scourge",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1756373241955,
+      "tag": "0004_faithful_ultimo",
+      "breakpoints": true
     }
   ]
 }

@@ -4,6 +4,8 @@ import {
   timestamp,
   boolean,
   integer,
+  serial,
+  varchar
 } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
@@ -73,6 +75,10 @@ export const payment = pgTable("payment", {
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
 
+  orderId: integer("order_id")
+    .notNull()
+    .references(() => orders.id, { onDelete: "cascade" }),
+
   // new column for email
   email: text("email").notNull(),
 
@@ -86,7 +92,32 @@ export const payment = pgTable("payment", {
   updatedAt: timestamp("updated_at").$defaultFn(() => new Date()).notNull(),
 });
 
+export const orders = pgTable("orders", {
+  id: serial("id").primaryKey(),
+
+  userEmail: varchar("user_email", { length: 255 }).notNull(),
+
+  // sum of all order_items
+  totalAmount: integer("total_amount").notNull(),
+
+  status: varchar("status", { length: 50 }).default("pending").notNull(),
+
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+// Order items table (linked to orders)
+export const orderItems = pgTable("order_items", {
+  id: serial("id").primaryKey(),
+
+  orderId: integer("order_id")
+    .notNull()
+    .references(() => orders.id, { onDelete: "cascade" }),
+
+  productName: varchar("product_name", { length: 255 }).notNull(),
+  quantity: integer("quantity").notNull(),
+  price: integer("price").notNull(), // price per unit
+  subtotal: integer("subtotal").notNull(), // quantity * price
+});
 
 
-
-export const schema = { user, session, account, verification, payment} ;
+export const schema = { user, session, account, verification, payment, orders, orderItems};

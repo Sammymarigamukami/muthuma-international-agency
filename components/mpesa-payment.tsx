@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/use-toast"
 import { toast } from "sonner"
 import { sendTelegramMessage } from "@/lib/telegram"
 import { Smartphone, CheckCircle, XCircle, Loader2, Shield, Clock, AlertTriangle } from "lucide-react"
+import { session, user } from "@/dp/schema"
 
 interface MpesaPaymentProps {
   customerInfo: {
@@ -39,96 +40,114 @@ export function MpesaPayment({ customerInfo, total, items }: MpesaPaymentProps) 
 
   // 🔹 Initiate real M-Pesa payment
   const initiateMpesaPayment = async () => {
-    if (!phoneNumber || !phoneNumber.match(/^(\+254|254|0)[17]\d{8}$/)) {
-      toast.error("Invalid Phone Number", {
-    description: "Please enter a valid Kenyan phone number (e.g., +254712345678)",
+  if (!phoneNumber || !phoneNumber.match(/^(\+254|254|0)[17]\d{8}$/)) {
+    toast.error("Invalid Phone Number", {
+      description:
+        "Please enter a valid Kenyan phone number (e.g., +254712345678)",
     });
-      return
-    }
+    return;
+  }
 
-    setPaymentStatus("initiating")
+  setPaymentStatus("initiating");
 
-    try {
-      const res = await fetch("/api/mpesa/stkpush", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          phone: phoneNumber,
-          amount: total,
-          email: customerInfo.email,
-          userId: customerInfo.email, // adjust if you store differently
-        }),
-      })
+  try {
+    const res = await fetch("/api/mpesa/stkpush", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        phone: phoneNumber,
+        amount: total,
+        email: customerInfo.email,
+        userId: customerInfo.email, // adjust if you use userId differently
+      }),
+    });
 
-      if (!res.ok) throw new Error("Failed to initiate payment")
-      const data = await res.json()
+    if (!res.ok) throw new Error("Failed to initiate payment");
+    const data = await res.json();
 
-      setCheckoutRequestId(data.checkoutRequestId)
-      setTransactionId(data.merchantRequestId || "")
-      setPaymentStatus("pending")
-      setCountdown(60)
+    await fetch("/api/orders", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userEmail: customerInfo.email,
+        items: items.map((item: any) => ({
+          productName: item.name,
+          quantity: item.quantity,
+          price: item.price,
+        })),
+      }),
+    })
 
-      toast.success("Payment Request Sent", {
+    setCheckoutRequestId(data.checkoutRequestId);
+    setTransactionId(data.merchantRequestId || "");
+    setPaymentStatus("pending");
+    setCountdown(60);
+
+    toast.success("Payment Request Sent", {
       description: `Check your phone ${phoneNumber} for the M-Pesa prompt`,
-   });
-
-      // Start countdown
-      let timeLeft = 60
-      const countdownInterval = setInterval(() => {
-        timeLeft--
-        setCountdown(timeLeft)
-        if (timeLeft <= 0) {
-          clearInterval(countdownInterval)
-          setPaymentStatus("timeout")
-        }
-      }, 1000)
-
-      // Poll backend for status updates
-      const pollInterval = setInterval(async () => {
-        const statusRes = await fetch(`/api/mpesa/status?checkoutRequestId=${data.checkoutRequestId}`)
-        const statusData = await statusRes.json()
-
-     if (statusData.status === "SUCCESS") {
-     clearInterval(countdownInterval)
-     clearInterval(pollInterval)
-     setPaymentStatus("success")
-
-     toast.success("Payment Successful!", {
-     description: `Transaction ${statusData.receiptNumber} completed successfully`,
     });
 
-  // Send customer info to Telegram
-  const message = `
-✅ New Payment Received:
-Name: ${customerInfo.firstName} ${customerInfo.lastName}
-Email: ${customerInfo.email}
-Phone: ${phoneNumber}
-Amount Paid: KSh ${total.toFixed(0)}
-Transaction ID: ${statusData.receiptNumber}
-  `;
-  await sendTelegramMessage(message);
+    // Start countdown
+    let timeLeft = 60;
+    const countdownInterval = setInterval(() => {
+      timeLeft--;
+      setCountdown(timeLeft);
+      if (timeLeft <= 0) {
+        clearInterval(countdownInterval);
+        setPaymentStatus("timeout");
+      }
+    }, 1000);
 
-  setTimeout(() => clearCart(), 2000)
-}
+    // Poll backend for status updates
+    const pollInterval = setInterval(async () => {
+      const statusRes = await fetch(
+        `/api/mpesa/status?checkoutRequestId=${data.checkoutRequestId}`
+      );
+      const statusData = await statusRes.json();
 
+      if (statusData.status === "SUCCESS") {
+        clearInterval(countdownInterval);
+        clearInterval(pollInterval);
+        setPaymentStatus("success");
 
-        if (statusData.status === "FAILED") {
-          clearInterval(countdownInterval)
-          clearInterval(pollInterval)
-          setPaymentStatus("failed")
-          toast.error("Payment Failed", {
+        toast.success("Payment Successful!", {
+          description: `Transaction ${statusData.receiptNumber} completed successfully`,
+        });
+
+        // ✅ Send customer info + order details to EMAIL
+        const orderPayload = {
+          customerInfo: { ...customerInfo, phone: phoneNumber },
+          total,
+          items,
+          receiptNumber: statusData.receiptNumber,
+        };
+
+        await fetch("/api/send-order", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(orderPayload),
+        });
+
+        setTimeout(() => clearCart(), 2000);
+      }
+
+      if (statusData.status === "FAILED") {
+        clearInterval(countdownInterval);
+        clearInterval(pollInterval);
+        setPaymentStatus("failed");
+        toast.error("Payment Failed", {
           description: statusData.failureReason || "Transaction failed.",
-       });
-        }
-      }, 5000) // poll every 5s
-    } catch (error) {
-      console.error(error)
-      setPaymentStatus("failed")
-      toast.error("Payment Error", {
+        });
+      }
+    }, 5000); // poll every 5s
+  } catch (error) {
+    console.error(error);
+    setPaymentStatus("failed");
+    toast.error("Payment Error", {
       description: "Failed to initiate payment. Please try again.",
     });
-    }
   }
+};
 
   const resetPayment = () => {
     setPaymentStatus("idle")
@@ -281,4 +300,3 @@ Transaction ID: ${statusData.receiptNumber}
     </Card>
   )
 }
-
