@@ -25,11 +25,7 @@ export const metadata: Metadata = {
   keywords: "vitamins, supplements, herbal remedies, natural health, wellness, beauty products",
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-})
+export default function RootLayout({children,}: {children: React.ReactNode})
  {
   return (
     <html lang="en">

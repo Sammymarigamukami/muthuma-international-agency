@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { use, useState } from "react"
 import { notFound } from "next/navigation"
 import Image from "next/image"
 import { Star, Heart, ShoppingCart, Minus, Plus, Shield, Truck, RotateCcw } from "lucide-react"
@@ -14,9 +14,10 @@ import { useToast } from "@/hooks/use-toast"
 import { products } from "@/lib/data"
 
 interface ProductPageProps {
-  params: {
-    slug: string
-  }
+  params: Promise< {
+    category: string
+    id: string
+  }>
 }
 
 export default function ProductPage({ params }: ProductPageProps) {
@@ -24,9 +25,10 @@ export default function ProductPage({ params }: ProductPageProps) {
   const [selectedImage, setSelectedImage] = useState(0)
   const { addItem } = useCart()
   const { toast } = useToast()
+  const { category, id } = use(params)
 
   // Find product by slug instead of ID
-  const product = products.find((p) => p.slug === params.slug)
+  const product = products.find((p) => String(p.id) === id)
 
   if (!product) {
     notFound()

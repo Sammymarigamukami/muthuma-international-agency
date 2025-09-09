@@ -37,24 +37,6 @@ export default function ProductCard({ product }: ProductCardProps) {
     })
   }
 
-  // fetch data from the backend
-
-  {/**const [products, setProducts] = useState<Product[]>([])
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch("http://localhost:3001/products")
-        const data = await response.json()
-        setProducts(data)
-      } catch (error) {
-        console.error("Failed to fetch products:", error)
-      }
-    }
-
-    fetchProducts()
-  }, [])**/}
-
   const toggleWishlist = () => {
     setIsWishlisted(!isWishlisted)
     toast({
