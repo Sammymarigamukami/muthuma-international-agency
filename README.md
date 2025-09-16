@@ -74,7 +74,7 @@ Users can register and log in using BetterAuth.
 Resend integration ensures that login and verification emails are delivered securely.
 Sessions are maintained across pages with JWT/session cookies.
 
-3. Product Catalog
+2. Product Catalog
 Categories allow users to filter products easily.
 Each product has a detail page with images, description, and price.
 
