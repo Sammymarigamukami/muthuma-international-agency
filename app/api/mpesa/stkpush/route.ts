@@ -87,7 +87,9 @@ export async function POST(req: NextRequest) {
       checkoutRequestId: data.CheckoutRequestID || null,
       customerInfo, // store frontend customer info as JSON
       items,        // store cart items as JSON
-    });
+    }
+  );
+  console.log("user information saved to database");
 
     return NextResponse.json({
       success: true,

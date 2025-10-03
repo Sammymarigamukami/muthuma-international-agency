@@ -13,6 +13,7 @@ import { useCart } from "@/contexts/cart-context"
 import { useAppContext } from "@/contexts/AppContext"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { authClient } from "@/lib/auth-client"
+import { useSignOut } from "@/hooks/use-signout"
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -25,7 +26,7 @@ const navigation = [
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const { user, logout, isLoading, setShowUserLogin, showUserLogin } = useAppContext()
+  const { user, isLoading, setShowUserLogin, showUserLogin } = useAppContext()
   const [searchQuery, setSearchQuery] = useState("")
   const { items } = useCart()
   const router = useRouter()
@@ -42,26 +43,19 @@ export default function Header() {
     useEffect(() => {
     setIsClient(true);
   }, []);
+
+  useEffect(() => {
+    if (!isLoading && !user){
+      router.push("/")
+    }
+  }, [user, isLoading, router])
   
   const handleClick = () => {
     router.push("order")
   }
 
-  const handleLogout = async () => {
-    try {
-      await logout(); // Call the logout function from your context
-      router.push("/"); // Redirect after the logout is complete
-      await logout({
-        fetchOptions: {
-          onSuccess: () => {
-            router.push("/") 
-          },
-        },
-      })
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
-  };
+  const handleSignOut = useSignOut();
+
 
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value)
@@ -212,7 +206,7 @@ export default function Header() {
                         <li onClick={handleClick} className="p-1.5 pl-3 hover:bg-[#4fbf8b]/10 cursor-pointer">
                           My order
                         </li>
-                        <li onClick={handleLogout} className="p-1.5 pl-3 hover:bg-[#4fbf8b]/10 cursor-pointer">
+                        <li onClick={handleSignOut} className="p-1.5 pl-3 hover:bg-[#4fbf8b]/10 cursor-pointer">
                           Logout
                         </li>
                       </ul>

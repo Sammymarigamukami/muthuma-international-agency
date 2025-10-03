@@ -36,6 +36,7 @@ export async function POST(req: NextRequest) {
         updatedAt: new Date(),
       };
 
+
       if (amount) updateData.amount = amount;
       if (phone) updateData.phone = phone;
 

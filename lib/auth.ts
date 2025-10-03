@@ -62,7 +62,7 @@ export const auth = betterAuth({
       cors: {
     origin: [
       "http://localhost:3000", // dev frontend
-      "https://holland-and-barrett-site-xu6q.vercel.app", // prod frontend
+      "https://holland-and-barrett-site.vercel.app", // prod frontend
     ],
     credentials: true,
   },
