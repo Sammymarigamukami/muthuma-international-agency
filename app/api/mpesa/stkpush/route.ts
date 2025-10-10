@@ -13,13 +13,13 @@ import { auth } from "@/lib/auth"; // Better Auth
 
 export async function POST(req: NextRequest) {
   try {
-    // ✅ Authenticate user
+    // Authenticate user
     const session = await auth.api.getSession({ headers: req.headers });
     if (!session) {
       return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
     }
 
-    // ✅ Extract request body
+    // Extract request body
     const { phone, amount, customerInfo, items } = await req.json();
     if (!phone || !amount || isNaN(amount) || !customerInfo || !items) {
       return NextResponse.json({ success: false, error: "Missing or invalid data" }, { status: 400 });
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
     const userId = session.user.id;
     const email = session.user.email!;
 
-    // ✅ Create order
+    // Create order
     const [newOrder] = await db
       .insert(orders)
       .values({
@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
 
     const orderId = newOrder.id;
 
-    // ✅ Prepare STK Push request
+    // Prepare STK Push request
     const timestamp = mpesaTimestamp();
     const shortcode = process.env.DARAJA_SHORTCODE!;
     const passkey = process.env.DARAJA_PASSKEY!;
@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // ✅ Save payment request to DB
+    // Save payment request to DB
     await db.insert(payment).values({
       userId,
       email,

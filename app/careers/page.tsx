@@ -1,5 +1,6 @@
+import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { MapPin, Clock, Users, Briefcase, Heart, TrendingUp } from "lucide-react"
+import { MapPin, Clock, Users, Briefcase, Heart, TrendingUp, Badge } from "lucide-react"
 
 export default function CareersPage() {
   const jobOpenings = [
@@ -104,7 +105,7 @@ export default function CareersPage() {
       <div className="bg-white py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">No job opening</h2>
-          {/*<div className="max-w-4xl mx-auto space-y-6">
+          <div className="max-w-4xl mx-auto space-y-6">
             {jobOpenings.map((job) => (
               <Card key={job.id}>
                 <CardHeader>
@@ -142,11 +143,11 @@ export default function CareersPage() {
                 </CardContent>
               </Card>
             ))}
-          </div>*/}
+          </div>
         </div>
       </div>
 
-      {/* Application Process */}{/*
+      {/* Application Process */}
       <div className="bg-green-50 py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
@@ -184,9 +185,9 @@ export default function CareersPage() {
             </div>
           </div>
         </div>
-      </div>*/}
+      </div>
 
-      {/* Contact Section */}{/*
+      {/* Contact Section */}
       <div className="bg-white py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center">
@@ -200,7 +201,7 @@ export default function CareersPage() {
             </Button>
           </div>
         </div>
-      </div>*/}
+      </div>
     </div>
   )
 }

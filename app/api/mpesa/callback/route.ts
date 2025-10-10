@@ -1,7 +1,7 @@
 // app/api/mpesa/callback/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/dp/drizzle";
-import { payment, orders } from "@/dp/schema"; // ✅ import orders too
+import { payment, orders } from "@/dp/schema";
 import { eq } from "drizzle-orm";
 
 export async function POST(req: NextRequest) {
@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     const resultDesc = result.ResultDesc;
 
     if (resultCode === 0) {
-      // ✅ Extract metadata safely
+      // Extract metadata safely
       const metadata = result.CallbackMetadata?.Item || [];
       const amount = metadata.find((i: any) => i.Name === "Amount")?.Value;
       const receiptNumber = metadata.find(
@@ -40,20 +40,20 @@ export async function POST(req: NextRequest) {
       if (amount) updateData.amount = amount;
       if (phone) updateData.phone = phone;
 
-      // ✅ Update payment
+      // Update payment
       await db
         .update(payment)
         .set(updateData)
         .where(eq(payment.checkoutRequestId, checkoutRequestId));
 
-      // ✅ Get the payment row so we know which order it belongs to
+      // Get the payment row so we know which order it belongs to
       const [updatedPayment] = await db
         .select()
         .from(payment)
         .where(eq(payment.checkoutRequestId, checkoutRequestId));
 
       if (updatedPayment?.orderId) {
-        // ✅ Update the related order status
+        // Update the related order status
         await db
           .update(orders)
           .set({ status: "SUCCESS"})

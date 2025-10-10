@@ -6,80 +6,130 @@ import { HelpCircle, MessageCircle, Phone, Mail } from "lucide-react"
 export default function FAQPage() {
   const faqCategories = [
     {
-      title: "Orders & Shipping",
+      title: "Account & General",
       faqs: [
         {
-          question: "How long does delivery take?",
+          question: "Who can use this platform?",
           answer:
-            "Standard delivery takes 3-5 business days. Express delivery is available for next-day delivery if ordered before 2pm. Free delivery is available on orders over KSh2500.",
+            "You must be at least 18 years old and legally able to enter into binding agreements. Minors may only use the platform under parental or guardian supervision.",
         },
         {
-          question: "Can I track my order?",
+          question: "Do I need an account to place orders or book appointments?",
           answer:
-            "Yes! Once your order is dispatched, you'll receive a tracking number via email. You can track your order on our website or through the courier's tracking system.",
+            "While some services allow guest checkout, creating an account provides faster checkout, order tracking, and access to your medical history and consultations.",
         },
         {
-          question: "What if I'm not home for delivery?",
+          question: "Are my personal and medical details secure?",
           answer:
-            "Our couriers will attempt delivery and leave a card if you're not home. You can reschedule delivery or collect from a local pickup point.",
+            "We use strict administrative, technical, and physical safeguards to protect your personal and medical information.",
         },
         {
-          question: "Do you deliver internationally?",
+          question: "How do I contact customer support?",
           answer:
-            "Yes, we deliver to over 50 countries worldwide. International delivery times and costs vary by destination. Check our shipping page for full details.",
+            "You can reach our support team at support@yourplatform.com or via the <span href='/contact'>Contact Us</span> page.",
+        },
+        {
+          question: "What should I do if I forget my password?",
+          answer:
+            "Click the 'Forgot Password' link on the login page and follow the instructions to reset your password.",
+        }
+      ],
+    },
+    {
+      title: "Products & Orders",
+      faqs: [
+        {
+          question: "How do I know if a product is in stock?",
+          answer:
+            "Product availability is displayed on the product page. Availability may change without notice.",
+        },
+        {
+          question: "How long will it take to receive my order?",
+          answer:
+            "Delivery times vary by location and product availability. We are not liable for delays caused by couriers or unforeseen events.",
+        },
+        {
+          question: "Can I return a product?",
+          answer:
+            "Opened or used medical products cannot be returned due to health and safety regulations. Refunds or replacements are provided only for defective, damaged, or incorrect items.",
+        },
+        {
+          question: "What payment methods do you accept?",
+          answer:
+            "We accept secure payments via credit/debit cards, mobile money services, and other approved gateways.",
+        },
+        {
+          question: "What if I notice an error in my order?",
+          answer:
+            "Contact our support team immediately. We will investigate and provide a replacement, refund, or correction if necessary.",
         },
       ],
     },
     {
-      title: "Products & Health",
+      title: "Prescriptions & Health Products",
       faqs: [
         {
-          question: "Are your products suitable for vegans?",
+          question: "Can I order prescription medications online?",
           answer:
-            "Many of our products are vegan-friendly and clearly labeled. Look for the vegan symbol on product pages or use our vegan filter when browsing.",
+            "Yes, but you must provide a valid prescription from a licensed healthcare professional.",
         },
         {
-          question: "How do I know which vitamins I need?",
+          question: "How are my prescriptions verified?",
           answer:
-            "We recommend consulting with a healthcare professional before starting any supplement regimen. Our in-store nutritionists can also provide guidance based on your individual needs.",
+            "Our team verifies all prescriptions with the issuing healthcare professional before processing your order.",
         },
         {
-          question: "Are your products tested for quality?",
+          question: "Can I get advice on over-the-counter medications?",
           answer:
-            "Yes, all our products undergo rigorous quality testing. We work with certified laboratories and follow strict quality assurance protocols to ensure safety and efficacy.",
+            "Our pharmacists can provide general guidance, but this does not replace a consultation with a licensed healthcare provider.",
         },
         {
-          question: "Can I take multiple supplements together?",
+          question: "Do you provide home delivery for prescriptions?",
           answer:
-            "While many supplements can be taken together, some may interact. Always read product labels and consult with a healthcare professional if you're taking multiple supplements or medications.",
+            "Yes, home delivery is available for eligible products, subject to location and legal regulations.",
+        },
+        {
+          question: "Can I access my medical records online?",
+          answer:
+            "Registered users can view and download medical records, prescriptions, and consultation history through their account.",
+        }
+      ],
+    },
+    {
+      title: "Health Services & Consultations",
+      faqs: [
+        {
+          question: "How do I book a consultation with a doctor?",
+          answer:
+            "After creating an account, go to the <span className='text-green-600' href='/book-appointment'>Book Appointment</span> section, select your doctor and time slot, and confirm.",
+        },
+        {
+          question: "Can I cancel or reschedule a consultation?",
+          answer:
+            "Yes, you can cancel or reschedule through your account, but some services may have specific notice periods or fees.",
+        },
+        {
+          question: "Are consultations covered by insurance?",
+          answer:
+            "Insurance coverage depends on your provider and the service. Check with your insurance company before booking.",
+        },
+        {
+          question: "How is my privacy protected during consultations?",
+          answer:
+            "All consultations are conducted via secure channels, and personal and medical information is handled according to our Privacy Policy.",
         },
       ],
     },
     {
-      title: "Returns & Refunds",
+      title: "Marketing & Notifications",
       faqs: [
         {
-          question: "What is your return policy?",
+          question: "Can I subscribe to newsletters and promotions?",
           answer:
-            "You can return unopened products within 30 days of purchase for a full refund. Items must be in original packaging with receipt or order confirmation.",
-        },
-        {
-          question: "Can I return opened products?",
-          answer:
-            "For hygiene reasons, we cannot accept returns of opened supplements, beauty products, or food items unless they are faulty or not as described.",
-        },
-        {
-          question: "How long do refunds take?",
-          answer:
-            "Refunds are processed within 3-5 business days of receiving your return. The time to appear in your account depends on your payment method and bank.",
-        },
-        {
-          question: "What if my product is damaged?",
-          answer:
-            "If you receive a damaged product, please contact us immediately with photos. We'll arrange a replacement or full refund at no cost to you.",
-        },
-      ],
-    },
+            "You can opt-in during registration or through your account settings. You may unsubscribe at any time.",
+        }
+      ]
+    }
   ]
 
   return (
@@ -129,14 +179,14 @@ export default function FAQPage() {
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold text-center mb-12">Still Need Help?</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/*<Card className="text-center">
+              <Card className="text-center">
                 <CardContent className="p-6">
                   <MessageCircle className="h-12 w-12 text-green-600 mx-auto mb-4" />
                   <h3 className="text-xl font-semibold mb-3">Live Chat</h3>
                   <p className="text-gray-600 mb-4">Chat with our customer service team on whatsapp</p>
                   <Button className="bg-green-600 hover:bg-green-700">Start Chat</Button>
                 </CardContent>
-              </Card>*/}
+              </Card>
 
               <Card className="text-center">
                 <CardContent className="p-6">

@@ -1,19 +1,36 @@
 "use client"
 
-import type React from "react"
+import React from "react"
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Search, ShoppingCart, Menu, User, Heart } from "lucide-react"
+import { FaFacebookF, FaInstagram, FaTiktok } from "react-icons/fa6";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { useCart } from "@/contexts/cart-context"
 import { useAppContext } from "@/contexts/AppContext"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { authClient } from "@/lib/auth-client"
 import { useSignOut } from "@/hooks/use-signout"
+
+const headerPages =  [
+  { name: "Home", href: "/" },
+  { name: "About Us", href: "/about" },
+  { name: "Our Team", href: "/ourteam" },
+  { name: "Term and Conditions", href: "/termsandcondition" },
+  { name: "Privacy Policy", href: "/privacypolicy" },
+  { name: "Return Policy", href: "/returns" },
+  { name: "Contact Us", href: "/contact" },
+  { name: "FAQs", href: "/faq" },
+  { name: "Blogs", href: "/blogs" },
+  { name: "Submit A Prescription", href: "/submit-prescription" },
+  { name: "Book Consultation", href: "/book-consultation" },
+  { name: "Health Checks Appointments", href: "/health-checks-appointments"},
+  { name: "Careers", href: "/careers" },
+]
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -24,6 +41,7 @@ const navigation = [
   { name: "Wellness", href: "/products?category=Wellness" },
 ]
 
+
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { user, isLoading, setShowUserLogin, showUserLogin } = useAppContext()
@@ -32,6 +50,11 @@ export default function Header() {
   const router = useRouter()
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
   const [isClient, setIsClient] = useState(false);
+  const [ showCategories, setShowCategories] = useState(true);
+  const [ showMore, setShowMore] = useState(false);
+  const [ hideTopBar, setHideTopBar] = useState(false);
+
+  let lastScrolly = 0;
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
@@ -68,32 +91,65 @@ export default function Header() {
   }
   console.log('Header render - user:', user);
 
+  const handleShowCategories = () => {
+    setShowCategories(true);
+    setShowMore(false);
+  }
+
+  const handleShowMore = () => {
+    setShowCategories(false);
+    setShowMore(true);
+  }
+
+  // hide top bar when scrolling dowm, show when scrolling up
+
+  useEffect (() => {
+    const handleScroll = () => {
+      const currentScrolly = window.scrollY;
+
+      if (currentScrolly > lastScrolly && currentScrolly > 80) {
+        setHideTopBar(true);
+      } else {
+        setHideTopBar(false);
+      }
+      lastScrolly = currentScrolly;
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   return (
     
-    <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+    <header className="sticky top-0 z-50 w-auto border-b  bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
     <div className={showUserLogin ? "pointer-events-none opacity-40" : ""}>
-      <div className="container mx-auto px-4">
-        {/* Top bar */}
-        <div className="flex h-12 items-center justify-between border-b text-sm">
-          <Link
-          href="mailto:work@example.com"
-          className="text-muted-foreground hover:text-primary"
-          >
-           Email us: work@example.com
-          </Link>
-          <div className="flex items-center space-x-4">
-            <Link href="/contact" className="text-muted-foreground hover:text-primary">
-              Contact Us
-            </Link>
-            <Link href="/stores" className="text-muted-foreground hover:text-primary hidden">
-              Store Locator
-            </Link>
-          </div>
+      {/* Top bar */}
+      <div className={` bg-green-600 transition-transform duration-500 ${hideTopBar ? "-translate-y-full" : "translate-y-0"}`}>
+      <div className="border-b border-green-200/40" >
+        <div className="container mx-auto px-4">
+          <nav className="hidden md:flex h-auto flex-wrap items-center justify-center py-2">
+            {headerPages.map((item, index) => (
+              <React.Fragment key={item.name}>
+                <Link
+                  href={item.href}
+                  className="text-[14px] font-medium text-gray-600 hover:text-primary transition-colors"
+                >
+                  {item.name}
+                </Link>
+
+                {/* Separator only between items */}
+                {index !== headerPages.length - 1 && (
+                  <div className="h-3.5 w-px bg-gray-500 mx-3 shrink-0"></div>
+                )}
+              </React.Fragment>
+            ))}
+          </nav>
         </div>
+      </div>
+      </div>
+
 
         {/* Main header */}
-        <div className="flex h-16 items-center justify-between">
-          <div className="flex items-center">
+        <div className="flex items-center justify-between px-4 mt-2 ">
+          <div className="flex items-center flex-shrink gap-4 w-1/4 ">
             <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="md:hidden">
@@ -101,8 +157,31 @@ export default function Header() {
                 </Button>
               </SheetTrigger>
               <SheetContent side="left" className="w-[300px] sm:w-[400px]">
+                {/* Toggle Buttons */}
+                <SheetTitle className="flex justify-around mt-4 border-b pb-2">
+                  <button
+                  onClick={handleShowCategories}
+                  className={`px-4 py-2 rounded-md text-sm font-medium 
+                    ${showCategories ? 'bg-green-600 text-white' : 'text-gray-600 hover:bg-gray-100'}`}
+                  >categories</button>
+                  <button
+                    onClick={handleShowMore}
+                    className={`px-4 py-2 rounded-md text-sm font-medium 
+                      ${showMore ? 'bg-green-600 text-white' : 'text-gray-600 hover:bg-gray-100'}`}
+                  >More</button>
+                </SheetTitle>
                 <nav className="flex flex-col space-y-4">
-                  {navigation.map((item) => (
+                  { showCategories && navigation.map((item) => (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      className="text-lg font-medium"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                  { showMore && headerPages.map((item) => (
                     <Link
                       key={item.name}
                       href={item.href}
@@ -130,34 +209,21 @@ export default function Header() {
               </SheetContent>
             </Sheet>
 
-            <Link href="/" className="ml-4 md:ml-0">
+            <Link href="/" className="flex items-center space-x-2 min-w-fit">
               <div className="flex items-center space-x-2">
                 <div className="h-8 w-8 rounded-full bg-green-600 flex items-center justify-center">
                   <span className="text-white font-bold text-sm">H&B</span>
                 </div>
-                <span className="font-bold text-xl text-green-600">Holland & Barrett</span>
+                <span className="font-bold text-xl text-green-600">Muthuma International </span>
               </div>
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-6">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
-              >
-                {item.name}
-              </Link>
-            ))}
-          </nav>
-
           {/* Search and Actions */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center justify-end flex-grow w-3/4 gap-3">
             {/* Desktop Search */}
-            {/*<div className="hidden sm:flex items-center space-x-2">
-              <form onSubmit={handleSearch} className="relative">
+            <div className="hidden sm:flex items-center space-x-2 flex-1 ml-8 w-auto ">
+              <form onSubmit={handleSearch} className="relative w-full max-w-[1000px] ml-10">
                 <Search
                   className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground cursor-pointer"
                   onClick={handleSearch}
@@ -168,10 +234,16 @@ export default function Header() {
                   value={searchQuery}
                   onChange={handleSearchInputChange}
                   onKeyDown={handleKeyDown}
-                  className="w-[200px] lg:w-[300px] pl-8"
+                  className=" pl-8 w-full"
                 />
               </form>
-            </div>*/}
+            </div>
+            {/* Social Icons */}
+          <div className="hidden md:flex items-center space-x-3">
+            <Link href="https://facebook.com" target="_blank"><FaFacebookF className="text-gray-600 hover:text-blue-600 text-3xl cursor-pointer" /></Link>
+            <Link href="https://instagram.com" target="_blank"><FaInstagram className="text-gray-600 hover:text-pink-500 text-3xl cursor-pointer" /></Link>
+            <Link href="https://tiktok.com" target="_blank"><FaTiktok className="text-gray-600 hover:text-black text-3xl cursor-pointer" /></Link>
+          </div>
 
             {/* Mobile Search Button */}
             <Button variant="ghost" size="icon" className="sm:hidden">
@@ -231,7 +303,19 @@ export default function Header() {
             </div>
           </div>
         </div>
-      </div>
+        <div className="hidden md:flex h-10 items-center justify-center border-t  ">
+          <nav className="hidden md:flex items-center space-x-6">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </nav>
+        </div>
       </div>
     </header>
   )

@@ -11,7 +11,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Email is required" }, { status: 400 })
     }
 
-    // ✅ Sandbox mode: only send to YOUR OWN email until domain is verified
+    //  Sandbox mode: only send to YOUR OWN email until domain is verified
     const data = await resend.emails.send({
       from: "onboarding@resend.dev", // Sandbox sender
       to: "marigasam18@gmail.com",   // Replace with YOUR email

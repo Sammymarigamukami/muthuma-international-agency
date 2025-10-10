@@ -19,9 +19,9 @@ export const metadata: Metadata = {
     shortcut: "/placeholder.svg",
     apple: "/placeholder.svg",
   },
-  title: "Holland & Barrett - Health, Wellness & Natural Products",
+  title: "Muthuma International",
   description:
-    "Discover vitamins, supplements, herbal remedies, beauty and wellness products at Holland & Barrett. Your trusted partner in natural health.",
+    "Discover vitamins, supplements, herbal remedies, beauty and wellness products at Muthuma International. Your trusted partner in natural health.",
   keywords: "vitamins, supplements, herbal remedies, natural health, wellness, beauty products",
 }
 
