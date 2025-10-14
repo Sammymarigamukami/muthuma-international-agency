@@ -244,7 +244,10 @@ export default function Header() {
             <Link href="/" className="flex items-center space-x-2 min-w-fit">
               <div className="flex items-center space-x-2">
                 <div className="flex items-center justify-center border">
-                  <img src="/nairobioutpatientlogo.png" alt="Logo" className=" w-80 object-contain md:w-40 sm:w-40" />
+                  <h2 className="bold">Nairobi Outpatient Gulf LTD</h2>
+                </div>
+                <div>
+                  <p className="bg-green-500 italic">hope within us</p>
                 </div>
               </div>
             </Link>

@@ -20,10 +20,14 @@ export async function POST(req: NextRequest) {
     }
 
     // Extract request body
-    const { phone, amount, customerInfo, items } = await req.json();
+    const body = await req.json();
+    console.log("Request Body:", body);
+    const { phone, amount, customerInfo, items } = body;
+
     if (!phone || !amount || isNaN(amount) || !customerInfo || !items) {
       return NextResponse.json({ success: false, error: "Missing or invalid data" }, { status: 400 });
     }
+    
 
     const userId = session.user.id;
     const email = session.user.email!;
