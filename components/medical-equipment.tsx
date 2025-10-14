@@ -1,13 +1,17 @@
 "use client";
+
+import React from 'react';
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { products } from "@/lib/data";
 import { useState } from "react";
-import Image from "next/image";
+import 'keen-slider/keen-slider.min.css';
+import { useKeenSlider } from 'keen-slider/react';
+
 
 const featuredProducts = products.filter(p => p.featured).slice(0, 5);
 
-export default function CategoryGrid() {
+export default function MedicalEquipment() {
   const [loaded, setLoaded] = useState<{ [key: string]: boolean }>({});
 
   const handleImageLoad = (id: string) => {
@@ -19,12 +23,8 @@ export default function CategoryGrid() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">
-            Shop by Category
+            Medical Equipment & Lab Supplies
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Your trusted source for premium medical equipment and lab supplies —
-            delivering quality, precision, and care for every healthcare need.
-          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">

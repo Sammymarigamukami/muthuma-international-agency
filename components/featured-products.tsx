@@ -15,18 +15,6 @@ export default function FeaturedProducts() {
   const { addItem } = useCart()
   const { toast } = useToast()
   const [wishlist, setWishlist] = useState<number[]>([]);
-  //const [products,setProducts] = useState([]);
-
-  // fetch data from the backend
-  {/*useEffect(() => {
-    const fetchProducts = async () => {
-      const productResponse = await fetch('http://localhost:3001/products');
-      const products = await productResponse.json();
-      console.log(products);
-      setProducts(products);
-    };
-    fetchProducts();
-  },[])*/}
 
   // Get featured products (first 8 products)
   const featuredProducts = products.slice(0, 8)
@@ -78,16 +66,6 @@ export default function FeaturedProducts() {
                   {product.inStock && (
                     <Badge className="absolute top-2 left-2 bg-red-500 hover:bg-red-600">On sale</Badge>
                   )}
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className={`absolute top-2 right-2 ${
-                      wishlist.includes(product.id) ? "text-red-500" : "text-gray-400"
-                    } hover:text-red-500`}
-                    onClick={() => toggleWishlist(product.id)}
-                  >
-                    <Heart className={`h-5 w-5 hidden ${wishlist.includes(product.id) ? "fill-current" : ""}`} />
-                  </Button>
                 </div>
 
                 <div className="p-4">

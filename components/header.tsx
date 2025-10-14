@@ -23,7 +23,6 @@ const headerPages =  [
   { name: "Term and Conditions", href: "/termsandcondition" },
   { name: "Privacy Policy", href: "/privacypolicy" },
   { name: "Return Policy", href: "/returns" },
-  { name: "Contact Us", href: "/contact" },
   { name: "FAQs", href: "/faq" },
   { name: "Blogs", href: "/blogs" },
   { name: "Submit A Prescription", href: "/submit-prescription" },
@@ -33,12 +32,42 @@ const headerPages =  [
 ]
 
 const navigation = [
-  { name: "Home", href: "/" },
-  { name: "Vitamins", href: "/products?category=Vitamins" },
-  { name: "Supplements", href: "/products?category=Supplements" },
-  { name: "Herbal", href: "/products?category=Herbal" },
-  { name: "Beauty", href: "/products?category=Beauty" },
-  { name: "Wellness", href: "/products?category=Wellness" },
+  { name: "Medical Equipment",
+    sub: [
+      { id: 1, name: "Diagnostic Devices"},
+      { id: 2, name: "Monitoring Tools"},
+      { id: 3, name: "Surgical Instruments"},
+    ],
+  },
+  {
+      name: "Medical Supplies",
+      sub: [
+        { id: 4, name: "Gloves" },
+        { id: 5, name: "Masks" },
+        { id: 6, name: "Bandages" },
+      ],
+    },
+    {
+      name: "Homecare Equipment",
+      sub: [
+        { id: 7, name: "Thermometers" },
+        { id: 8, name: "BP Monitors" },
+      ],
+    },
+    {
+      name: "Lab Equipment",
+      sub: [
+        { id: 9, name: "Microscopes" },
+        { id: 10, name: "Centrifuges" },
+      ],
+    },
+    {
+      name: "Lab Glassware",
+      sub: [
+        { id: 11, name: "Beakers" },
+        { id: 12, name: "Test Tubes" },
+      ],
+    },
 ]
 
 
@@ -53,6 +82,8 @@ export default function Header() {
   const [ showCategories, setShowCategories] = useState(true);
   const [ showMore, setShowMore] = useState(false);
   const [ hideTopBar, setHideTopBar] = useState(false);
+  const [ activeMenu, setActiveMenu] = useState<string | null>(null);
+  const [ isShrunk, setIsShrunk] = useState(false);
 
   let lastScrolly = 0;
 
@@ -103,26 +134,24 @@ export default function Header() {
 
   // hide top bar when scrolling dowm, show when scrolling up
 
-  useEffect (() => {
-    const handleScroll = () => {
-      const currentScrolly = window.scrollY;
-
-      if (currentScrolly > lastScrolly && currentScrolly > 80) {
-        setHideTopBar(true);
-      } else {
-        setHideTopBar(false);
-      }
-      lastScrolly = currentScrolly;
-    };
+  useEffect(() => {
+    const handleScroll = () => setIsShrunk(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   return (
     
-    <header className="sticky top-0 z-50 w-auto border-b  bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+    <header
+  className={`fixed top-0 z-50 left-0 w-full border-b transition-all duration-300 ${
+    isShrunk
+      ? "bg-white/80 backdrop-blur-sm shadow-md py-2"
+      : "bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 py-4"
+  }`}
+>
     <div className={showUserLogin ? "pointer-events-none opacity-40" : ""}>
       {/* Top bar */}
-      <div className={` bg-green-600 transition-transform duration-500 ${hideTopBar ? "-translate-y-full" : "translate-y-0"}`}>
+      {!isShrunk &&(
+      <div className="bg-green-600 mt-0 hidden md:flex ">
       <div className="border-b border-green-200/40" >
         <div className="container mx-auto px-4">
           <nav className="hidden md:flex h-auto flex-wrap items-center justify-center py-2">
@@ -145,6 +174,7 @@ export default function Header() {
         </div>
       </div>
       </div>
+      )}
 
 
         {/* Main header */}
@@ -171,10 +201,12 @@ export default function Header() {
                   >More</button>
                 </SheetTitle>
                 <nav className="flex flex-col space-y-4">
+
                   { showCategories && navigation.map((item) => (
+                    
                     <Link
                       key={item.name}
-                      href={item.href}
+                      href= {`/products?category=${item.name}`}
                       className="text-lg font-medium"
                       onClick={() => setIsMenuOpen(false)}
                     >
@@ -211,10 +243,9 @@ export default function Header() {
 
             <Link href="/" className="flex items-center space-x-2 min-w-fit">
               <div className="flex items-center space-x-2">
-                <div className="h-8 w-8 rounded-full bg-green-600 flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">H&B</span>
+                <div className="flex items-center justify-center border">
+                  <img src="/nairobioutpatientlogo.png" alt="Logo" className=" w-80 object-contain md:w-40 sm:w-40" />
                 </div>
-                <span className="font-bold text-xl text-green-600">Muthuma International </span>
               </div>
             </Link>
           </div>
@@ -303,16 +334,42 @@ export default function Header() {
             </div>
           </div>
         </div>
+        {/* Desktop Menu */}
         <div className="hidden md:flex h-10 items-center justify-center border-t  ">
           <nav className="hidden md:flex items-center space-x-6">
+            <Link className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors" href="/">
+            Home
+            </Link>
             {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+              <nav
+              key={item.name}
+              className="relative group"
+              onMouseEnter={() => setActiveMenu(item.name)}
+              onMouseLeave={() => setActiveMenu(null)}
               >
-                {item.name}
-              </Link>
+                <Link
+                  key={item.name}
+                  href= {`/products?category=${encodeURIComponent(item.name)}`}
+                  className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {item.name}
+                </Link>
+              {/* Dropdown for sub-menu */}
+              {activeMenu === item.name && (
+                <ul className="absolute left-0 top-full mt-2 w-56 bg-white shadow-lg rounded-lg py-2 z-50 border border-gray-100">
+                  {item.sub.map((subItem) => (
+                    <li key={subItem.id}>
+                      <Link
+                        href={`/products/${subItem.id}`}
+                        className="block px-4 py-2 text-sm text-gray-700 duration-200 cursor-pointer hover:bg-green-50 hover:text-green-400"
+                      >
+                        {subItem.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              </nav>
             ))}
           </nav>
         </div>

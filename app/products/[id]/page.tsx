@@ -65,6 +65,7 @@ export default function ProductPage({ params }: ProductPageProps) {
           <div className="grid grid-cols-3 gap-4">
             {images.map((img, index) => (
               <button
+                type="button"
                 key={index}
                 onClick={() => setSelectedImage(index)}
                 className={`aspect-square relative overflow-hidden rounded-lg bg-gray-100 border-2 ${

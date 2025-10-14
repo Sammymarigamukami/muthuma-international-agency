@@ -32,8 +32,8 @@ export default function RootLayout({children,}: {children: React.ReactNode})
       <body className={inter.className}>
         <AppProvider>
         <CartProvider>
-          <Header />
-          <main>{children}</main>
+          <Header/>
+          <main className="pt-20 lg:pt-28">{children}</main>
           <Footer />
           <Toaster />
           <SessionWatcher />

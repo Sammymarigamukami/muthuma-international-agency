@@ -12,13 +12,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import ProductCard from "@/components/product-card"
 import { products } from "@/lib/data"
 
-const categories = ["All", "Vitamins", "Supplements", "Herbal", "Beauty", "Wellness",]
-const priceRanges = [
-  { label: "Under Ksh2500", min: 0, max: 10 },
-  { label: "Ksh2500 - Ksh3500", min: 10, max: 25 },
-  { label: "Ksh3500 - Ksh4500", min: 25, max: 50 },
-  { label: "Over Ksh4500", min: 50, max: Number.POSITIVE_INFINITY },
-]
+const categories = [
+  "All",
+  ...new Set(products.map((products) => products.category))
+];
+console.log(categories);
 
 export default function ProductsPage() {
   const searchParams = useSearchParams()
@@ -27,18 +25,6 @@ export default function ProductsPage() {
   const [selectedPriceRanges, setSelectedPriceRanges] = useState<string[]>([])
   const [sortBy, setSortBy] = useState("name")
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
-  //const [products,setProducts] = useState([]);
-
-  // fetch data from the backend
-  {/*useEffect(() => {
-    const fetchProducts = async () => {
-      const productResponse = await fetch('http://localhost:3001/products');
-      const products = await productResponse.json();
-      console.log(products);
-      setProducts(products);
-    };
-    fetchProducts();
-  },[]) */}
 
   // Handle URL parameters
   useEffect(() => {
@@ -71,17 +57,6 @@ export default function ProductsPage() {
     // Filter by category
     if (selectedCategory !== "All") {
       filtered = filtered.filter((product) => product.category === selectedCategory)
-    }
-
-    // Filter by price ranges
-    if (selectedPriceRanges.length > 0) {
-      filtered = filtered.filter((product) => {
-        return selectedPriceRanges.some((range) => {
-          const priceRange = priceRanges.find((r) => r.label === range)
-          if (!priceRange) return false
-          return product.price >= priceRange.min && product.price <= priceRange.max
-        })
-      })
     }
 
     // Sort products
@@ -180,25 +155,6 @@ export default function ProductsPage() {
                     ))}
                   </SelectContent>
                 </Select>
-              </div>
-
-              {/* Price Range Filter */}
-              <div>
-                <Label>Price Range</Label>
-                <div className="mt-2 space-y-2">
-                  {priceRanges.map((range) => (
-                    <div key={range.label} className="flex items-center space-x-2">
-                      <Checkbox
-                        id={range.label}
-                        checked={selectedPriceRanges.includes(range.label)}
-                        onCheckedChange={(checked) => handlePriceRangeChange(range.label, checked as boolean)}
-                      />
-                      <Label htmlFor={range.label} className="text-sm">
-                        {range.label}
-                      </Label>
-                    </div>
-                  ))}
-                </div>
               </div>
             </CardContent>
           </Card>

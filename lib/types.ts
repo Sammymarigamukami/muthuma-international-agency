@@ -19,6 +19,7 @@ export interface Product {
   featured: boolean
   inStock: boolean
   tags: string[]
+
 }
 
 export interface CartItem extends Product {
