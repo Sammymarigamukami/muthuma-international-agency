@@ -247,7 +247,7 @@ export default function Header() {
                   <h2 className="bold">Nairobi Outpatient Gulf LTD</h2>
                 </div>
                 <div>
-                  <p className="bg-green-500 italic">hope within us</p>
+                  <p className="text-green-500 italic">hope within us</p>
                 </div>
               </div>
             </Link>
