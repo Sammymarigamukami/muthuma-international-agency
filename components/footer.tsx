@@ -8,12 +8,12 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           {/* Company Info */}
           <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <div className="h-8 w-8 rounded-full bg-green-600 flex items-center justify-center">
-                <span className="text-white font-bold text-sm">H&B</span>
-              </div>
-              <span className="font-bold text-xl text-green-400">Muthuma International Agency</span>
-            </div>
+                <div className="place-item-center">
+                  <img
+                   className="h-15 sm:h-8 md:h-18 lg:h-24 w-auto object-contain"
+                   src="footerlogo.png" 
+                   alt="footer logo" />
+                </div>
               <p className="text-gray-300 text-sm leading-relaxed">
                 Muthuma International Agency is a trusted healthcare provider offering genuine medical 
                 supplies, prescription medicines, and wellness essentials. Combining the expertise of 

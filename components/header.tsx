@@ -242,14 +242,12 @@ export default function Header() {
             </Sheet>
 
             <Link href="/" className="flex items-center space-x-2 min-w-fit">
-              <div className="flex items-center space-x-2">
-                <div className="flex items-center justify-center border">
-                  <h2 className="bold">Nairobi Outpatient Gulf LTD</h2>
+                <div className="place-item-center">
+                  <img
+                   className="h-10 sm:h-12 md:h-14 lg:h-16 w-auto object-contain"
+                   src="/outpatientlogo.png" 
+                   alt="logo" />
                 </div>
-                <div>
-                  <p className="text-green-500 italic">hope within us</p>
-                </div>
-              </div>
             </Link>
           </div>
 

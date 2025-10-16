@@ -6,7 +6,7 @@ import Header from "@/components/header"
 import Footer from "@/components/footer"
 import { CartProvider } from "@/contexts/cart-context"
 import { Toaster } from "sonner"  
-import { AppProvider, useAppContext } from "@/contexts/AppContext"
+import { AppProvider } from "@/contexts/AppContext"
 import SessionWatcher from "@/components/SessionWatcher"
 import AuthWrapper from "@/components/authWrapper"
 
