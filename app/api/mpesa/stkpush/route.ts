@@ -32,6 +32,8 @@ export async function POST(req: NextRequest) {
     const userId = session.user.id;
     const email = session.user.email!;
 
+    console.log("User Info:", { userId, email });
+
     // Create order
     const [newOrder] = await db
       .insert(orders)
@@ -69,6 +71,11 @@ export async function POST(req: NextRequest) {
         TransactionDesc: "Payment",
       }),
     });
+
+    if (!res.ok) {
+      console.error("STK Push request failed:", await res.text());
+      return NextResponse.json({ success: false, error: "STK Push request failed" }, { status: 500 });
+    }
 
     const data = await res.json();
     console.log("STK Push Response:", JSON.stringify(data, null, 2));

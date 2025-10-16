@@ -68,6 +68,7 @@ export const verification = pgTable("verification", {
 export const payment = pgTable("payment", {
   id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
   userId: text("user_id").notNull().references(() => user.id, { onDelete: "cascade" }),
+  orderId: integer("order_id").references(() => orders.id, { onDelete: "set null" }),
   email: text("email").notNull(),
   phone: text("phone").notNull(),
   amount: integer("amount").notNull(),
