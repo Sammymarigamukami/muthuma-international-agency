@@ -31,11 +31,13 @@ export async function GET(req: NextRequest) {
 
     // Return the status of payment
     return NextResponse.json({
+      success: true,
       checkoutRequestId: record.checkoutRequestId,
       status: record.status,
       amount: record.amount,
       phoneNumber: record.phone,
       createdAt: record.createdAt,
+      pollInterval: 3000, // Suggest polling interval of 3 seconds
     });
   } catch (error) {
     console.error("Error fetching payment status:", error);

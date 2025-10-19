@@ -89,6 +89,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (err) {
     console.error("Callback error:", err);
-    return NextResponse.json({ success: false }, { status: 200 }); // still 200 to stop retries
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

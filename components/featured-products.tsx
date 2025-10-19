@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/use-toast"
 import { ToastAction } from "@radix-ui/react-toast"
 import { products } from "@/lib/data"
 
+
 export default function FeaturedProducts() {
   const { addItem } = useCart()
   const { toast } = useToast()

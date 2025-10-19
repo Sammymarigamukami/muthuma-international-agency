@@ -32,31 +32,6 @@ export default function HeroSection() {
                 </Button>
               </Link>
             </div>
-
-            {/* Trust indicators */}
-            <div className="grid grid-cols-2 gap-6 pt-8 border-t border-gray-200">
-              <div className="flex items-center space-x-3">
-                <Shield className="h-8 w-8 text-green-600" />
-                <div>
-                  <p className="font-semibold text-gray-900">Quality Assured</p>
-                  <p className="text-sm text-gray-600">Tested & Certified</p>
-                </div>
-              </div>
-              <div className=" items-center space-x-3 hidden">
-                <Truck className="h-8 w-8 text-green-600" />
-                <div>
-                  <p className="font-semibold text-gray-900">Pay After Delivery</p>
-                  <p className="text-sm text-gray-600">Orders over Ksh2500</p>
-                </div>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Award className="h-8 w-8 text-green-600" />
-                <div>
-                  <p className="font-semibold text-gray-900">2+ Years</p>
-                  <p className="text-sm text-gray-600">Trusted Heritage</p>
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Hero Image */}
