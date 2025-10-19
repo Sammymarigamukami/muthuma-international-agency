@@ -4,6 +4,12 @@ import { db } from "@/dp/drizzle";
 import { payment, orders } from "@/dp/schema";
 import { eq } from "drizzle-orm";
 
+export async function GET() {
+  return NextResponse.json({
+    message: "Callback route live ✅ - POST required for STK callback",
+  });
+}
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
