@@ -12,6 +12,7 @@ import { ToastAction } from "@radix-ui/react-toast"
 import { products } from "@/lib/data"
 
 
+
 export default function FeaturedProducts() {
   const { addItem } = useCart()
   const { toast } = useToast()
@@ -57,7 +58,11 @@ export default function FeaturedProducts() {
             <Card key={product.id} className="group hover:shadow-lg transition-all duration-300">
               <CardContent className="p-0">
                 <div className="relative overflow-hidden rounded-t-lg">
-                  <Link href={`/products/${product.id}`}>
+                  <Link
+                    href={`/products/${product.category?.toLowerCase()}/${product.name
+                      ?.toLowerCase()
+                      .replace(/\s+/g, "-")}/${product.id}`}
+                  >
                   <img
                     src={product.image}
                     alt={product.name}

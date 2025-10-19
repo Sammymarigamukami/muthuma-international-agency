@@ -49,7 +49,11 @@ export default function ProductCard({ product }: ProductCardProps) {
     <Card className="group hover:shadow-lg transition-all duration-300 h-full">
       <CardContent className="p-0 h-full flex flex-col">
         <div className="relative overflow-hidden rounded-t-lg">
-          <Link href={`/products/${product.id}`}>
+          <Link
+            href={`/products/${product.category?.toLowerCase()}/${product.name
+              ?.toLowerCase()
+              .replace(/\s+/g, "-")}/${product.id}`}
+          >
           <img
             src={product.image}
             alt={product.name}
