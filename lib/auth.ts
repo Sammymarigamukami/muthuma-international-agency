@@ -57,7 +57,7 @@ export const auth = betterAuth({
         provider: "pg", 
         schema,
     }),
-    plugins: [nextCookies()],
+    //plugins: process.env.NODE_ENV === "production" ? [nextCookies()] : [],
 
       cors: {
     origin: [

@@ -5,6 +5,7 @@ import { payment, orders } from "@/dp/schema";
 import { eq } from "drizzle-orm";
 
 export async function GET() {
+  console.log("MPESA Callback route accessed via GET");
   return NextResponse.json({
     message: "Callback route live ✅ - POST required for STK callback",
   });

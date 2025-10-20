@@ -15,5 +15,9 @@ export async function middleware(request: NextRequest) {
 }
  
 export const config = {
-	matcher: ["/checkout"], // Specify the routes the middleware applies to
+	  matcher: [
+    // Apply middleware to everything EXCEPT API routes and the callback
+    "/((?!api/mpesa/callback|api/auth|_next/static|_next/image|favicon.ico).*)",
+  ],
+
 };
