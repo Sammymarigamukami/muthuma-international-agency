@@ -54,6 +54,10 @@ export async function POST(req: NextRequest) {
     const password = buildStkPassword(shortcode, passkey, timestamp);
     const token = await getAccessToken();
 
+    const callbackURL = `${process.env.BASE_URL}/api/mpesa/callback`;
+    console.log("Callback URL:", callbackURL);
+
+
     const res = await fetch(`${darajaBase}/mpesa/stkpush/v1/processrequest`, {
       method: "POST",
       headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
