@@ -1,4 +1,8 @@
 // app/api/mpesa/callback/route.ts
+
+export const runtime = "nodejs";
+
+
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/dp/drizzle";
 import { payment, orders } from "@/dp/schema";
