@@ -1,5 +1,5 @@
 // app/api/mpesa/stkpush/route.ts
-import { NextRequest, NextResponse} from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/dp/drizzle";
 import { orders, payment } from "@/dp/schema";
 import {
@@ -9,32 +9,28 @@ import {
   normalizeMsisdn,
   darajaBase,
 } from "@/lib/mpesa";
-import { auth } from "@/lib/auth"; // Better Auth
+import { auth } from "@/lib/auth";
+
+// ✅ Prevent static build evaluation
+export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
   try {
-    // Authenticate user
     const session = await auth.api.getSession({ headers: req.headers });
     if (!session) {
       return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
     }
 
-    // Extract request body
     const body = await req.json();
-    console.log("Request Body:", body);
     const { phone, amount, customerInfo, items } = body;
 
     if (!phone || !amount || isNaN(amount) || !customerInfo || !items) {
       return NextResponse.json({ success: false, error: "Missing or invalid data" }, { status: 400 });
     }
-    
 
     const userId = session.user.id;
     const email = session.user.email!;
 
-    console.log("User Info:", { userId, email });
-
-    // Create order
     const [newOrder] = await db
       .insert(orders)
       .values({
@@ -47,16 +43,11 @@ export async function POST(req: NextRequest) {
 
     const orderId = newOrder.id;
 
-    // Prepare STK Push request
     const timestamp = mpesaTimestamp();
     const shortcode = process.env.DARAJA_SHORTCODE!;
     const passkey = process.env.DARAJA_PASSKEY!;
     const password = buildStkPassword(shortcode, passkey, timestamp);
     const token = await getAccessToken();
-
-    const callbackURL = `${process.env.BASE_URL}/api/mpesa/callback`;
-    console.log("Callback URL:", callbackURL);
-
 
     const res = await fetch(`${darajaBase}/mpesa/stkpush/v1/processrequest`, {
       method: "POST",
@@ -82,16 +73,7 @@ export async function POST(req: NextRequest) {
     }
 
     const data = await res.json();
-    console.log("STK Push Response:", JSON.stringify(data, null, 2));
 
-    if (data.errorCode || data.errorMessage) {
-      return NextResponse.json(
-        { success: false, error: data.errorMessage || "STK Push request failed" },
-        { status: 400 }
-      );
-    }
-
-    // Save payment request to DB
     await db.insert(payment).values({
       userId,
       email,
@@ -100,20 +82,17 @@ export async function POST(req: NextRequest) {
       status: "PENDING",
       merchantRequestId: data.MerchantRequestID || null,
       checkoutRequestId: data.CheckoutRequestID || null,
-      customerInfo, // store frontend customer info as JSON
-      items,        // store cart items as JSON
-    }
-  );
-  console.log("user information saved to database");
+      customerInfo,
+      items,
+    });
 
     return NextResponse.json({
       success: true,
       orderId,
-      merchantRequestId: data.MerchantRequestID || null,
-      checkoutRequestId: data.CheckoutRequestID || null,
-      responseCode: data.ResponseCode || null,
-      customerMessage: data.CustomerMessage || null,
-      consolelog: "STK Push initiated",
+      merchantRequestId: data.MerchantRequestID,
+      checkoutRequestId: data.CheckoutRequestID,
+      responseCode: data.ResponseCode,
+      customerMessage: data.CustomerMessage,
     });
 
   } catch (err) {
