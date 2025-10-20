@@ -1,3 +1,4 @@
+import { sql } from "drizzle-orm";
 import {
   pgTable,
   text,
@@ -75,7 +76,7 @@ export const orders = pgTable("orders", {
 
 
 export const payment = pgTable("payment", {
-  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  id: text("id").primaryKey().default(sql`gen_random_uuid()`),
   userId: text("user_id").notNull().references(() => user.id, { onDelete: "cascade" }),
   orderId: integer("order_id").references(() => orders.id, { onDelete: "set null" }),
   email: text("email").notNull(),
