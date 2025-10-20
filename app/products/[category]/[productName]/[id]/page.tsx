@@ -1,227 +1,259 @@
 "use client"
 
-import { useState, useMemo, useEffect } from "react"
-import { useSearchParams } from "next/navigation"
-import { Search, Filter, Grid, List } from "lucide-react"
-import { Input } from "@/components/ui/input"
+import { use, useState } from "react"
+import { notFound } from "next/navigation"
+import Image from "next/image"
+import { Star, Heart, ShoppingCart, Minus, Plus, Shield, Truck, RotateCcw } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Label } from "@/components/ui/label"
+import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import ProductCard from "@/components/product-card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Separator } from "@/components/ui/separator"
+import { useCart } from "@/contexts/cart-context"
+import { useToast } from "@/hooks/use-toast"
 import { products } from "@/lib/data"
 
-const categories = [
-  "All",
-  ...new Set(products.map((products) => products.category))
-];
-console.log(categories);
+interface ProductPageProps {
+  params: Promise< {
+    category: string
+    id: string
+  }>
+}
 
-export default function ProductsPage() {
-  const searchParams = useSearchParams()
-  const [searchTerm, setSearchTerm] = useState("")
-  const [selectedCategory, setSelectedCategory] = useState("All")
-  const [selectedPriceRanges, setSelectedPriceRanges] = useState<string[]>([])
-  const [sortBy, setSortBy] = useState("name")
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
+export default function ProductPage({ params }: ProductPageProps) {
+  const [quantity, setQuantity] = useState(1)
+  const [selectedImage, setSelectedImage] = useState(0)
+  const { addItem } = useCart()
+  const { toast } = useToast()
+  const { category, id } = use(params)
 
-  // Handle URL parameters
-  useEffect(() => {
-    const categoryParam = searchParams.get("category")
-    const searchParam = searchParams.get("search")
+  // Find product by slug instead of ID
+  const product = products.find((p) => String(p.id) === id)
 
-    if (categoryParam && categories.includes(categoryParam)) {
-      setSelectedCategory(categoryParam)
-    }
+  if (!product) {
+    notFound()
+  }
 
-    if (searchParam) {
-      setSearchTerm(searchParam)
-    }
-  }, [searchParams])
-
-  const filteredProducts = useMemo(() => {
-    let filtered = products
-
-    // Filter by search term
-    if (searchTerm) {
-      filtered = filtered.filter(
-        (product) =>
-          product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          product.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          (product.tags && product.tags.some((tag) => tag.toLowerCase().includes(searchTerm.toLowerCase()))),
-      )
-    }
-
-    // Filter by category
-    if (selectedCategory !== "All") {
-      filtered = filtered.filter((product) => product.category === selectedCategory)
-    }
-
-    // Sort products
-    filtered.sort((a, b) => {
-      switch (sortBy) {
-        case "price-low":
-          return a.price - b.price
-        case "price-high":
-          return b.price - a.price
-        case "rating":
-          return b.rating - a.rating
-        case "name":
-        default:
-          return a.name.localeCompare(b.name)
-      }
+  const handleAddToCart = () => {
+    addItem(product, quantity)
+    toast({
+      title: "Added to cart",
+      description: `${quantity} x ${product.name} added to your cart.`,
     })
-
-    return filtered
-  }, [searchTerm, selectedCategory, selectedPriceRanges, sortBy])
-
-  const handlePriceRangeChange = (range: string, checked: boolean) => {
-    if (checked) {
-      setSelectedPriceRanges([...selectedPriceRanges, range])
-    } else {
-      setSelectedPriceRanges(selectedPriceRanges.filter((r) => r !== range))
-    }
   }
 
-  const getPageTitle = () => {
-    if (searchTerm && selectedCategory !== "All") {
-      return `${selectedCategory} - "${searchTerm}"`
-    } else if (searchTerm) {
-      return `Search Results for "${searchTerm}"`
-    } else if (selectedCategory !== "All") {
-      return selectedCategory
-    }
-    return "All Products"
+  const renderStars = (rating: number) => {
+    return Array.from({ length: 5 }, (_, i) => (
+      <Star key={i} className={`h-4 w-4 ${i < rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}`} />
+    ))
   }
 
-  const getPageDescription = () => {
-    if (searchTerm && selectedCategory !== "All") {
-      return `${selectedCategory.toLowerCase()} products matching "${searchTerm}"`
-    } else if (searchTerm) {
-      return `Products matching "${searchTerm}"`
-    } else if (selectedCategory !== "All") {
-      return `Browse our ${selectedCategory.toLowerCase()} collection`
-    }
-    return "Discover our complete range of health and wellness products"
-  }
+  // Fallback if no images
+  const images = product.images?.length ? product.images : [product.image]
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">{getPageTitle()}</h1>
-        <p className="text-gray-600">{getPageDescription()}</p>
-      </div>
+      <div className="grid lg:grid-cols-2 gap-12">
+        {/* MAIN IMAGE */}
+        <div className="space-y-4">
+          <div className="aspect-square relative overflow-hidden rounded-lg bg-gray-100">
+            <Image src={images[selectedImage]} alt={product.name} fill className="object-cover" />
+            {product.discount && <Badge className="absolute top-4 left-4 bg-red-500">-{product.discount}%</Badge>}
+          </div>
 
-      <div className="grid lg:grid-cols-4 gap-8">
-        {/* Filters Sidebar */}
-        <div className="lg:col-span-1">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <Filter className="h-5 w-5 mr-2" />
-                Filters
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {/* Search */}
-              <div>
-                <Label htmlFor="search">Search Products</Label>
-                <div className="relative mt-2">
-                  <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    id="search"
-                    placeholder="Search..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-8"
-                  />
-                </div>
-              </div>
-
-              {/* Category Filter */}
-              <div>
-                <Label>Category</Label>
-                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                  <SelectTrigger className="mt-2">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categories.map((category) => (
-                      <SelectItem key={category} value={category}>
-                        {category}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </CardContent>
-          </Card>
+          {/* THUMBNAIL IMAGES */}
+          <div className="grid grid-cols-3 gap-4">
+            {images.map((img, index) => (
+              <button
+                key={index}
+                onClick={() => setSelectedImage(index)}
+                className={`aspect-square relative overflow-hidden rounded-lg bg-gray-100 border-2 ${
+                  selectedImage === index ? "border-green-600" : "border-transparent"
+                }`}
+              >
+                <Image src={img} alt={`${product.name} ${index + 1}`} fill className="object-cover" />
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* Products Grid */}
-        <div className="lg:col-span-3">
-          {/* Toolbar */}
-          <div className="flex justify-between items-center mb-6">
-            <p className="text-gray-600">
-              Showing {filteredProducts.length} of {products.length} products
-            </p>
-
-            <div className="flex items-center space-x-4">
-              <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="w-[180px] hidden">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="hidden">
-                  <SelectItem value="name">Sort by Name</SelectItem>
-                  <SelectItem value="price-low">Price: Low to High</SelectItem>
-                  <SelectItem value="price-high">Price: High to Low</SelectItem>
-                  <SelectItem value="rating">Highest Rated</SelectItem>
-                </SelectContent>
-              </Select>
-
-              <div className="hidden border rounded-md">
-                <Button
-                  variant={viewMode === "grid" ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => setViewMode("grid")}
-                >
-                  <Grid className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant={viewMode === "list" ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => setViewMode("list")}
-                >
-                  <List className="h-4 w-4" />
-                </Button>
+        {/* Product Details */}
+        <div className="space-y-6">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">{product.name}</h1>
+            <div className="flex items-center space-x-4 mb-4">
+              <div className="flex items-center space-x-1">
+                {renderStars(product.rating)}
+                <span className="text-sm text-gray-500">({product.reviews} reviews)</span>
               </div>
+              <Badge variant="secondary">{product.category}</Badge>
             </div>
           </div>
 
-          {/* Products */}
-          {filteredProducts.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-gray-500">No products found matching your criteria.</p>
-              {searchTerm && (
-                <Button variant="outline" className="mt-4 bg-transparent" onClick={() => setSearchTerm("")}>
-                  Clear Search
+          <div className="flex items-center space-x-4">
+            <span className="text-3xl font-bold text-green-600">Ksh{product.price}</span>
+            {product.originalPrice && (
+              <span className="text-xl text-gray-500 line-through">Ksh{product.originalPrice}</span>
+            )}
+          </div>
+
+          <p className="text-gray-600 leading-relaxed">{product.description}</p>
+
+          {/* Quantity and Add to Cart */}
+          <div className="space-y-4">
+            <div className="flex items-center space-x-4">
+              <span className="font-medium">Quantity:</span>
+              <div className="flex items-center border rounded-md">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  disabled={quantity <= 1}
+                >
+                  <Minus className="h-4 w-4" />
                 </Button>
-              )}
+                <span className="px-4 py-2 font-medium">{quantity}</span>
+                <Button variant="ghost" size="icon" onClick={() => setQuantity(quantity + 1)}>
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
-          ) : (
-            <div
-              className={`grid gap-6 ${
-                viewMode === "grid" ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" : "grid-cols-1"
-              }`}
-            >
-              {filteredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
+
+            <div className="flex space-x-4">
+              <Button onClick={handleAddToCart} className="flex-1 bg-green-600 hover:bg-green-700" size="lg">
+                <ShoppingCart className="h-5 w-5 mr-2" />
+                Add to Cart
+              </Button>
+              <Button className="hidden" variant="outline" size="lg">
+                <Heart className="h-5 w-5" />
+              </Button>
             </div>
-          )}
+          </div>
+
+          {/* Features */}
+          <div className="grid grid-cols-3 gap-4 pt-6 border-t">
+            <div className="text-center">
+              <Truck className="h-6 w-6 mx-auto mb-2 text-green-600" />
+              <p className="text-sm font-medium">Home Delivery</p>
+              <p className="text-xs text-gray-500">On orders over Ksh2500</p>
+            </div>
+            <div className="text-center">
+              <Shield className="h-6 w-6 mx-auto mb-2 text-green-600" />
+              <p className="text-sm font-medium">Quality Assured</p>
+              <p className="text-xs text-gray-500">Tested & certified</p>
+            </div>
+            <div className="text-center">
+              <RotateCcw className="h-6 w-6 mx-auto mb-2 text-green-600" />
+              <p className="text-sm font-medium">Easy Returns</p>
+              <p className="text-xs text-gray-500">30-day guarantee</p>
+            </div>
+          </div>
         </div>
+      </div>
+
+      {/* Product Information Tabs */}
+      <div className="mt-16">
+        <Tabs defaultValue="description" className="w-full">
+          <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger value="description">Description</TabsTrigger>
+            <TabsTrigger value="ingredients">Ingredients</TabsTrigger>
+            <TabsTrigger value="usage">Usage</TabsTrigger>
+            <TabsTrigger value="reviews">Reviews</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="description" className="mt-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Product Description</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 leading-relaxed">{product.description}</p>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="ingredients" className="mt-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Ingredients</CardTitle>
+              </CardHeader>
+              <CardContent>
+                {product.ingredients?.length ? (
+                  <ul className="list-disc list-inside space-y-2 text-gray-600">
+                    {product.ingredients.map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-gray-500">No ingredient information available.</p>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="usage" className="mt-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Usage Instructions</CardTitle>
+              </CardHeader>
+              <CardContent>
+                {product.usage?.length ? (
+                  <div className="space-y-4 text-gray-600">
+                    {product.usage.map((item, index) => (
+                      <p key={index}>
+                        <strong>{item.label}:</strong> {item.value}
+                      </p>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-gray-500">No usage instructions available.</p>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="reviews" className="mt-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Customer Reviews</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-6">
+                  <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-1">{renderStars(product.rating)}</div>
+                    <span className="text-lg font-medium">{product.rating}/5</span>
+                    <span className="text-gray-500">({product.reviews} reviews)</span>
+                  </div>
+
+                  <Separator />
+
+                  <div className="space-y-4">
+                    <div className="border-b pb-4">
+                      <div className="flex items-center space-x-2 mb-2">
+                        {renderStars(5)}
+                        <span className="font-medium">Sarah M.</span>
+                      </div>
+                      <p className="text-gray-600">
+                        "Excellent product! I've been using this for 3 months and feel much more energetic. Great
+                        quality and fast delivery."
+                      </p>
+                    </div>
+
+                    <div className="border-b pb-4">
+                      <div className="flex items-center space-x-2 mb-2">
+                        {renderStars(4)}
+                        <span className="font-medium">Sam Mariga</span>
+                      </div>
+                      <p className="text-gray-600">
+                        "Good value for money. The packaging is excellent and the product seems to be working well."
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   )

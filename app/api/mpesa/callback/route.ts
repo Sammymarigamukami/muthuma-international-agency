@@ -1,7 +1,6 @@
 // app/api/mpesa/callback/route.ts
-
+export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
-
 
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/dp/drizzle";
@@ -9,16 +8,16 @@ import { payment, orders } from "@/dp/schema";
 import { eq } from "drizzle-orm";
 
 export async function GET() {
-  console.log("MPESA Callback route accessed via GET");
+  console.log("✅ MPESA Callback route accessed via GET");
   return NextResponse.json({
-    message: "Callback route live ✅ - POST required for STK callback",
+    message: "Callback route live  - POST required for STK callback",
   });
 }
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    console.log("Callback body:", JSON.stringify(body, null, 2));
+    console.log(" Callback body:", JSON.stringify(body, null, 2));
 
     const result = body.Body?.stkCallback;
     if (!result) {
@@ -29,11 +28,11 @@ export async function POST(req: NextRequest) {
     }
 
     const checkoutRequestId = result.CheckoutRequestID;
-    const resultCode = result.ResultCode; // 0 = success
+    const resultCode = result.ResultCode;
     const resultDesc = result.ResultDesc;
 
     if (resultCode === 0) {
-      // Extract metadata safely
+      //  Payment success
       const metadata = result.CallbackMetadata?.Item || [];
       const amount = metadata.find((i: any) => i.Name === "Amount")?.Value;
       const receiptNumber = metadata.find(
@@ -43,41 +42,39 @@ export async function POST(req: NextRequest) {
 
       const updateData: any = {
         status: "SUCCESS",
-        receiptNumber: receiptNumber || null,
         updatedAt: new Date(),
+        receiptNumber: receiptNumber || null,
       };
-
 
       if (amount) updateData.amount = amount;
       if (phone) updateData.phone = phone;
 
-      // Update payment
       await db
         .update(payment)
         .set(updateData)
         .where(eq(payment.checkoutRequestId, checkoutRequestId));
 
-      // Get the payment row so we know which order it belongs to
       const [updatedPayment] = await db
         .select()
         .from(payment)
         .where(eq(payment.checkoutRequestId, checkoutRequestId));
 
       if (updatedPayment?.orderId) {
-        // Update the related order status
         await db
           .update(orders)
-          .set({ status: "SUCCESS"})
+          .set({ status: "SUCCESS" })
           .where(eq(orders.id, updatedPayment.orderId));
       }
+
+      console.log("✅ Payment updated successfully:", updateData);
     } else {
-      // mark as failed in both tables
+      //  Payment failed
       await db
         .update(payment)
         .set({
           status: "FAILED",
-          receiptNumber: null,
           updatedAt: new Date(),
+          receiptNumber: null,
         })
         .where(eq(payment.checkoutRequestId, checkoutRequestId));
 
@@ -93,13 +90,16 @@ export async function POST(req: NextRequest) {
           .where(eq(orders.id, failedPayment.orderId));
       }
 
-      console.warn(`STK Push failed: ${resultDesc}`);
+      console.warn(`⚠️ STK Push failed: ${resultDesc}`);
     }
 
-    // ✅ Always return 200 so Safaricom doesn’t retry
+    // Safaricom requires HTTP 200 OK always
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (err) {
-    console.error("Callback error:", err);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    console.error(" Callback error:", err);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
   }
 }

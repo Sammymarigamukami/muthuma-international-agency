@@ -1,4 +1,8 @@
 // app/api/mpesa/status/route.ts
+
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/dp/drizzle";
 import { payment } from "@/dp/schema";
