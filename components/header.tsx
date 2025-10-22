@@ -144,8 +144,8 @@ export default function Header() {
     <header
   className={`fixed top-0 z-50 left-0 w-full border-b transition-all duration-300 ${
     isShrunk
-      ? "bg-white/80 backdrop-blur-sm shadow-md py-2"
-      : "bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 py-4"
+      ? "bg-white/80 backdrop-blur-sm shadow-md "
+      : "bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 "
   }`}
 >
     <div className={showUserLogin ? "pointer-events-none opacity-40" : ""}>
