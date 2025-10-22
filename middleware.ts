@@ -6,7 +6,7 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // List of routes to protect
-  const protectedRoutes = ["/checkout", "/order"];
+  const protectedRoutes = ["/order"];
 
   // Only redirect if the user tries to access a protected route without a session
   if (protectedRoutes.some(route => pathname.startsWith(route)) && !sessionCookie) {
