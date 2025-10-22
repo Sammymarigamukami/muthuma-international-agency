@@ -57,12 +57,11 @@ export const auth = betterAuth({
         provider: "pg", 
         schema,
     }),
-    plugins: process.env.NODE_ENV === "production" ? [nextCookies()] : [],
-
+    plugins: [nextCookies()],
       cors: {
     origin: [
       "http://localhost:3000", // dev frontend
-      "https://holland-and-barrett-site.vercel.app", // prod frontend
+      "https://muthuma-international-agency.vercel.app/", // prod frontend
     ],
     credentials: true,
   },
