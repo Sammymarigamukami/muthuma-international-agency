@@ -33,7 +33,7 @@ export default function RootLayout({children,}: {children: React.ReactNode})
         <AppProvider>
         <CartProvider>
           <Header/>
-          <main className="pt-20 lg:pt-28">{children}</main>
+          <main className="mt-20 lg:pt-20">{children}</main>
           <Footer />
           <Toaster />
           <SessionWatcher />

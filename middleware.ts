@@ -7,10 +7,16 @@ export async function middleware(request: NextRequest) {
 
   // List of routes to protect
   const protectedRoutes = ["/order"];
+  const publicRoutes = ["/login", "/signup", "/forgot-password", "/reset-password"];
 
   // Only redirect if the user tries to access a protected route without a session
   if (protectedRoutes.some(route => pathname.startsWith(route)) && !sessionCookie) {
     return NextResponse.redirect(new URL("/login", request.url));
+  }
+
+  // Allow access to public routes without a session
+  if (publicRoutes.some(route => pathname.startsWith(route)) && !sessionCookie) {
+    return NextResponse.next();
   }
 
   // Otherwise, allow request

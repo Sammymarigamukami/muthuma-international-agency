@@ -41,7 +41,7 @@ export default function OurTeamPage() {
   ];
 
   return (
-    <div className="relative min-h-screen bg-gray-50">
+    <div className="relative min-h-screen bg-gray-50 ">
       {/* Background image */}
       <div className="absolute inset-0 -z-10">
         <Image

@@ -68,7 +68,7 @@ export default function CareersPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 py-16 px-4">
       {/* Hero Section */}
       <div className="bg-green-600 text-white py-16">
         <div className="container mx-auto px-4">

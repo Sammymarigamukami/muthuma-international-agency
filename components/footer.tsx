@@ -14,13 +14,6 @@ export default function Footer() {
                    src="footerlogo.png" 
                    alt="footer logo" />
                 </div>
-              <p className="text-gray-300 text-sm leading-relaxed">
-                Muthuma International Agency is a trusted healthcare provider offering genuine medical 
-                supplies, prescription medicines, and wellness essentials. Combining the expertise of 
-                licensed pharmacies with the ease of online shopping, we ensure safe, affordable, and 
-                timely access to quality healthcare — wherever you are.
-              </p>
-
             <div className="flex space-x-4">
               <Link href="#" className="text-gray-400 hover:text-white">
                 <Facebook className="h-5 w-5" />
