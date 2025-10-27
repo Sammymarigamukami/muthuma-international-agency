@@ -7,7 +7,6 @@ import Footer from "@/components/footer"
 import { CartProvider } from "@/contexts/cart-context"
 import { Toaster } from "sonner"  
 import { AppProvider } from "@/contexts/AppContext"
-import SessionWatcher from "@/components/SessionWatcher"
 import AuthWrapper from "@/components/authWrapper"
 
 
@@ -36,7 +35,6 @@ export default function RootLayout({children,}: {children: React.ReactNode})
           <main className="mt-20 lg:pt-20">{children}</main>
           <Footer />
           <Toaster />
-          <SessionWatcher />
           <AuthWrapper />
         </CartProvider>
         </AppProvider>

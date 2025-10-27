@@ -99,11 +99,16 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    if (!isLoading && !user){
+
+    const currentpath = window.location.pathname;
+    const publicRoutes = ["/reset-password"];
+
+    if (!isLoading && !user && !publicRoutes.includes(currentpath)){
       router.push("/")
     }
   }, [user, isLoading, router])
   
+
   const handleClick = () => {
     router.push("order")
   }

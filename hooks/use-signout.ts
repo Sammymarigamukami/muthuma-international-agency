@@ -14,7 +14,6 @@ export function useSignOut() {
 
       // navigate after successful signout
       router.push("/");
-      window.location.reload();
     } catch (err) {
       console.error("Error signing out:", err);
       toast.error("Error signing out, try again later");

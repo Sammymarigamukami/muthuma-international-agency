@@ -47,6 +47,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [showUserSignup, setShowUserSignup] = useState<boolean>(false)
   const [showUserResetPassword, setShowUserResetPassword] = useState<boolean>(false);
 
+
   const closeAuth = () => {
     setShowUserLogin(false)
     setShowUserSignup(false)
@@ -56,7 +57,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const logout = authClient.signOut
 
   // Custom login function that calls your server action
-  const login = async (email: string, password: string) => {
+   const login = async (email: string, password: string) => {
     try {
       const result = await signIn(email, password)
 
