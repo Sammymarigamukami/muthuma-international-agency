@@ -8,7 +8,7 @@ export async function middleware(request: NextRequest) {
   // List of routes to protect
   const protectedRoutes = ["/order"];
 
-  const publicRoutes = ["/reset-password", "/api/auth"];
+  const publicRoutes = ["/reset-password", "/api/auth", "/signup", "/login", "/", "/cart", "/checkout", "/logins", "/signup"];
 
   // If it's a public route → skip all checks
   if (publicRoutes.some(route => pathname.startsWith(route))) {

@@ -35,7 +35,7 @@ export default function SubmitPrescriptionPage() {
   };
 
   return (
-    <div className="max-w-xl mx-auto p-6 bg-white shadow-md rounded-md mt-10">
+    <div className="max-w-xl mx-auto p-6 bg-white shadow-md rounded-md">
       <h1 className="text-2xl font-semibold mb-6 text-gray-800 text-center">Submit Prescription</h1>
 
       {submitted ? (

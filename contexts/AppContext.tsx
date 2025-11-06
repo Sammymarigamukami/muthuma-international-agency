@@ -32,7 +32,6 @@ interface AuthContextType {
 
 // Create context
 const AppContext = createContext<AuthContextType | undefined>(undefined)
-
 // AppProvider props
 interface AppProviderProps {
   children: ReactNode

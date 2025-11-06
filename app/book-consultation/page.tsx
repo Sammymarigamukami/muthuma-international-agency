@@ -37,7 +37,7 @@ export default function bookConsultation() {
   };
 
   return (
-    <div className="max-w-xl mx-auto p-6 bg-white shadow-md rounded-md mt-10">
+    <div className="max-w-xl mx-auto p-6 bg-white shadow-md rounded-md">
 
       {submitted ? (
         <p className="text-green-700 font-medium">

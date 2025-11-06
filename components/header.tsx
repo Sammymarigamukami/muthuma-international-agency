@@ -5,7 +5,7 @@ import React from "react"
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { Search, ShoppingCart, Menu, User, Heart } from "lucide-react"
+import { Search, ShoppingCart, Menu, User, Heart, UserRound } from "lucide-react"
 import { FaFacebookF, FaInstagram, FaTiktok } from "react-icons/fa6";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -15,6 +15,11 @@ import { useAppContext } from "@/contexts/AppContext"
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { authClient } from "@/lib/auth-client"
 import { useSignOut } from "@/hooks/use-signout"
+import { useSearch } from "@/contexts/SearchContext"
+import { products } from "@/lib/data"
+import { groupByCategory } from "@/lib/utils"
+import { Product } from "@/lib/types"
+
 
 const headerPages =  [
   { name: "Home", href: "/" },
@@ -32,11 +37,13 @@ const headerPages =  [
 ]
 
 const navigation = [
-  { name: "Medical Equipment",
+  { name: "Medical Test Kits",
     sub: [
-      { id: 1, name: "Diagnostic Devices"},
-      { id: 2, name: "Monitoring Tools"},
-      { id: 3, name: "Surgical Instruments"},
+      { 
+        id: 1, 
+        name: "Infectious Disease Test Kits"
+      },
+      { id: 2, name: "Pregnancy Test Kits"},
     ],
   },
   {
@@ -71,6 +78,7 @@ const navigation = [
 ]
 
 
+
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { user, isLoading, setShowUserLogin, showUserLogin } = useAppContext()
@@ -81,11 +89,12 @@ export default function Header() {
   const [isClient, setIsClient] = useState(false);
   const [ showCategories, setShowCategories] = useState(true);
   const [ showMore, setShowMore] = useState(false);
-  const [ hideTopBar, setHideTopBar] = useState(false);
   const [ activeMenu, setActiveMenu] = useState<string | null>(null);
-  const [ isShrunk, setIsShrunk] = useState(false);
+  const [ hideTop, setHideTop] = useState(false);
+  const { searchTerm, setSearchTerm } = useSearch();
 
-  let lastScrolly = 0;
+  const grouped = groupByCategory(products as Product[]);
+
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
@@ -115,16 +124,12 @@ export default function Header() {
 
   const handleSignOut = useSignOut();
 
-
-  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value)
-  }
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      handleSearch(e)
+  useEffect(() => {
+    if (searchTerm.length > 0) {
+      router.push("/products");
     }
-  }
+  }, [searchTerm, router])
+
   console.log('Header render - user:', user);
 
   const handleShowCategories = () => {
@@ -140,22 +145,22 @@ export default function Header() {
   // hide top bar when scrolling dowm, show when scrolling up
 
   useEffect(() => {
-    const handleScroll = () => setIsShrunk(window.scrollY > 50);
+    const handleScroll = () => setHideTop(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   return (
     
     <header
-  className={`fixed top-0 z-50 left-0 w-full border-b transition-all duration-300 ${
-    isShrunk
+  className={`md:fixed top-0 z-50 left-0 w-full border-b transition-all duration-300 ${
+    hideTop
       ? "bg-white/80 backdrop-blur-sm shadow-md "
       : "bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 "
   }`}
 >
     <div className={showUserLogin ? "pointer-events-none opacity-40" : ""}>
       {/* Top bar */}
-      {!isShrunk &&(
+      {!hideTop &&(
       <div className="bg-green-600 mt-0 hidden md:flex ">
       <div className="border-b border-green-200/40" >
         <div className="container mx-auto px-4">
@@ -183,7 +188,7 @@ export default function Header() {
 
 
         {/* Main header */}
-        <div className="flex items-center justify-between px-4 mt-2 ">
+        <div className="flex items-center justify-between px-4 ">
           <div className="flex items-center flex-shrink gap-4 w-1/4 ">
             <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
               <SheetTrigger asChild>
@@ -212,9 +217,10 @@ export default function Header() {
                     <Link
                       key={item.name}
                       href= {`/products?category=${item.name}`}
-                      className="text-lg font-medium"
+                      className="text-sm font-medium text-gray-700 border-b-gray-500"
                       onClick={() => setIsMenuOpen(false)}
                     >
+                    
                       {item.name}
                     </Link>
                   ))}
@@ -222,7 +228,7 @@ export default function Header() {
                     <Link
                       key={item.name}
                       href={item.href}
-                      className="text-lg font-medium"
+                      className="text-sm font-medium text-gray-700 border-b-gray-500"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       {item.name}
@@ -236,9 +242,7 @@ export default function Header() {
                     <Input
                       type="search"
                       placeholder="Search products..."
-                      value={searchQuery}
-                      onChange={handleSearchInputChange}
-                      onKeyDown={handleKeyDown}
+                      onChange={(e) => setSearchQuery(e.target.value)}
                       className="pl-8"
                     />
                   </form>
@@ -246,14 +250,15 @@ export default function Header() {
               </SheetContent>
             </Sheet>
 
-            <Link href="/" className="flex items-center space-x-2 min-w-fit">
-                <div className="place-item-center">
+              <Link href="/" className="flex items-center space-x-2 min-w-fit">
+                <div className="flex items-center justify-center">
                   <img
-                   className="h-10 sm:h-12 md:h-14 lg:h-16 w-auto object-contain"
-                   src="/outpatientlogo.png" 
-                   alt="logo" />
+                    className="h-10 sm:h-20 md:h-14 lg:h-16 w-auto"
+                    src="/outpatientlogo.png"
+                    alt="logo"
+                  />
                 </div>
-            </Link>
+              </Link>
           </div>
 
           {/* Search and Actions */}
@@ -267,10 +272,9 @@ export default function Header() {
                 />
                 <Input
                   type="search"
+                  value={searchTerm}
                   placeholder="Search products..."
-                  value={searchQuery}
-                  onChange={handleSearchInputChange}
-                  onKeyDown={handleKeyDown}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                   className=" pl-8 w-full"
                 />
               </form>
@@ -281,19 +285,6 @@ export default function Header() {
             <Link href="https://instagram.com" target="_blank"><FaInstagram className="text-gray-600 hover:text-pink-500 text-3xl cursor-pointer" /></Link>
             <Link href="https://tiktok.com" target="_blank"><FaTiktok className="text-gray-600 hover:text-black text-3xl cursor-pointer" /></Link>
           </div>
-
-            {/* Mobile Search Button */}
-            <Button variant="ghost" size="icon" className="sm:hidden">
-              <Search className="h-5 w-5 hidden" />
-            </Button>
-
-            <Button variant="ghost" size="icon" className="hidden">
-              <User className="h-5 w-5 " />
-            </Button>
-
-            <Button variant="ghost" size="icon" className="hidden">
-              <Heart className="h-5 w-5" />
-            </Button>
 
             <Link href="/cart">
               <Button variant="ghost" size="icon" className="relative">
@@ -332,14 +323,26 @@ export default function Header() {
                         onClick={() => setShowUserLogin(true)}
                         className="md:hidden cursor-pointer"
                       >
-                        <img src="/placeholder-user.jpg" className="w-20 rounded-full" alt="Login" />
+                        <UserRound size={30} className="text-gray-600"/>
                       </div>
                     </>
                   
                 )}
             </div>
           </div>
+             {/* Mobile Search */}
         </div>
+            <div className="flex sm:hidden items-center mt-2 mb-3 space-x-2 pl-12  flex-1 w-auto">
+
+                <Input
+                
+                  type="search"
+                  value={searchTerm}
+                  placeholder="Search products..."
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className=" pl-8 pr-6 w-75 shadow-sm outline-none"
+                />
+            </div>
         {/* Desktop Menu */}
         <div className="hidden md:flex h-10 items-center justify-center border-t  ">
           <nav className="hidden md:flex items-center space-x-6">

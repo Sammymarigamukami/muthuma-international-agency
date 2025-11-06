@@ -5,7 +5,9 @@ import { products } from "@/lib/data";
 import { useState } from "react";
 import Image from "next/image";
 
-const featuredProducts = products.filter(p => p.featured).slice(0, 5);
+const category = [...new Set(products.map(p => p.category))];
+
+console.log("Featured Products:", category);
 
 export default function CategoryGrid() {
   const [loaded, setLoaded] = useState<{ [key: string]: boolean }>({});
@@ -27,40 +29,19 @@ export default function CategoryGrid() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-          {featuredProducts.map((product) => (
-            <Link key={product.id} href={`/product/${product.id}`}>
+{/*        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+          {category.map((cat) => (
+            <Link key={cat} href={`/category/${cat}`}>
               <Card className="group hover:shadow-lg transition-all duration-300 cursor-pointer h-full rounded-t-lg">
                 <CardContent className="p-6 text-center">
-                  <div className="relative overflow-hidden rounded-2xl mb-4 h-48 flex items-center justify-center bg-gray-100">
-                    {!loaded[product.id] && (
-                      <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center text-gray-400">
-                        Loading...
-                      </div>
-                    )}
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className={`w-full md:w-30 object-cover transition-all duration-700 ease-out ${
-                        loaded[product.id]
-                          ? "opacity-100 scale-100"
-                          : "opacity-0 scale-105"
-                      }`}
-                      onLoad={() => handleImageLoad(product.id)}
-                      onError={() => handleImageLoad(product.id)}
-                    />
-                  </div>
                   <h3 className="font-semibold text-lg mb-2 text-gray-900">
-                    {product.name}
+                    {cat.name}
                   </h3>
-                  <p className="text-gray-600 text-sm line-clamp-2">
-                    {product.description}
-                  </p>
                 </CardContent>
               </Card>
             </Link>
           ))}
-        </div>
+        </div>*/}
       </div>
     </section>
   );

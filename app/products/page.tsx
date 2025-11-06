@@ -6,11 +6,11 @@ import { Search, Filter, Grid, List } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import ProductCard from "@/components/product-card"
 import { products } from "@/lib/data"
+import { useSearch } from "@/contexts/SearchContext"
 
 const categories = [
   "All",
@@ -20,11 +20,11 @@ console.log(categories);
 
 export default function ProductsPage() {
   const searchParams = useSearchParams()
-  const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [selectedPriceRanges, setSelectedPriceRanges] = useState<string[]>([])
   const [sortBy, setSortBy] = useState("name")
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
+  const { searchTerm, setSearchTerm } = useSearch()
 
   // Handle URL parameters
   useEffect(() => {

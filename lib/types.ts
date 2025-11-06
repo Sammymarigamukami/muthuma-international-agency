@@ -9,6 +9,7 @@ export interface Product {
   image: string
   images: string[]
   category: string
+  subcategory: string | null
   ingredients: string[]
  usage: {
     label: string
