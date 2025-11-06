@@ -152,7 +152,7 @@ export default function Header() {
   return (
     
     <header
-  className={`md:fixed top-0 z-50 left-0 w-full border-b transition-all duration-300 ${
+  className={`md:fixed top-0 z-50 left-0 w-full border-b transition-all duration-300  ${
     hideTop
       ? "bg-white/80 backdrop-blur-sm shadow-md "
       : "bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 "
@@ -287,7 +287,7 @@ export default function Header() {
           </div>
 
             <Link href="/cart">
-              <Button variant="ghost" size="icon" className="relative">
+              <Button variant="ghost" size="icon" className="relative mt-3">
                 <ShoppingCart className="h-5 w-5" />
                 {itemCount > 0 && (
                   <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs">
