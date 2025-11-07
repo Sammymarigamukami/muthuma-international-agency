@@ -1,6 +1,25 @@
 import Link from "next/link"
 import { Facebook, Twitter, Instagram, Youtube } from "lucide-react"
 
+
+
+const footerData = [
+  {
+    title: "Shop By Category",
+    pages: [
+      {
+        name: "All Products",
+        href: "/products",
+      },
+      {
+        name: "Medical Test Kits",
+        href: "/products?category=Medical Test Kits",
+      }
+    ]
+
+  }
+]
+
 export default function Footer() {
   return (
     <footer className="bg-gray-900 text-white">

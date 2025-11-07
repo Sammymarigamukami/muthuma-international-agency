@@ -1,11 +1,9 @@
 "use client"
 
-import React from "react"
-
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { Search, ShoppingCart, Menu, User, Heart, UserRound } from "lucide-react"
+import { Search, ShoppingCart, Menu, User, Heart, UserRound, Cross } from "lucide-react"
 import { FaFacebookF, FaInstagram, FaTiktok } from "react-icons/fa6";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -19,6 +17,7 @@ import { useSearch } from "@/contexts/SearchContext"
 import { products } from "@/lib/data"
 import { groupByCategory } from "@/lib/utils"
 import { Product } from "@/lib/types"
+import React from "react"
 
 
 const headerPages =  [
@@ -344,44 +343,77 @@ export default function Header() {
                 />
             </div>
         {/* Desktop Menu */}
-        <div className="hidden md:flex h-10 items-center justify-center border-t  ">
-          <nav className="hidden md:flex items-center space-x-6">
-            <Link className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors" href="/">
-            Home
-            </Link>
-            {navigation.map((item) => (
-              <nav
-              key={item.name}
-              className="relative group"
-              onMouseEnter={() => setActiveMenu(item.name)}
-              onMouseLeave={() => setActiveMenu(null)}
+          <div className="hidden md:flex h-10 items-center justify-center border-t">
+            <nav className="hidden md:flex items-center space-x-6 relative">
+              <Link
+                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                href="/"
               >
-                <Link
-                  key={item.name}
-                  href= {`/products?category=${encodeURIComponent(item.name)}`}
-                  className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {item.name}
-                </Link>
-              {/* Dropdown for sub-menu */}
-              {activeMenu === item.name && (
-                <ul className="absolute left-0 top-full mt-2 w-56 bg-white shadow-lg rounded-lg py-2 z-50 border border-gray-100">
-                  {item.sub.map((subItem) => (
-                    <li key={subItem.id}>
-                      <Link
-                        href={`/products/${subItem.id}`}
-                        className="block px-4 py-2 text-sm text-gray-700 duration-200 cursor-pointer hover:bg-green-50 hover:text-green-400"
-                      >
-                        {subItem.name}
-                      </Link>
+                Home
+              </Link>
+
+              {/* Dropdown: Shop By Category */}
+              <div className="relative group">
+                <button 
+                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+                  Shop by Category
+                </button>
+                {/* Category submenu */}
+                <ul className="absolute left-0 mt-2 hidden group-hover:block bg-white border shadow-lg rounded-md min-w-[200px] z-50">
+                  {Object.entries(grouped).map(([category, categoryProducts]) => (
+                    <li 
+                    key={category} 
+                    onMouseEnter={() => setActiveMenu(category)}
+                    onMouseLeave={() => setActiveMenu(null)}
+                    className="relative group/item">
+                      <span className="block px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                        <Link href={`/products?category=${encodeURIComponent(category)}`}>{category}</Link>
+                      </span>
+
+                      {/* Products submenu */}
+                      {activeMenu === category && (
+                      <ul className="absolute top-0 left-full hidden group-hover/item:block bg-white border shadow-md rounded-md min-w-[200px]">
+                        {categoryProducts.map((product) => (
+                          <li key={product.id}>
+                            <Link
+                              href={`/products/${product.category?.toLowerCase()}/${product.name
+                                ?.toLowerCase()
+                                .replace(/\s+/g, "-")}/${product.id}`}
+                              className="block px-4 py-2 text-sm hover:bg-gray-100"
+                            >
+                              {product.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                      )}
                     </li>
                   ))}
                 </ul>
-              )}
-              </nav>
-            ))}
-          </nav>
-        </div>
+              </div>
+
+              {/* Other links */}
+              <Link 
+              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+              href="/products"
+              >Shop by Condition</Link>
+              <Link 
+              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+              href="/products"
+              >Sales & Offers</Link>
+              <Link 
+              className="flex text-sm text-green-400 hover:text-green-600 font-medium transition-colors items-center"
+              href="/submit-prescription"
+              >
+                <span><Cross size={20} /></span>
+                Submit Prescription
+              </Link>
+              <Link 
+              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+              href="#"
+              >Health Services</Link>
+            </nav>
+          </div>
       </div>
     </header>
   )
