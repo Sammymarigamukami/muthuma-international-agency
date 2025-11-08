@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { Search, ShoppingCart, Menu, User, Heart, UserRound, Cross } from "lucide-react"
 import { FaFacebookF, FaInstagram, FaTiktok } from "react-icons/fa6";
 import { Button } from "@/components/ui/button"
@@ -11,13 +11,13 @@ import { Badge } from "@/components/ui/badge"
 import { useCart } from "@/contexts/cart-context"
 import { useAppContext } from "@/contexts/AppContext"
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
-import { authClient } from "@/lib/auth-client"
 import { useSignOut } from "@/hooks/use-signout"
 import { useSearch } from "@/contexts/SearchContext"
 import { products } from "@/lib/data"
 import { groupByCategory } from "@/lib/utils"
 import { Product } from "@/lib/types"
 import React from "react"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion"
 
 
 const headerPages =  [
@@ -35,47 +35,38 @@ const headerPages =  [
   { name: "Careers", href: "/careers" },
 ]
 
-const navigation = [
-  { name: "Medical Test Kits",
-    sub: [
-      { 
-        id: 1, 
-        name: "Infectious Disease Test Kits"
-      },
-      { id: 2, name: "Pregnancy Test Kits"},
-    ],
+const healthServices = [
+  {
+    name: "Book Consultation", href: "/book-consultation"
   },
   {
-      name: "Medical Supplies",
-      sub: [
-        { id: 4, name: "Gloves" },
-        { id: 5, name: "Masks" },
-        { id: 6, name: "Bandages" },
-      ],
-    },
-    {
-      name: "Homecare Equipment",
-      sub: [
-        { id: 7, name: "Thermometers" },
-        { id: 8, name: "BP Monitors" },
-      ],
-    },
-    {
-      name: "Lab Equipment",
-      sub: [
-        { id: 9, name: "Microscopes" },
-        { id: 10, name: "Centrifuges" },
-      ],
-    },
-    {
-      name: "Lab Glassware",
-      sub: [
-        { id: 11, name: "Beakers" },
-        { id: 12, name: "Test Tubes" },
-      ],
-    },
+    name: "Submit Prescription", href: "/submit-prescription"
+  },
+  {
+    name: "Health Checks Appointments", href: "/health-checks-appointments"
+  }
 ]
 
+const aboutUs = [
+  {
+    name: "Our Team", href: "/ourteam"
+  },
+  {
+    name: "Careers", href: "/careers"
+  },
+  {
+    name: "Private Policy", href: "/privacypolicy"
+  },
+  {
+    name: "Terms & Conditions", href: "/termsandconditions"
+  },
+  {
+    name: "Our Story", href: "/about"
+  },
+  {
+    name: "Return Policy", href: "/returns"
+  }
+]
 
 
 export default function Header() {
@@ -88,11 +79,16 @@ export default function Header() {
   const [isClient, setIsClient] = useState(false);
   const [ showCategories, setShowCategories] = useState(true);
   const [ showMore, setShowMore] = useState(false);
-  const [ activeMenu, setActiveMenu] = useState<string | null>(null);
+  const [ activeMenu, setActiveMenu] = useState<string | null | false>(null);
   const [ hideTop, setHideTop] = useState(false);
   const { searchTerm, setSearchTerm } = useSearch();
+  const pathname = usePathname();
 
   const grouped = groupByCategory(products as Product[]);
+
+  useEffect(() => {
+    setActiveMenu(false);
+  }, [pathname])
 
 
   const handleSearch = (e: React.FormEvent) => {
@@ -189,63 +185,92 @@ export default function Header() {
         {/* Main header */}
         <div className="flex items-center justify-between px-4 ">
           <div className="flex items-center flex-shrink gap-4 w-1/4 ">
-            <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+            <Sheet 
+            open={isMenuOpen} 
+            onOpenChange={setIsMenuOpen} >
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="md:hidden">
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="w-[300px] sm:w-[400px]">
+              <SheetContent side="left" className="w-[300px] sm:w-[400px] overflow-auto">
                 {/* Toggle Buttons */}
                 <SheetTitle className="flex justify-around mt-4 border-b pb-2">
-                  <button
-                  onClick={handleShowCategories}
-                  className={`px-4 py-2 rounded-md text-sm font-medium 
-                    ${showCategories ? 'bg-green-600 text-white' : 'text-gray-600 hover:bg-gray-100'}`}
-                  >categories</button>
-                  <button
-                    onClick={handleShowMore}
-                    className={`px-4 py-2 rounded-md text-sm font-medium 
-                      ${showMore ? 'bg-green-600 text-white' : 'text-gray-600 hover:bg-gray-100'}`}
-                  >More</button>
+                  <img src="/outpatientlogo.png" alt="logo" />
                 </SheetTitle>
-                <nav className="flex flex-col space-y-4">
-
-                  { showCategories && navigation.map((item) => (
-                    
-                    <Link
-                      key={item.name}
-                      href= {`/products?category=${item.name}`}
-                      className="text-sm font-medium text-gray-700 border-b-gray-500"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                    
-                      {item.name}
-                    </Link>
-                  ))}
-                  { showMore && headerPages.map((item) => (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      className="text-sm font-medium text-gray-700 border-b-gray-500"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
+                <nav className="flex flex-col space-y-4 mt-3">
+                  <Link href="/" className="border-b">Home</Link>
+                  <Accordion type="single" collapsible className="w-auto mt-0.5">
+                    <AccordionItem value="categories">
+                      <AccordionTrigger>
+                        Shop by category
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <ul>
+                          {Object.entries(grouped).map(([category]) => (
+                            <li key={category}>
+                              <Link 
+                              onClick={() => setActiveMenu(false)}
+                              href={`/products?category=${encodeURIComponent(category)}`} className="block py-2 ml-3">
+                                {category}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </AccordionContent>
+                    </AccordionItem>                   
+                  </Accordion>
+                  <Link href="#" className="border-b">Shop By Condition</Link>
+                  <Link href="#" className="border-b">Shop By Brand</Link>
+                  <Accordion type="single" collapsible className="w-auto mt-0.5">
+                    <AccordionItem value="health-services">
+                      <AccordionTrigger>
+                        Health Services
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <ul>
+                          {healthServices.map((item) => (
+                            <li key={item.name}>
+                              <Link
+                                onClick={() => setActiveMenu(false)}
+                                href={item.href}
+                                className="block py-2 ml-3"
+                              >
+                                {item.name}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                  <Accordion type="single" collapsible className="w-auto mt-0.5">
+                    <AccordionItem value="about-us">
+                      <AccordionTrigger>
+                        About Us
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <ul>
+                          {aboutUs.map((item) => (
+                            <li key={item.name}>
+                              <Link
+                                onClick={() => setActiveMenu(false)}
+                                href={item.href}
+                                className="block py-2 ml-3"
+                              >
+                                {item.name}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                  <Link href="#" className="border-b">Blog</Link>
+                  <Link href="#" className="border-b">FAQ's</Link>
+                  <Link href="#" className="border-b">Our Branches</Link>
+                  <Link href="#" className="border-b">Contact Us</Link>
                 </nav>
-                {/* Mobile Search */}
-                <div className="mt-6">
-                  <form onSubmit={handleSearch} className="relative hidden">
-                    <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      type="search"
-                      placeholder="Search products..."
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="pl-8"
-                    />
-                  </form>
-                </div>
               </SheetContent>
             </Sheet>
 

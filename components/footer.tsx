@@ -1,9 +1,15 @@
 import Link from "next/link"
 import { Facebook, Twitter, Instagram, Youtube } from "lucide-react"
 
+interface FooterSection {
+  title: string;
+  pages: {
+    name: string;
+    href: string;
+  }[];
+}
 
-
-const footerData = [
+const footerData: FooterSection[] = [
   {
     title: "Shop By Category",
     pages: [
@@ -14,26 +20,98 @@ const footerData = [
       {
         name: "Medical Test Kits",
         href: "/products?category=Medical Test Kits",
+      },
+      {
+        name: "Submit Prescription",
+        href: "/submit-prescription",
+      },
+      {
+        name: "Visit Nearest Facility",
+        href: "#",
       }
     ]
 
+  },
+  {
+    title: "About Us",
+    pages: [
+      {
+        name: "Our Team",
+        href: "/ourteam",
+      },
+      {
+        name: "Careers",
+        href: "/careers",
+      },
+      {
+        name: "Blog",
+        href: "/blog",
+      },
+      {
+        name:"Private Policy",
+        href:"/privacypolicy"
+      },
+      {
+        name:"Terms & Conditions",
+        href:"/termsandconditions"
+      },
+      {
+        name: "Our Story",
+        href: "/about",
+      }
+    ]
+  },
+  {
+    title:"Our Services",
+    pages: [
+      {
+        name: "Products Store",
+        href: "/products",
+      },
+      {
+        name: "Book Consultation",
+        href: "/book-consultation",
+      },
+      {
+        name: "Submit Prescription",
+        href: "/submit-prescription",
+      }
+    ]
+  },
+  {
+    title: "Customer Care",
+    pages: [
+      {
+        name: "Delivery & returns",
+        href: "returns",
+      },
+      {
+        name: "My account",
+        href: "#",
+      },
+      {
+        name: "FAQ's",
+        href: "/faq",
+      },
+    ]
   }
 ]
 
 export default function Footer() {
   return (
     <footer className="bg-gray-900 text-white">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
+      <div className="container items-center px-5 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-1 justify-center">
           {/* Company Info */}
-          <div className="space-y-4">
-                <div className="place-item-center">
+          <div className="space-y-2 items-center">
+                <div className="place-item-center ">
                   <img
-                   className="h-15 sm:h-8 md:h-18 lg:h-24 w-auto object-contain"
+                   className=" sm:h-20 md:h-24 w-auto object-contain"
                    src="footerlogo.png" 
                    alt="footer logo" />
                 </div>
-            <div className="flex space-x-4">
+                <p className="text-gray-400 text-sm">Find us on</p>
+            <div className="flex gap-2">
               <Link href="#" className="text-gray-400 hover:text-white">
                 <Facebook className="h-5 w-5" />
               </Link>
@@ -48,146 +126,49 @@ export default function Footer() {
               </Link>
             </div>
           </div>
+          {/* Footer Links */}
 
-          {/* Quick Links */}
+          {footerData.map((section)=> (
+            <div key={section.title}>
+              <h4 className="font-semibold">{section.title}</h4>
+              <ul className="mt-2 space-y-2">
+                {section.pages.map((page) => (
+                  <li key={page.name}>
+                    <Link href={page.href} className="text-gray-400 text-sm font-medium hover:text-white">
+                      {page.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
           <div>
-            <h3 className="font-semibold text-lg mb-4">Quick Links</h3>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link href="/" className="text-gray-300 hover:text-white">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link href="/products" className="text-gray-300 hover:text-white">
-                  All Products
-                </Link>
-              </li>
-              <li>
-                <Link href="/products?category=Vitamins" className="text-gray-300 hover:text-white">
-                  Vitamins
-                </Link>
-              </li>
-              <li>
-                <Link href="/products?category=Supplements" className="text-gray-300 hover:text-white">
-                  Supplements
-                </Link>
-              </li>
-              <li>
-                <Link href="/products?category=Herbal" className="text-gray-300 hover:text-white">
-                  Herbal
-                </Link>
-              </li>
-              <li>
-                <Link href="/products?category=Beauty" className="text-gray-300 hover:text-white">
-                  Beauty
+            <h4 className="font-semibold">Contact Us</h4>
+            <ul className="mt-2 space-y-2 ">
+              <li className="text-gray-400 text-sm font-medium ">123 Health St.</li>
+              <li className="text-gray-400 text-sm font-medium ">Nairobi, Kenya</li>
+              <li><p className="text-gray-400 text-sm font-medium ">Email: </p>
+                <Link
+                className="text-gray-400 text-xs font-medium hover:text-white"
+                 href="mailto:info@muthumainternational.com">
+                  info@muthumainternational.com
                 </Link>
               </li>
             </ul>
-          </div>
 
-          {/* Product Categories */}
-          <div>
-            <h3 className="font-semibold text-lg mb-4">Product Categories</h3>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link href="/products?category=Vitamins" className="text-gray-300 hover:text-white">
-                  Medical Condition
-                </Link>
-              </li>
-              <li>
-                <Link href="/products?category=Supplements" className="text-gray-300 hover:text-white">
-                  Vitamin and Supplements
-                </Link>
-              </li>
-              <li>
-                <Link href="/products?category=Herbal" className="text-gray-300 hover:text-white">
-                  Medical Devices
-                </Link>
-              </li>
-              <li>
-                <Link href="/products?category=Beauty" className="text-gray-300 hover:text-white">
-                  Personal Care
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Customer Service */}
-          <div>
-            <h3 className="font-semibold text-lg mb-4">Customer Service</h3>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link href="/contact" className="text-gray-300 hover:text-white">
-                  Contact Us
-                </Link>
-              </li>
-              <li>
-                <Link href="/faq" className="text-gray-300 hover:text-white">
-                  FAQ
-                </Link>
-              </li>
-              <li>
-                <Link href="/shipping" className="text-gray-300 hover:text-white hidden">
-                  Shipping Info
-                </Link>
-              </li>
-              <li>
-                <Link href="/returns" className="text-gray-300 hover:text-white">
-                  Returns
-                </Link>
-              </li>
-              <li>
-                <Link href="/stores" className="text-gray-300 hover:text-white ">
-                  Store Locator
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* About */}
-          <div>
-            <h3 className="font-semibold text-lg mb-4">About</h3>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link href="/about" className="text-gray-300 hover:text-white">
-                  Our Story
-                </Link>
-              </li>
-              <li>
-                <Link href="/careers" className="text-gray-300 hover:text-white">
-                  Careers
-                </Link>
-              </li>
-              <li>
-                <Link href="/sustainability" className="text-gray-300 hover:text-white hidden">
-                  Sustainability
-                </Link>
-              </li>
-              <li>
-                <Link href="/press" className="text-gray-300 hover:text-white hidden">
-                  Press
-                </Link>
-              </li>
-              <li>
-                <Link href="/investors" className="text-gray-300 hover:text-white hidden">
-                  Investors
-                </Link>
-              </li>
-            </ul>
           </div>
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-400 text-sm">© 2025 Muthuma International Agency. All rights reserved.</p>
+          <p className="text-gray-400 text-xs">© 2025 Muthuma International Agency. All rights reserved.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
-            <Link href="/privacy" className="text-gray-400 hover:text-white text-sm ">
+            <Link href="/privacy" className="text-gray-400 hover:text-white text-xs ">
               Privacy Policy
             </Link>
-            <Link href="/terms" className="text-gray-400 hover:text-white text-sm ">
+            <Link href="/terms" className="text-gray-400 hover:text-white text-xs ">
               Terms of Service
             </Link>
-            <Link href="/cookies" className="text-gray-400 hover:text-white text-sm ">
+            <Link href="/cookies" className="text-gray-400 hover:text-white text-xs ">
               Cookie Policy
             </Link>
           </div>
