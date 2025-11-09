@@ -180,8 +180,9 @@ export default function Header() {
       </div>
       </div>
       )}
-
-
+      <div className="flex items-center justify-center bg-green-700 text-white text-sm font-medium py-1 md:hidden">
+        <p>Free Delivery For orders above 3000/=.</p>
+      </div>
         {/* Main header */}
         <div className="flex items-center justify-between px-4 ">
           <div className="flex items-center flex-shrink gap-4 w-1/4 ">
@@ -193,16 +194,16 @@ export default function Header() {
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="w-[300px] sm:w-[400px] overflow-auto">
+              <SheetContent side="left" className="w-[300px] sm:w-[400px] overflow-auto max-h-screen">
                 {/* Toggle Buttons */}
                 <SheetTitle className="flex justify-around mt-4 border-b pb-2">
                   <img src="/outpatientlogo.png" alt="logo" />
                 </SheetTitle>
                 <nav className="flex flex-col space-y-4 mt-3">
-                  <Link href="/" className="border-b">Home</Link>
+                  <Link href="/" className="border-b text-gray-800">Home</Link>
                   <Accordion type="single" collapsible className="w-auto mt-0.5">
                     <AccordionItem value="categories">
-                      <AccordionTrigger>
+                      <AccordionTrigger className="text-gray-800">
                         Shop by category
                       </AccordionTrigger>
                       <AccordionContent>
@@ -211,7 +212,7 @@ export default function Header() {
                             <li key={category}>
                               <Link 
                               onClick={() => setActiveMenu(false)}
-                              href={`/products?category=${encodeURIComponent(category)}`} className="block py-2 ml-3">
+                              href={`/products?category=${encodeURIComponent(category)}`} className="block py-1 ml-3 text-gray-800">
                                 {category}
                               </Link>
                             </li>
@@ -220,11 +221,11 @@ export default function Header() {
                       </AccordionContent>
                     </AccordionItem>                   
                   </Accordion>
-                  <Link href="#" className="border-b">Shop By Condition</Link>
-                  <Link href="#" className="border-b">Shop By Brand</Link>
+                  <Link href="#" className="border-b text-gray-800">Shop By Condition</Link>
+                  <Link href="#" className="border-b text-gray-800">Shop By Brand</Link>
                   <Accordion type="single" collapsible className="w-auto mt-0.5">
                     <AccordionItem value="health-services">
-                      <AccordionTrigger>
+                      <AccordionTrigger className="text-gray-800">
                         Health Services
                       </AccordionTrigger>
                       <AccordionContent>
@@ -234,7 +235,7 @@ export default function Header() {
                               <Link
                                 onClick={() => setActiveMenu(false)}
                                 href={item.href}
-                                className="block py-2 ml-3"
+                                className="block py-2 ml-3 text-gray-800"
                               >
                                 {item.name}
                               </Link>
@@ -246,7 +247,7 @@ export default function Header() {
                   </Accordion>
                   <Accordion type="single" collapsible className="w-auto mt-0.5">
                     <AccordionItem value="about-us">
-                      <AccordionTrigger>
+                      <AccordionTrigger className="text-gray-800">
                         About Us
                       </AccordionTrigger>
                       <AccordionContent>
@@ -256,7 +257,7 @@ export default function Header() {
                               <Link
                                 onClick={() => setActiveMenu(false)}
                                 href={item.href}
-                                className="block py-2 ml-3"
+                                className="block py-2 ml-3 text-gray-800"
                               >
                                 {item.name}
                               </Link>
@@ -266,10 +267,10 @@ export default function Header() {
                       </AccordionContent>
                     </AccordionItem>
                   </Accordion>
-                  <Link href="#" className="border-b">Blog</Link>
-                  <Link href="#" className="border-b">FAQ's</Link>
-                  <Link href="#" className="border-b">Our Branches</Link>
-                  <Link href="#" className="border-b">Contact Us</Link>
+                  <Link href="#" className="border-b text-gray-800">Blog</Link>
+                  <Link href="/faq" className="border-b text-gray-800">FAQ's</Link>
+                  <Link href="#" className="border-b text-gray-800">Our Branches</Link>
+                  <Link href="/contact" className="border-b text-gray-800">Contact Us</Link>
                 </nav>
               </SheetContent>
             </Sheet>
@@ -305,9 +306,9 @@ export default function Header() {
             </div>
             {/* Social Icons */}
           <div className="hidden md:flex items-center space-x-3">
-            <Link href="https://facebook.com" target="_blank"><FaFacebookF className="text-gray-600 hover:text-blue-600 text-3xl cursor-pointer" /></Link>
+            <Link href="https://www.facebook.com/share/1BmBCsMbmr/" target="_blank"><FaFacebookF className="text-gray-600 hover:text-blue-600 text-3xl cursor-pointer" /></Link>
             <Link href="https://instagram.com" target="_blank"><FaInstagram className="text-gray-600 hover:text-pink-500 text-3xl cursor-pointer" /></Link>
-            <Link href="https://tiktok.com" target="_blank"><FaTiktok className="text-gray-600 hover:text-black text-3xl cursor-pointer" /></Link>
+            <Link href="https://www.tiktok.com/@nairobi.outpatien?_r=1&_t=ZM-91CG8LONMRk" target="_blank"><FaTiktok className="text-gray-600 hover:text-black text-3xl cursor-pointer" /></Link>
           </div>
 
             <Link href="/cart">
@@ -326,7 +327,7 @@ export default function Header() {
                 ): user ? (
                     <div className="relative group">
                       <img src="/profile_icon.png" className="w-10 rounded-full" alt="User Profile" />
-                      <ul className="hidden group-hover:block absolute top-10 right-0 bg-white shadow border border-gray-200 py-2.5 w-30 rounded-md text-sm z-40">
+                      <ul className="hidden group-hover:block absolute top-full right-0 bg-white shadow border border-gray-200 py-2.5 w-30 rounded-md text-sm z-[9999]">
                         <li onClick={handleClick} className="p-1.5 pl-3 hover:bg-[#4fbf8b]/10 cursor-pointer">
                           My order
                         </li>

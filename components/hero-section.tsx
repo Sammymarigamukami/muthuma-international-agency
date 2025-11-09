@@ -100,8 +100,8 @@ export default function HeroSection() {
     autoplaySpeed: 3000,
   }
   return (
-    <section className="relative bg-gradient-to-br from-green-50 to-blue-50 overflow-hidden">
-      <div className="container mx-auto px-4">
+    <section className="relative bg-gradient-to-br from-green-50 to-blue-50 ">
+      <div className="container mx-auto">
          <Slider {...settings}>
           {heroImages.map((image) => (
             <div key={image.id} className="relative">

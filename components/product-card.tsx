@@ -10,6 +10,7 @@ import { useCart } from "@/contexts/cart-context"
 import { useToast } from "@/hooks/use-toast"
 import { ToastAction } from "@radix-ui/react-toast"
 import type { Product } from "@/lib/types"
+import Image from "next/image"
 
 interface ProductCardProps {
   product: Product

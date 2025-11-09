@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { Facebook, Twitter, Instagram, Youtube } from "lucide-react"
+import { FaTiktok } from "react-icons/fa6";
 
 interface FooterSection {
   title: string;
@@ -107,12 +108,12 @@ export default function Footer() {
                 <div className="place-item-center ">
                   <img
                    className=" sm:h-20 md:h-24 w-auto object-contain"
-                   src="footerlogo.png" 
+                   src="/footerlogo.png" 
                    alt="footer logo" />
                 </div>
                 <p className="text-gray-400 text-sm">Find us on</p>
             <div className="flex gap-2">
-              <Link href="#" className="text-gray-400 hover:text-white">
+              <Link href="https://www.facebook.com/share/1BmBCsMbmr/" className="text-gray-400 hover:text-white">
                 <Facebook className="h-5 w-5" />
               </Link>
               <Link href="#" className="text-gray-400 hover:text-white">
@@ -121,8 +122,8 @@ export default function Footer() {
               <Link href="#" className="text-gray-400 hover:text-white">
                 <Instagram className="h-5 w-5" />
               </Link>
-              <Link href="#" className="text-gray-400 hover:text-white hidden">
-                <Youtube className="h-5 w-5" />
+              <Link href="https://www.tiktok.com/@nairobi.outpatien?_r=1&_t=ZM-91CG8LONMRk" className="text-gray-400 hover:text-white">
+                <FaTiktok className="h-5 w-5" />
               </Link>
             </div>
           </div>

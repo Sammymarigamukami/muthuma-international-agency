@@ -4,6 +4,8 @@ import FeaturedProducts from "@/components/featured-products"
 import PromotionalBanner from "@/components/promotional-banner"
 import NewsletterSignup from "@/components/newsletter-signup"
 import MedicalEquipment from "@/components/medical-equipment"
+import HealthServices from "@/components/healthServices"
+import BlogsPage from "@/components/blog"
 
 export default function HomePage() {
   return (
@@ -11,7 +13,9 @@ export default function HomePage() {
       <HeroSection />
       <CategoryGrid />
       <MedicalEquipment />
+      <HealthServices />
       <FeaturedProducts />
+      <BlogsPage />
       <PromotionalBanner />
       <NewsletterSignup />
     </div>
