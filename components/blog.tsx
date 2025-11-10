@@ -21,7 +21,7 @@ export default function BlogsPage() {
         settings: { slidesToShow: 2 }
       },
       {
-        breakpoint: 768,
+        breakpoint: 640,
         settings: { slidesToShow: 1 }
       }
     ]
