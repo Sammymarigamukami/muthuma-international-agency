@@ -12,6 +12,26 @@ body {
   }
 }
 
+/* Hide all scrollbars across the app */
+* {
+  scrollbar-width: none;       /* Firefox */
+  -ms-overflow-style: none;    /* IE and Edge */
+}
+
+*::-webkit-scrollbar {
+  display: none;               /* Chrome, Safari, Opera */
+}
+
+/* Also make React Slick sliders never show scrollbars */
+.slick-slider {
+  overflow: hidden !important;
+}
+
+.slick-list {
+  overflow: visible !important;
+}
+
+
 @layer base {
   :root {
     --background: 0 0% 100%;
