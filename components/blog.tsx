@@ -57,7 +57,7 @@ export default function BlogsPage() {
                     />
                     <div className="p-4">
                       <p className="text-sm text-green-600 mb-2">{post.category}</p>
-                      <h2 className="text-xl font-semibold mb-2 line-clamp-2">
+                      <h2 className="text-xl font-semibold mb-2 line-clamp-2 min-h-[4rem]">
                         {post.title}
                       </h2>
                       <p className="text-gray-600 mb-4 line-clamp-3">
