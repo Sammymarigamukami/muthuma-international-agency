@@ -7,11 +7,6 @@ import Slider from "react-slick"
 import { Card } from "./ui/card"
 
 export default function BlogsPage() {
-  const [isClient, setIsClient] = useState(false)
-
-  useEffect(() => {
-    setIsClient(true)
-  }, [])
 
   const settings = {
     dots: true,
@@ -19,7 +14,6 @@ export default function BlogsPage() {
     infinite: true,
     speed: 500,
     slidesToScroll: 1,
-    slidesToShow: 3,
     pauseOnHover: true,
     pauseOnFocus: true,
     responsive: [
@@ -43,8 +37,6 @@ export default function BlogsPage() {
     <section className="py-10 bg-gray-50">
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-bold text-center mb-12">Medical Blogs</h1>
-
-        {isClient && (
           <div className="overflow-hidden">
             <Slider {...settings}>
               {samplePosts.map((post) => (
@@ -75,7 +67,6 @@ export default function BlogsPage() {
               ))}
             </Slider>
           </div>
-        )}
       </div>
     </section>
   )
