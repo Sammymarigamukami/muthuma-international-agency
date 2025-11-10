@@ -65,7 +65,7 @@ export default function CartPage() {
                     <p className="text-sm text-gray-500">{item.category}</p>
                     <p className="font-bold text-green-600">KSh{item.price.toFixed(2)}</p>
                   </div>
-
+                  <div className="flex flex-col md:flex-row md:items-center md:space-x-6 space-y-4 md:space-y-0">
                   <div className="flex items-center space-x-2 md:grid-cols-1">
                     <Button
                       variant="outline"
@@ -92,6 +92,7 @@ export default function CartPage() {
                       <Trash2 className="h-4 w-4 mr-1" />
                       Remove
                     </Button>
+                  </div>
                   </div>
                 </div>
               </CardContent>
