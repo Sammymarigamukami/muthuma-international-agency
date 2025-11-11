@@ -87,7 +87,7 @@ export default function Header() {
   const grouped = groupByCategory(products as Product[]);
 
   useEffect(() => {
-    setActiveMenu(false);
+    setIsMenuOpen(false);
   }, [pathname])
 
 
@@ -200,7 +200,9 @@ export default function Header() {
                   <img src="/outpatientlogo.png" alt="logo" />
                 </SheetTitle>
                 <nav className="flex flex-col space-y-4 mt-3">
+                  {isMenuOpen && (
                   <Link href="/" className="border-b text-gray-800">Home</Link>
+                  )}
                   <Accordion type="single" collapsible className="w-auto mt-0.5">
                     <AccordionItem value="categories">
                       <AccordionTrigger className="text-gray-800">
