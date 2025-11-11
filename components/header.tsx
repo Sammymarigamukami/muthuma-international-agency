@@ -58,7 +58,7 @@ const aboutUs = [
     name: "Private Policy", href: "/privacypolicy"
   },
   {
-    name: "Terms & Conditions", href: "/termsandconditions"
+    name: "Terms & Conditions", href: "/termsandcondition"
   },
   {
     name: "Our Story", href: "/about"
@@ -210,7 +210,7 @@ export default function Header() {
                       </AccordionTrigger>
                       <AccordionContent>
                         <ul>
-                          {Object.entries(grouped).map(([category]) => (
+                          { Object.entries(grouped).map(([category]) => (
                             <li key={category}>
                               <Link 
                               onClick={() => setActiveMenu(false)}
@@ -269,7 +269,7 @@ export default function Header() {
                       </AccordionContent>
                     </AccordionItem>
                   </Accordion>
-                  <Link href="#" className="border-b text-gray-800">Blog</Link>
+                  <Link href="/blogs" className="border-b text-gray-800">Blog</Link>
                   <Link href="/faq" className="border-b text-gray-800">FAQ's</Link>
                   <Link href="#" className="border-b text-gray-800">Our Branches</Link>
                   <Link href="/contact" className="border-b text-gray-800">Contact Us</Link>
