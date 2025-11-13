@@ -5,6 +5,8 @@ import Link from "next/link"
 import { samplePosts } from "@/lib/blog"
 import Slider from "react-slick"
 import { Card } from "./ui/card"
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 export default function BlogsPage() {
 
@@ -14,6 +16,7 @@ export default function BlogsPage() {
     infinite: true,
     speed: 500,
     slidesToScroll: 1,
+    slidesToShow: 3,
     pauseOnHover: true,
     pauseOnFocus: true,
     responsive: [

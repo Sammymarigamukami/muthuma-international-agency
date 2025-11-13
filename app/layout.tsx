@@ -22,10 +22,12 @@ export const metadata: Metadata = {
     shortcut: "/placeholder.svg",
     apple: "/placeholder.svg",
   },
-  title: "Muthuma International",
-  description:
-    "Discover vitamins, supplements, herbal remedies, beauty and wellness products at Muthuma International. Your trusted partner in natural health.",
+  title: "Health Supply Market",
+  description: "Your trusted medical and consumable products supplier",
   keywords: "vitamins, supplements, herbal remedies, natural health, wellness, beauty products",
+  verification: {
+    google: "ds_IGYsd1w0SWgME9wuxVYohbN8HOvtlwIe7W1_GKJQ",
+  }
 }
 
 
