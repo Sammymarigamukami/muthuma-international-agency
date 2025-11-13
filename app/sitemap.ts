@@ -13,7 +13,7 @@ export default async function sitemap() {
     }));
 
 
-    return [
+    const mainPages = [
         {
             url: `${process.env.BASE_URL}/`,
             lastModified: new Date(),
@@ -37,12 +37,7 @@ export default async function sitemap() {
             lastModified: new Date(),
             changeFrequency: "monthly",
             priority: 0.5,
-        },
-        {
-            url: productUrls,
-            lastModified: new Date(),
-            changeFrequency: "weekly",
-            priority: 0.7,
         }
-    ]
+    ];
+    return [...mainPages, ...productUrls];
 }
