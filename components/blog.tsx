@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+
 import Link from "next/link"
 import { samplePosts } from "@/lib/blog"
 import Slider from "react-slick"
@@ -18,7 +18,11 @@ export default function BlogsPage() {
     pauseOnFocus: true,
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1536,
+        settings: { slidesToShow: 3, slidesToScroll: 1 },
+      },
+      {
+        breakpoint: 1280,
         settings: { slidesToShow: 2, slidesToScroll: 1 },
       },
       {

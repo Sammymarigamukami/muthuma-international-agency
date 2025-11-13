@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+/* Hide horizontal scrollbar and fix slick width flicker */
+html, body {
+  overflow-x: hidden;
+}
+
+.slick-slide > div {
+  margin: 0 8px;
+}
+
+.slick-list {
+  margin: 0 -8px;
+}
 
 
 body {

@@ -109,7 +109,7 @@ export default function HeroSection() {
                 <img
                   src={isMobile ? image.imgSmall : image.imgBig}
                   alt={image.alt}
-                  className="w-full h-auto object-cover"
+                  className="w-full h-auto object-cover overflow-hidden"
                 />
               </Link>
             </div>
