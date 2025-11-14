@@ -12,9 +12,11 @@ import AuthWrapper from "@/components/authWrapper"
 import { useState } from "react"
 import { SearchProvider } from "@/contexts/SearchContext"
 import WhatsAppButton from "@/components/WhatsAppButton"
+import { businessSchema, productsSchema } from "@/lib/metaschema"
 
 
 const inter = Inter({ subsets: ["latin"] })
+
 
 export const metadata: Metadata = {
   icons: {
@@ -22,9 +24,28 @@ export const metadata: Metadata = {
     shortcut: "/placeholder.svg",
     apple: "/placeholder.svg",
   },
-  title: "Health Supply Market",
-  description: "Your trusted medical and consumable products supplier",
-  keywords: "vitamins, supplements, herbal remedies, natural health, wellness, beauty products",
+  title: "Health Supply Market Kenya - Medical Supplies Online",
+  description: "Buy reliable medical consumables, test kits, and hospital supplies in Kenya. Fast delivery, affordable prices, trusted quality. Order online at Health Supply Market.",
+  keywords: [
+    "medical supplies kenya",
+    "medical consumables kenya",
+    "hospital supplies kenya",
+    "medical test kits kenya",
+    "HIV test kit kenya",
+    "blood sugar test kit kenya",
+    "pregnancy test kit kenya",
+    "lab supplies kenya",
+    "PPE supplies kenya",
+    "surgical consumables kenya",
+    "online medical shop kenya",
+    "medical equipment kenya",
+    "healthcare products kenya",
+    "hospital equipment nairobi",
+    "home medical kits kenya",
+    "omega-3 supplements kenya",
+    "herbal supplements kenya",
+    "vitamins and supplements kenya"
+  ],
   verification: {
     google: "ds_IGYsd1w0SWgME9wuxVYohbN8HOvtlwIe7W1_GKJQ",
   }
@@ -35,6 +56,16 @@ export default function RootLayout({children,}: {children: React.ReactNode})
  {
   return (
     <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(businessSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(productsSchema) }}
+        />
+      </head>
       <body className={inter.className}>
         <SearchProvider>
         <AppProvider>

@@ -1,53 +1,23 @@
 "use client"
 
-
 import Link from "next/link"
 import { samplePosts } from "@/lib/blog"
-import Slider from "react-slick"
 import { Card } from "./ui/card"
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import { Button } from "./ui/button";
+
+const blogpost = samplePosts.slice(0, 3);
 
 export default function BlogsPage() {
 
-  const settings = {
-    dots: true,
-    autoplay: true,
-    infinite: true,
-    speed: 500,
-    slidesToScroll: 1,
-    slidesToShow: 3,
-    pauseOnHover: true,
-    pauseOnFocus: true,
-    responsive: [
-      {
-        breakpoint: 1536,
-        settings: { slidesToShow: 3, slidesToScroll: 1 },
-      },
-      {
-        breakpoint: 1280,
-        settings: { slidesToShow: 2, slidesToScroll: 1 },
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          centerMode: true,
-          centerPadding: "30px",
-        },
-      },
-    ],
-  }
+
 
   return (
     <section className="py-10 bg-gray-50">
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-bold text-center mb-12">Medical Blogs</h1>
-          <div className="overflow-hidden">
-            <Slider {...settings}>
-              {samplePosts.map((post) => (
-                <div key={post.id} className="p-2 h-full">
+          <div className="overflow-hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+              {blogpost.map((post) => (
+                <div key={post.id} className="p-2 h-auto">
                   <Card className="bg-white shadow rounded-lg overflow-hidden hover:shadow-md transition flex flex-col h-full">
                     <img
                       src={post.image}
@@ -72,7 +42,13 @@ export default function BlogsPage() {
                   </Card>
                 </div>
               ))}
-            </Slider>
+          </div>
+          <div className="text-center">
+            <Link href="/blogs">
+              <Button size="lg" variant="outline" className="px-8 bg-transparent">
+                View All Blogs
+              </Button>
+            </Link>
           </div>
       </div>
     </section>
