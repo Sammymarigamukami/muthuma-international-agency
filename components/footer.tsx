@@ -146,13 +146,12 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold">Contact Us</h4>
             <ul className="mt-2 space-y-2 ">
-              <li className="text-gray-400 text-sm font-medium ">123 Health St.</li>
               <li className="text-gray-400 text-sm font-medium ">Nairobi, Kenya</li>
               <li><p className="text-gray-400 text-sm font-medium ">Email: </p>
                 <Link
                 className="text-gray-400 text-xs font-medium hover:text-white"
-                 href="mailto:info@muthumainternational.com">
-                  info@muthumainternational.com
+                 href="mailto:nairobioutpatient@healthsupplymarket.it.com">
+                  nairobioutpatient@healthsupplymarket.it.com
                 </Link>
               </li>
             </ul>

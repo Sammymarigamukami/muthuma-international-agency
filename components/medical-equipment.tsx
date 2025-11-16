@@ -26,7 +26,7 @@ export default function MedicalEquipment() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
           {featuredProducts.map((product) => (
-            <Link key={product.id} href={`/product/${product.id}`}>
+            <Link key={product.id} href={`/product/${product.category}`}>
               <Card className="group hover:shadow-lg transition-all duration-300 cursor-pointer h-full rounded-t-lg">
                 <CardContent className="p-6 text-center">
                   <div className="relative overflow-hidden rounded-2xl mb-4 h-48 flex items-center justify-center bg-gray-100">
