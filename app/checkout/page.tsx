@@ -210,7 +210,7 @@ export default function CheckoutPage() {
 
                 <div className="flex justify-between text-sm">
                   <span>Delivery</span>
-                  <span className="text-green-600">NOT FREE</span>
+                  <span className="text-green-600">Ony orders above Ksh3000</span>
                 </div>
 
                 <div className="flex justify-between text-sm">

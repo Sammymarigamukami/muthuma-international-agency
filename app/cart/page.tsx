@@ -114,7 +114,7 @@ export default function CartPage() {
 
               <div className="flex justify-between">
                 <span>Delivery</span>
-                <span className="text-green-600">NOT FREE</span>
+                <span className="text-green-600">Only orders above Ksh3000</span>
               </div>
 
               <div className="flex justify-between">
@@ -138,7 +138,7 @@ export default function CartPage() {
               </Button>
 
               <div className="text-center text-sm text-gray-500 pt-4">
-                <p>Free delivery on orders over Ksh2500</p>
+                <p>Free delivery on orders over Ksh3000</p>
                 <p>30-day money-back guarantee</p>
               </div>
             </CardContent>
