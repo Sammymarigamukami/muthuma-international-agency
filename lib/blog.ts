@@ -20,7 +20,7 @@ export const samplePosts: BlogPost[] = [
     category: "Diagnostics",
     excerpt: "Selecting the right HIV test kit is essential for accurate results and early detection. Learn the factors to consider.",
     image: "/testImage.jpeg",
-    date: "2024-06-15",
+    date: "2025-11-15",
     author: "Sammy Mariga",
     tags: ["HIV", "test kit", "diagnostics", "health"],
     content: `
@@ -66,7 +66,7 @@ Look for CE-marked or FDA-approved kits. Counterfeit kits may give false results
     category: "Chronic Conditions",
     excerpt: "Blood sugar testing is simple—but understanding results can prevent complications. Learn how to interpret your readings.",
     image: "/sugarlevel.jpg",
-    date: "2024-06-10",
+    date: "2025-11-10",
     author: "Sammy Mariga",
     tags: ["blood sugar", "diabetes", "testing", "health"],
     content: `
@@ -105,7 +105,7 @@ Look for CE-marked or FDA-approved kits. Counterfeit kits may give false results
     category: "Preventive Medicine",
     excerpt: "Regular health checkups can detect issues early and improve your long-term well-being. Here’s what to include in your annual visit.",
     image: "/annualcheck.jpg",
-    date: "2024-06-05",
+    date: "2024-11-05",
     author: "Sammy Mariga",
     tags: ["health checkup", "preventive medicine", "wellness"],
     content: `
@@ -141,7 +141,7 @@ Look for CE-marked or FDA-approved kits. Counterfeit kits may give false results
     category: "Nutrition & Wellness",
     excerpt: "Vitamin deficiencies can impact your energy, immunity, and overall health. Recognize the signs and know how to act.",
     image: "/vitamin.jpg",
-    date: "2024-06-01",
+    date: "2024-11-01",
     author: "Sammy Mariga",
     tags: ["vitamin deficiency", "nutrition", "wellness"],
     content: `
@@ -177,7 +177,7 @@ Look for CE-marked or FDA-approved kits. Counterfeit kits may give false results
     category: "Mental Health",
     excerpt: "Anxiety and stress affect daily life. Discover strategies to manage your mental well-being effectively.",
     image: "/mental.jpg",
-    date: "2024-05-28",
+    date: "2024-10-28",
     author: "Sammy Mariga",
     tags: ["mental health", "anxiety", "stress", "wellness"],
     content: `

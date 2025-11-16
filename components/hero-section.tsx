@@ -4,43 +4,14 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Contact, CreditCard, Globe, ThumbsUp, Truck } from 'lucide-react';
-import Image from "next/image";
 import Link from "next/link";
 
 const heroImages = [
   {
     id: 1,
-    imgBig: "/newbanner.png",
-    imgSmall: "/mobileBanner.jpg",
+    imgBig: "/accuratebanner.jpg",
+    imgSmall: "/phoneimg.jpg",
     alt: "Hero Image 1",
-    link: "#"
-  },
-  {
-    id: 2,
-    imgBig: "/newbanner.png",
-    imgSmall: "/mobileBanner.jpg",
-    alt: "Hero Image 2",
-    link: "#"
-  },
-  {
-    id: 3,
-    imgBig: "/newbanner.png",
-    imgSmall: "/mobileBanner.jpg",
-    alt: "Hero Image 3",
-    link: "#"
-  },
-  {
-    id: 4,
-    imgBig: "/newbanner.png",
-    imgSmall: "/mobileBanner.jpg",
-    alt: "Hero Image 4",
-    link: "#"
-  },
-  {
-    id: 5,
-    imgBig: "/newbanner.png",
-    imgSmall: "/mobileBanner.jpg",
-    alt: "Hero Image 5",
     link: "#"
   }
 ]
@@ -109,7 +80,7 @@ export default function HeroSection() {
                 <img
                   src={isMobile ? image.imgSmall : image.imgBig}
                   alt={image.alt}
-                  className="w-full h-auto object-cover overflow-hidden"
+                  className="w-full h-100 object-cover overflow-hidden"
                 />
               </Link>
             </div>

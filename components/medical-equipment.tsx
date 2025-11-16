@@ -5,9 +5,6 @@ import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { products } from "@/lib/data";
 import { useState } from "react";
-import 'keen-slider/keen-slider.min.css';
-import { useKeenSlider } from 'keen-slider/react';
-
 
 const featuredProducts = products.filter(p => p.featured).slice(0, 5);
 

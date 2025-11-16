@@ -18,6 +18,7 @@ import { groupByCategory } from "@/lib/utils"
 import { Product } from "@/lib/types"
 import React from "react"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu"
 
 
 const headerPages =  [
@@ -327,17 +328,21 @@ export default function Header() {
                 { isLoading ? (
                   <div className="w-10 h-10 rounded-full bg-gray-200 animate-pulse" />
                 ): user ? (
-                    <div className="relative group">
-                      <img src="/profile_icon.png" className="w-10 rounded-full" alt="User Profile" />
-                      <ul className="hidden group-hover:block absolute top-full right-0 bg-white shadow border border-gray-200 py-2.5 w-30 rounded-md text-sm z-[9999]">
-                        <li onClick={handleClick} className="p-1.5 pl-3 hover:bg-[#4fbf8b]/10 cursor-pointer">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <img src="/profile_icon.png" className="w-10 rounded-full" alt="User Profile" />
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                      <DropdownMenuItem asChild>
+                        <Link href="/order" className="p-1.5 pl-3 hover:bg-[#4fbf8b]/10 cursor-pointer">
                           My order
-                        </li>
-                        <li onClick={handleSignOut} className="p-1.5 pl-3 hover:bg-[#4fbf8b]/10 cursor-pointer">
+                        </Link>
+                      </DropdownMenuItem>
+                        <DropdownMenuItem onClick={handleSignOut} className="p-1.5 pl-3 hover:bg-[#4fbf8b]/10 cursor-pointer">
                           Logout
-                        </li>
-                      </ul>
-                    </div>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   ) : (
                     <>
                       <button
