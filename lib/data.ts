@@ -17,7 +17,7 @@ export const products: Product[] = [
     usage: [],
     rating: 0,
     reviews: 0,
-    featured: false,
+    featured: true,
     inStock: true,
   },
   {
@@ -61,7 +61,7 @@ export const products: Product[] = [
     ],
     rating: 0,
     reviews: 0,
-    featured: false,
+    featured: true,
     inStock: true
   },
   {
@@ -83,7 +83,7 @@ export const products: Product[] = [
     ],
     rating: 0,
     reviews: 0,
-    featured: false,
+    featured: true,
     inStock: true
   },
   {
