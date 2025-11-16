@@ -81,7 +81,9 @@ export default function FeaturedProducts() {
                     </Badge>
                   </div>
 
-                  <Link href={`/products/${product.id}`}>
+                  <Link href={`/products/${product.category?.toLowerCase()}/${product.name
+                      ?.toLowerCase()
+                      .replace(/\s+/g, "-")}/${product.id}`}>
                     <h3 className="font-semibold text-gray-900 mb-2 hover:text-green-600 transition-colors line-clamp-2">
                       {product.name}
                     </h3>
