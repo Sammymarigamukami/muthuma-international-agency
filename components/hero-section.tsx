@@ -12,7 +12,7 @@ const heroImages = [
     imgBig: "/accuratebanner.jpg",
     imgSmall: "/phoneimg.jpg",
     alt: "Hero Image 1",
-    link: "#"
+    link: "/products?category=Medical Test Kits"
   }
 ]
 
