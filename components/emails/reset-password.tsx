@@ -103,7 +103,7 @@ const ForgotPasswordEmail = (props: ForgotPasswordEmailProps) => {
                   href="mailto:support@company.com"
                   className="text-blue-600"
                 >
-                  support@company.com
+                  nairobioutpatient@healthsupplymarket.it.com
                 </Link>
               </Text>
             </Section>
@@ -114,10 +114,10 @@ const ForgotPasswordEmail = (props: ForgotPasswordEmailProps) => {
                 This email was sent to {userEmail}
               </Text>
               <Text className="text-[12px] text-gray-500 leading-[16px] m-0 mb-[8px]">
-                Company Name, 123 Business Street, City, State 12345
+               nairobi outpatient, Nairobi Kenya
               </Text>
               <Text className="text-[12px] text-gray-500 leading-[16px] m-0">
-                © 2025 Company Name. All rights reserved.{" "}
+                © 2025 nairobi outpatient. All rights reserved.{" "}
                 <Link href="#" className="text-gray-500">
                   Unsubscribe
                 </Link>

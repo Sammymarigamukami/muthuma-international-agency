@@ -3,46 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { MapPin, Clock, Users, Briefcase, Heart, TrendingUp, Badge } from "lucide-react"
 
 export default function CareersPage() {
-  const jobOpenings = [
-    {
-      id: 1,
-      title: "Store Manager",
-      location: "London, UK",
-      type: "Full-time",
-      department: "Retail",
-      description:
-        "Lead a team of health enthusiasts in our flagship London store. Perfect for someone passionate about natural health and customer service.",
-      requirements: ["3+ years retail management experience", "Passion for natural health", "Strong leadership skills"],
-    },
-    {
-      id: 2,
-      title: "Nutritionist",
-      location: "Manchester, UK",
-      type: "Full-time",
-      department: "Health & Wellness",
-      description: "Provide expert nutritional advice to customers and support our product development team.",
-      requirements: ["Qualified nutritionist", "Customer-facing experience", "Knowledge of supplements"],
-    },
-    {
-      id: 3,
-      title: "Digital Marketing Specialist",
-      location: "Remote",
-      type: "Full-time",
-      department: "Marketing",
-      description:
-        "Drive our digital marketing campaigns and help grow our online presence in the health and wellness space.",
-      requirements: ["Digital marketing experience", "Social media expertise", "Analytics skills"],
-    },
-    {
-      id: 4,
-      title: "Supply Chain Coordinator",
-      location: "Birmingham, UK",
-      type: "Full-time",
-      department: "Operations",
-      description: "Ensure our natural products reach customers efficiently while maintaining quality standards.",
-      requirements: ["Supply chain experience", "Attention to detail", "Problem-solving skills"],
-    },
-  ]
+  const jobOpenings = []
 
   const benefits = [
     {
