@@ -9,10 +9,9 @@ import { CartProvider } from "@/contexts/cart-context"
 import { Toaster } from "sonner"  
 import { AppProvider } from "@/contexts/AppContext"
 import AuthWrapper from "@/components/authWrapper"
-import { useState } from "react"
 import { SearchProvider } from "@/contexts/SearchContext"
 import WhatsAppButton from "@/components/WhatsAppButton"
-import { businessSchema, productsSchema } from "@/lib/metaschema"
+import { businessSchema, productsSchema, titleSchema } from "@/lib/metaschema"
 
 
 const inter = Inter({ subsets: ["latin"] })
@@ -59,12 +58,17 @@ export default function RootLayout({children,}: {children: React.ReactNode})
       <head>
         <script
           type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(titleSchema) }}
+        />
+        <script
+          type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(businessSchema) }}
         />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(productsSchema) }}
         />
+        
       </head>
       <body className={inter.className}>
         <SearchProvider>

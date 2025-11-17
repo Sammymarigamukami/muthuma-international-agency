@@ -1,4 +1,20 @@
 
+ const titleSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Health Supply Market kenya",
+  "alternateName": "Muthuma International",
+  "url": "https://healthsupplymarket.it.com/",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Health Supply Market kenya",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://healthsupplymarket.it.com/logo.png"
+    }
+  }
+ }
+
  const productsSchema = 
     {
   "@context": "https://schema.org/",
@@ -91,9 +107,9 @@ const businessSchema = {
   "@context": "https://schema.org",
   "@type": "MedicalBusiness",
   "name": "Health Supply Market Kenya",
-  "url": "https://healthsupplymarket.com",
-  "image": "https://healthsupplymarket.com/og-image.png",
-  "logo": "https://healthsupplymarket.com/logo.png",
+  "url": "https://healthsupplymarket.it.com",
+  "image": "https://healthsupplymarket.it.com/og-image.png",
+  "logo": "https://healthsupplymarket.it.com/logo.png",
   "description": "Trusted online store for medical supplies, test kits, consumables, and health products in Kenya. Fast delivery and verified quality.",
   "telephone": "+254790921006",
   "email": "nairobioutpatient@healthsupplymarket.it.com",
@@ -136,4 +152,4 @@ const businessSchema = {
   ]
 };
 
-export { businessSchema, productsSchema };
+export { businessSchema, productsSchema, titleSchema };
