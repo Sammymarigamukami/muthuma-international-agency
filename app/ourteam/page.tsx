@@ -12,33 +12,7 @@ interface MemberData {
 }
 
 export default function OurTeamPage() {
-  const team: MemberData[] = [
-    {
-      name: "Dr. John Muthuma",
-      role: "Founder & Chief Pharmacist",
-      img: "/doctors.png",
-    },
-    {
-      name: "Sarah Kamau",
-      role: "Operations Manager",
-      img: "/doctors.png",
-    },
-    {
-      name: "Dr. Peter Mwangi",
-      role: "Medical Advisor",
-      img: "/doctors.png",
-    },
-    {
-      name: "Grace Wanjiru",
-      role: "Customer Support Lead",
-      img: "/doctors.png",
-    },
-    {
-      name: "Grace Wanjiru",
-      role: "Customer Support Lead",
-      img: "/doctors.png",
-    },
-  ];
+  const team: MemberData[] = [];
 
   return (
     <div className="relative min-h-screen bg-gray-50 ">
