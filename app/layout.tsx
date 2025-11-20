@@ -19,9 +19,9 @@ const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   icons: {
-    icon: "/placeholder.svg",
-    shortcut: "/placeholder.svg",
-    apple: "/placeholder.svg",
+    icon: "/placeholer.svg",
+    shortcut: "/placehoder.svg",
+    apple: "/placehoder.svg",
   },
   title: "Health Supply Market Kenya - Medical Supplies Online",
   description: "Buy reliable medical consumables, test kits, and hospital supplies in Kenya. Fast delivery, affordable prices, trusted quality. Order online at Health Supply Market.",
